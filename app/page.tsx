@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useMemo, useCallback } from "react";
 import {
   motion,
   useScroll,
@@ -21,44 +21,30 @@ import {
   Mail,
   Star,
   ArrowRight,
-  Shirt,
-  WashingMachine,
-  Timer,
   Truck,
   CheckCircle2,
   Instagram,
   MessageCircle,
   Zap,
-  Leaf,
   ChevronDown,
   TrendingUp,
-  Award,
   BarChart3,
   Building2,
   Calendar,
-  ChevronUp,
-  CircleDot,
   CreditCard,
   Download,
   Eye,
   FileText,
-  Gift,
   Handshake,
   Headphones,
-  HelpCircle,
   LineChart,
   Menu,
-  Play,
-  Quote,
-  Rocket,
   Send,
-  Target,
   Users,
   Wrench,
   X,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 
@@ -112,33 +98,38 @@ function Marquee({ children, reverse = false }: { children: React.ReactNode; rev
   );
 }
 
-/* ─── Parallax wrapper ─── */
-function useParallax(value: MotionValue<number>, distance: number) {
-  return useTransform(value, [0, 1], [-distance, distance]);
-}
-
-/* ─── Background Patterns ─── */
-/* ─── Background Patterns ─── */
-function BackgroundGrid() {
+/* ─── Shared mouse tracker (single listener for all background patterns) ─── */
+function useSharedMouse() {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
-  const spotlightX = useSpring(mouseX, { damping: 50, stiffness: 400 });
-  const spotlightY = useSpring(mouseY, { damping: 50, stiffness: 400 });
 
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      mouseX.set(e.clientX);
-      mouseY.set(e.clientY);
+    let rafId: number;
+    const handler = (e: MouseEvent) => {
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        mouseX.set(e.clientX);
+        mouseY.set(e.clientY);
+      });
     };
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mousemove", handler, { passive: true });
+    return () => {
+      window.removeEventListener("mousemove", handler);
+      cancelAnimationFrame(rafId);
+    };
   }, [mouseX, mouseY]);
 
+  return { mouseX, mouseY };
+}
+
+/* ─── Background Patterns (use shared mouse) ─── */
+function BackgroundGrid({ mouseX, mouseY }: { mouseX: MotionValue<number>; mouseY: MotionValue<number> }) {
+  const spotlightX = useSpring(mouseX, { damping: 50, stiffness: 400 });
+  const spotlightY = useSpring(mouseY, { damping: 50, stiffness: 400 });
   const spotlight = useMotionTemplate`radial-gradient(600px circle at ${spotlightX}px ${spotlightY}px, black, transparent 80%)`;
 
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden">
-      {/* Base subtle grid - increased opacity */}
       <div
         className="absolute inset-0 opacity-[0.05]"
         style={{
@@ -146,7 +137,6 @@ function BackgroundGrid() {
           backgroundSize: "60px 60px",
         }}
       />
-      {/* Interactive spotlight grid - increased opacity and defined color */}
       <motion.div
         className="absolute inset-0 opacity-[0.2] text-primary"
         style={{
@@ -160,26 +150,13 @@ function BackgroundGrid() {
   );
 }
 
-function BackgroundDots() {
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
+function BackgroundDots({ mouseX, mouseY }: { mouseX: MotionValue<number>; mouseY: MotionValue<number> }) {
   const spotlightX = useSpring(mouseX, { damping: 50, stiffness: 400 });
   const spotlightY = useSpring(mouseY, { damping: 50, stiffness: 400 });
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      mouseX.set(e.clientX);
-      mouseY.set(e.clientY);
-    };
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, [mouseX, mouseY]);
-
   const spotlightMask = useMotionTemplate`radial-gradient(400px circle at ${spotlightX}px ${spotlightY}px, black, transparent 85%)`;
 
   return (
     <div className="pointer-events-none absolute inset-0 overflow-hidden">
-      {/* Base dots - increased opacity */}
       <div
         className="absolute inset-0 opacity-[0.1]"
         style={{
@@ -187,7 +164,6 @@ function BackgroundDots() {
           backgroundSize: "32px 32px",
         }}
       />
-      {/* Spotlight enhanced dots - increased opacity and size */}
       <motion.div
         className="absolute inset-0 opacity-[0.35] text-primary"
         style={{
@@ -201,32 +177,16 @@ function BackgroundDots() {
   );
 }
 
-function InteractiveBlobs() {
-  return (
-    <div className="pointer-events-none absolute inset-0 overflow-hidden">
-      <motion.div
-        animate={{
-          x: [0, 100, 0],
-          y: [0, 50, 0],
-          scale: [1, 1.2, 1],
-        }}
-        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-        className="absolute -left-1/4 top-0 h-[500px] w-[500px] rounded-full bg-primary/5 blur-[100px]"
-      />
-      <motion.div
-        animate={{
-          x: [0, -80, 0],
-          y: [0, 120, 0],
-          scale: [1, 1.1, 1],
-        }}
-        transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-        className="absolute -right-1/4 bottom-0 h-[600px] w-[600px] rounded-full bg-secondary/5 blur-[120px]"
-      />
-    </div>
-  );
-}
+/* ─── Data (outside component — never re-created) ─── */
+const navLinks = [
+  { label: "Tentang", href: "#tentang" },
+  { label: "Layanan", href: "#layanan" },
+  { label: "Proses", href: "#proses" },
+  { label: "ROI", href: "#roi" },
+  { label: "Galeri", href: "#galeri" },
+  { label: "FAQ", href: "#faq" },
+];
 
-/* ─── Data ─── */
 const services = [
   { icon: Sparkles, title: "Self-Service Laundry", desc: "Mesin cuci LG 20kg premium dengan sistem pembayaran QRIS TORU", price: "8K", unit: "/kg" },
   { icon: Droplets, title: "Drop-Off Laundry", desc: "Layanan cuci, kering, lipat rapi dengan pewangi premium", price: "7K", unit: "/kg" },
@@ -251,27 +211,9 @@ const companyTimeline = [
 ];
 
 const investmentPackages = [
-  {
-    id: "Standard",
-    investment: "150.000.000",
-    profit: "6.500.000",
-    payback: "18-24 Bulan",
-    features: ["5 Mesin Cuci", "Standard Interior", "Basic Marketing"]
-  },
-  {
-    id: "Premium",
-    investment: "250.000.000",
-    profit: "12.000.000",
-    payback: "21 Bulan",
-    features: ["8 Mesin Cuci", "Premium Interior", "Advanced Marketing", "Recruitment Support"]
-  },
-  {
-    id: "Ultimate",
-    investment: "450.000.000",
-    profit: "25.000.000",
-    payback: "19 Bulan",
-    features: ["12 Mesin Cuci", "Luxury Interior", "Full Marketing Agency", "VIP Support"]
-  },
+  { id: "Standard", investment: "150.000.000", profit: "6.500.000", payback: "18-24 Bulan", features: ["5 Mesin Cuci", "Standard Interior", "Basic Marketing"] },
+  { id: "Premium", investment: "250.000.000", profit: "12.000.000", payback: "21 Bulan", features: ["8 Mesin Cuci", "Premium Interior", "Advanced Marketing", "Recruitment Support"] },
+  { id: "Ultimate", investment: "450.000.000", profit: "25.000.000", payback: "19 Bulan", features: ["12 Mesin Cuci", "Luxury Interior", "Full Marketing Agency", "VIP Support"] },
 ];
 
 const galleryImages = [
@@ -295,12 +237,6 @@ const investmentHighlights = [
   { icon: Headphones, title: "Support Marketing", desc: "Dukungan promosi berkelanjutan untuk menjaga traffic outlet." },
 ];
 
-const testimonials = [
-  { name: "Hendra Wijaya", role: "Investor sejak 2021", text: "ROI 60% di tahun pertama. Saya tidak perlu turun tangan sama sekali — tim SHO SHA mengelola semuanya.", rating: 5 },
-  { name: "Sari Indrawati", role: "Investor sejak 2022", text: "Dashboard real-time-nya luar biasa transparan. Saya bisa pantau omzet harian dari HP. Balik modal cepat!", rating: 5 },
-  { name: "Bambang Sutrisno", role: "Investor sejak 2020", text: "Sudah punya 3 outlet SHO SHA. Passive income yang konsisten setiap bulan. Sistem autopilot-nya benar-benar works.", rating: 5 },
-];
-
 const faqItems = [
   { q: "Berapa modal minimum untuk berinvestasi?", a: "Investasi mulai dari Rp 150 juta untuk satu outlet laundry lengkap termasuk mesin, interior, branding, dan biaya operasional awal." },
   { q: "Apakah saya perlu mengelola outlet sendiri?", a: "Tidak. Kami menggunakan sistem full-autopilot di mana tim kamilah yang mengelola seluruh operasional dari A sampai Z." },
@@ -309,24 +245,9 @@ const faqItems = [
 ];
 
 const teamMembers = [
-  { 
-    name: "Anton Agusta", 
-    role: "Founder & CEO", 
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400&h=400&auto=format&fit=crop",
-    initials: "AA" 
-  },
-  { 
-    name: "Yesi Elfira", 
-    role: "COO", 
-    image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=400&h=400&auto=format&fit=crop",
-    initials: "YE" 
-  },
-  { 
-    name: "Riyanti", 
-    role: "CFO", 
-    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400&h=400&auto=format&fit=crop",
-    initials: "RI" 
-  },
+  { name: "Anton Agusta", role: "Founder & CEO", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=400&h=400&auto=format&fit=crop", initials: "AA" },
+  { name: "Yesi Elfira", role: "COO", image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=400&h=400&auto=format&fit=crop", initials: "YE" },
+  { name: "Riyanti", role: "CFO", image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400&h=400&auto=format&fit=crop", initials: "RI" },
 ];
 
 const trustedLogos = ["LG Electronics", "QRIS", "Bank BCA", "Grab", "Gojek", "OVO"];
@@ -341,6 +262,9 @@ export default function Home() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [activePackage, setActivePackage] = useState("Premium");
 
+  // Single shared mouse tracker for all background patterns
+  const { mouseX, mouseY } = useSharedMouse();
+
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", handler, { passive: true });
@@ -352,14 +276,15 @@ export default function Home() {
   const heroY = useTransform(scrollYProgress, [0, 1], [0, 150]);
   const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
-  const navLinks = [
-    { label: "Tentang", href: "#tentang" },
-    { label: "Layanan", href: "#layanan" },
-    { label: "Proses", href: "#proses" },
-    { label: "ROI", href: "#roi" },
-    { label: "Galeri", href: "#galeri" },
-    { label: "FAQ", href: "#faq" },
-  ];
+  // Memoize active package data
+  const activePkg = useMemo(
+    () => investmentPackages.find(p => p.id === activePackage) ?? investmentPackages[1],
+    [activePackage]
+  );
+
+  const toggleFaq = useCallback((i: number) => {
+    setOpenFaq(prev => prev === i ? null : i);
+  }, []);
 
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
@@ -391,6 +316,7 @@ export default function Home() {
               <button
                 className="flex h-9 w-9 items-center justify-center rounded-xl md:hidden"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                aria-label="Toggle menu"
               >
                 {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
               </button>
@@ -422,23 +348,18 @@ export default function Home() {
       </nav>
 
       {/* ═══ HERO ═══ */}
-      <section ref={heroRef} id="beranda" className="relative flex min-h-[100dvh] items-center justify-center overflow-hidden px-6">
-        {/* Animated gradient orbs */}
+      <section ref={heroRef} id="beranda" className="relative overflow-hidden px-4 pt-24 pb-16 sm:px-6 lg:flex lg:min-h-[100dvh] lg:items-center lg:pt-0 lg:pb-0">
+        {/* Animated gradient orbs — use will-change + reduced blur */}
         <div className="pointer-events-none absolute inset-0">
           <motion.div
             animate={{ x: [0, 30, 0], y: [0, -20, 0] }}
             transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute -left-32 top-20 h-[600px] w-[600px] rounded-full bg-primary/10 blur-[120px]"
+            className="absolute -left-32 top-20 h-[600px] w-[600px] rounded-full bg-primary/10 blur-[80px] will-change-transform"
           />
           <motion.div
             animate={{ x: [0, -20, 0], y: [0, 30, 0] }}
             transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute -right-32 bottom-20 h-[500px] w-[500px] rounded-full bg-accent/8 blur-[120px]"
-          />
-          <motion.div
-            animate={{ scale: [1, 1.1, 1] }}
-            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute left-1/2 top-1/2 h-[400px] w-[400px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-secondary/8 blur-[100px]"
+            className="absolute -right-32 bottom-20 h-[500px] w-[500px] rounded-full bg-accent/8 blur-[80px] will-change-transform"
           />
         </div>
 
@@ -453,9 +374,9 @@ export default function Home() {
 
         <motion.div
           style={{ y: heroY, opacity: heroOpacity }}
-          className="relative z-10 mx-auto max-w-7xl"
+          className="relative z-10 mx-auto w-full max-w-7xl"
         >
-          <div className="grid items-center gap-12 lg:grid-cols-2">
+          <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-12">
             {/* Left Column: Text Content */}
             <div className="text-center lg:text-left">
               <motion.div
@@ -465,7 +386,7 @@ export default function Home() {
               >
                 <Badge
                   variant="outline"
-                  className="mb-8 gap-2 border-primary/30 bg-primary/5 px-4 py-2 text-sm font-medium text-primary"
+                  className="mb-6 gap-2 border-primary/30 bg-primary/5 px-3 py-1.5 text-xs font-medium text-primary sm:mb-8 sm:px-4 sm:py-2 sm:text-sm"
                 >
                   <span className="relative flex h-2 w-2">
                     <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
@@ -479,7 +400,7 @@ export default function Home() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1, duration: 0.6 }}
-                className="text-5xl font-extrabold leading-[1.1] tracking-tight sm:text-6xl md:text-7xl"
+                className="text-[2.25rem] font-extrabold leading-[1.1] tracking-tight sm:text-5xl md:text-6xl lg:text-7xl"
               >
                 <span className="block">Bersih itu</span>
                 <span className="relative inline-block">
@@ -514,7 +435,7 @@ export default function Home() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2, duration: 0.6 }}
-                className="mt-8 max-w-xl text-lg leading-relaxed text-muted-foreground sm:text-xl lg:mx-0"
+                className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-muted-foreground sm:mt-8 sm:text-lg md:text-xl lg:mx-0"
               >
                 Bangun bisnis laundry autopilot dengan <span className="font-semibold text-foreground">passive income berkelanjutan</span>. Tim kami mengelola segalanya — Anda cukup memantau profit.
               </motion.p>
@@ -523,15 +444,15 @@ export default function Home() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3, duration: 0.6 }}
-                className="mt-10 flex flex-col items-center gap-4 sm:flex-row lg:justify-start"
+                className="mt-7 flex flex-col items-center gap-3 sm:mt-10 sm:flex-row sm:gap-4 lg:justify-start"
               >
-                <Button size="lg" className="group gap-2 rounded-xl px-8 text-base shadow-xl shadow-primary/20" asChild>
+                <Button size="lg" className="group w-full gap-2 rounded-xl px-8 text-base shadow-xl shadow-primary/20 sm:w-auto" asChild>
                   <a href="https://wa.me/6281234567890" target="_blank" rel="noopener noreferrer">
                     Konsultasi Gratis
                     <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </a>
                 </Button>
-                <Button size="lg" variant="ghost" className="gap-2 rounded-xl text-base text-muted-foreground" asChild>
+                <Button size="lg" variant="ghost" className="w-full gap-2 rounded-xl text-base text-muted-foreground sm:w-auto" asChild>
                   <a href="#proses">
                     Lihat cara kerjanya
                     <ChevronDown className="h-4 w-4" />
@@ -539,63 +460,64 @@ export default function Home() {
                 </Button>
               </motion.div>
 
-              {/* Stats in 2 columns for lg */}
+              {/* Stats */}
               <motion.div
                 initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5, duration: 0.6 }}
-                className="mt-12 grid grid-cols-3 gap-3 sm:gap-4 lg:grid-cols-3"
+                className="mt-8 grid grid-cols-3 gap-2 sm:mt-12 sm:gap-4"
               >
                 {[
-                  { value: 15, suffix: "+", label: "Outlet Aktif", icon: Shield },
-                  { value: 65, suffix: "%", label: "ROI Tahunan", icon: Star },
-                  { value: 19, suffix: " Bln", label: "Payback Period", icon: Zap },
+                  { value: 15, suffix: "+", label: "Outlet Aktif" },
+                  { value: 65, suffix: "%", label: "ROI Tahunan" },
+                  { value: 19, suffix: " Bln", label: "Payback Period" },
                 ].map((stat) => (
                   <div
                     key={stat.label}
-                    className="group rounded-2xl border border-border/50 bg-card/50 p-4 backdrop-blur-sm transition-all duration-300 hover:border-primary/20 hover:shadow-lg"
+                    className="group rounded-xl border border-border/50 bg-card/50 px-3 py-3 backdrop-blur-sm transition-all duration-300 hover:border-primary/20 hover:shadow-lg sm:rounded-2xl sm:p-4"
                   >
-                    <p className="text-xl font-bold tabular-nums sm:text-2xl">
+                    <p className="text-lg font-bold tabular-nums sm:text-2xl">
                       <AnimatedNumber value={stat.value} suffix={stat.suffix} />
                     </p>
-                    <p className="mt-0.5 text-[10px] uppercase tracking-wide text-muted-foreground">{stat.label}</p>
+                    <p className="mt-0.5 text-[9px] uppercase tracking-wide text-muted-foreground sm:text-[10px]">{stat.label}</p>
                   </div>
                 ))}
               </motion.div>
             </div>
 
-            {/* Right Column: Hero Banner Image */}
+            {/* Right Column: Hero Banner Image — hidden on mobile, shown from lg */}
             <motion.div
               initial={{ opacity: 0, scale: 0.8, x: 20 }}
               animate={{ opacity: 1, scale: 1, x: 0 }}
               transition={{ delay: 0.4, duration: 0.8 }}
-              className="relative mt-12 lg:mt-0"
+              className="relative hidden lg:block"
             >
-              {/* Decorative elements behind image */}
               <div className="absolute inset-0 z-0">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent blur-3xl" />
+                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent blur-2xl" />
               </div>
               <div className="relative z-10 flex justify-center">
                 <img
                   src="/hero-banner.png"
                   alt="SHO SHA Investment"
-                  className="h-[400px] w-auto object-contain drop-shadow-2xl sm:h-[500px] lg:h-[650px]"
+                  className="h-[650px] w-auto object-contain drop-shadow-2xl"
+                  loading="eager"
+                  fetchPriority="high"
                 />
               </div>
-              
-              {/* Floating badges - responsive positioning */}
+
+              {/* Floating badges — only on desktop where image is visible */}
               <motion.div
                 animate={{ y: [0, -10, 0] }}
                 transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute -right-2 top-1/4 rounded-2xl border border-border/50 bg-card/80 p-3 shadow-xl backdrop-blur-md sm:-right-4 sm:p-4"
+                className="absolute -right-4 top-1/4 rounded-2xl border border-border/50 bg-card/80 p-4 shadow-xl backdrop-blur-md will-change-transform"
               >
-                <div className="flex items-center gap-2 sm:gap-3">
-                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary sm:h-10 sm:w-10">
-                    <TrendingUp className="h-4 w-4 sm:h-5 sm:w-5" />
+                <div className="flex items-center gap-3">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary">
+                    <TrendingUp className="h-5 w-5" />
                   </div>
                   <div>
-                    <p className="text-[10px] text-muted-foreground sm:text-xs">Potensi Profit</p>
-                    <p className="text-sm font-bold text-foreground sm:text-base">Aktif 24/7</p>
+                    <p className="text-xs text-muted-foreground">Potensi Profit</p>
+                    <p className="text-base font-bold text-foreground">Aktif 24/7</p>
                   </div>
                 </div>
               </motion.div>
@@ -603,23 +525,23 @@ export default function Home() {
               <motion.div
                 animate={{ y: [0, 15, 0] }}
                 transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-                className="absolute -bottom-4 left-4 rounded-2xl border border-border/50 bg-card/80 p-4 shadow-xl backdrop-blur-md sm:left-1/4 sm:p-5"
+                className="absolute -bottom-4 left-1/4 rounded-2xl border border-border/50 bg-card/80 p-5 shadow-xl backdrop-blur-md will-change-transform"
               >
                 <div className="flex items-baseline gap-1">
-                  <span className="text-2xl font-black text-primary sm:text-3xl">100%</span>
-                  <span className="text-xs font-medium text-muted-foreground sm:text-sm">Autopilot</span>
+                  <span className="text-3xl font-black text-primary">100%</span>
+                  <span className="text-sm font-medium text-muted-foreground">Autopilot</span>
                 </div>
               </motion.div>
             </motion.div>
           </div>
         </motion.div>
 
-        {/* Scroll indicator */}
+        {/* Scroll indicator — hidden on mobile */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1.5, duration: 0.5 }}
-          className="absolute bottom-8 left-1/2 -translate-x-1/2"
+          className="absolute bottom-8 left-1/2 hidden -translate-x-1/2 lg:block"
         >
           <motion.div
             animate={{ y: [0, 8, 0] }}
@@ -696,7 +618,7 @@ export default function Home() {
 
       {/* ═══ LAYANAN ═══ */}
       <section id="layanan" className="relative px-6 py-28 overflow-hidden">
-        <BackgroundDots />
+        <BackgroundDots mouseX={mouseX} mouseY={mouseY} />
         <div className="mx-auto max-w-6xl">
           <FadeIn className="text-center">
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">Layanan Kami</p>
@@ -726,7 +648,7 @@ export default function Home() {
 
       {/* ═══ CARA KERJA / PROSES ═══ */}
       <section id="proses" className="relative bg-accent px-6 py-28 text-accent-foreground overflow-hidden">
-        <BackgroundGrid />
+        <BackgroundGrid mouseX={mouseX} mouseY={mouseY} />
         <div className="mx-auto max-w-6xl">
           <FadeIn className="text-center">
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">Investasi</p>
@@ -756,7 +678,11 @@ export default function Home() {
 
       {/* ═══ ROI SECTION ═══ */}
       <section id="roi" className="px-6 py-28 relative overflow-hidden">
-        <InteractiveBlobs />
+        {/* Static blobs — CSS-only, no JS animation for background blobs */}
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
+          <div className="absolute -left-1/4 top-0 h-[500px] w-[500px] animate-[pulse_20s_ease-in-out_infinite] rounded-full bg-primary/5 blur-[80px]" />
+          <div className="absolute -right-1/4 bottom-0 h-[600px] w-[600px] animate-[pulse_25s_ease-in-out_infinite] rounded-full bg-secondary/5 blur-[80px]" />
+        </div>
         <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-border to-transparent" />
         <div className="mx-auto max-w-6xl">
           <div className="grid gap-16 lg:grid-cols-2 lg:items-center">
@@ -764,7 +690,7 @@ export default function Home() {
               <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">Potensi Keuntungan</p>
               <h2 className="mt-4 text-4xl font-bold tracking-tight sm:text-5xl">Investasi Cerdas, <br /><span className="text-muted-foreground">Masa Depan Cerah.</span></h2>
               <p className="mt-6 text-lg text-muted-foreground">Sistem kami dirancang untuk efisiensi maksimal. Nikmati ROI tinggi dengan transparansi penuh 24/7 melalui dashboard mitra kami.</p>
-              
+
               <div className="mt-10 grid grid-cols-2 gap-4">
                 {investmentHighlights.slice(0, 4).map((h) => (
                   <div key={h.title} className="rounded-2xl border border-border/50 bg-card/50 p-5">
@@ -801,41 +727,41 @@ export default function Home() {
                   <div className="space-y-4 rounded-2xl bg-muted/50 p-6">
                     <div className="flex justify-between items-center text-sm">
                       <span className="text-muted-foreground">Modal Investasi</span>
-                      <motion.span 
+                      <motion.span
                         key={activePackage + "inv"}
                         initial={{ opacity: 0, x: 10 }}
                         animate={{ opacity: 1, x: 0 }}
                         className="font-bold"
                       >
-                        Rp {investmentPackages.find(p => p.id === activePackage)?.investment}
+                        Rp {activePkg.investment}
                       </motion.span>
                     </div>
                     <Separator className="bg-border/50" />
                     <div className="flex justify-between items-center text-sm">
                       <span className="text-muted-foreground">Estimasi Profit / Bln</span>
-                      <motion.span 
+                      <motion.span
                         key={activePackage + "prof"}
                         initial={{ opacity: 0, x: 10 }}
                         animate={{ opacity: 1, x: 0 }}
                         className="font-bold text-primary"
                       >
-                        Rp {investmentPackages.find(p => p.id === activePackage)?.profit}
+                        Rp {activePkg.profit}
                       </motion.span>
                     </div>
                     <Separator className="bg-border/50" />
                     <div className="flex justify-between items-center text-sm">
                       <span className="text-muted-foreground">Payback Period</span>
-                      <motion.span 
+                      <motion.span
                         key={activePackage + "pay"}
                         initial={{ opacity: 0, x: 10 }}
                         animate={{ opacity: 1, x: 0 }}
                         className="font-bold"
                       >
-                        {investmentPackages.find(p => p.id === activePackage)?.payback}
+                        {activePkg.payback}
                       </motion.span>
                     </div>
                   </div>
-                  
+
                   <Button className="w-full rounded-2xl gap-2" size="lg" asChild>
                     <a href="https://wa.me/6281234567890" target="_blank" rel="noopener noreferrer">
                       Dapatkan Proposal Lengkap
@@ -851,7 +777,7 @@ export default function Home() {
 
       {/* ═══ GALERI ═══ */}
       <section id="galeri" className="relative px-6 py-28 bg-accent text-accent-foreground overflow-hidden">
-        <BackgroundGrid />
+        <BackgroundGrid mouseX={mouseX} mouseY={mouseY} />
         <div className="mx-auto max-w-6xl">
           <FadeIn className="text-center">
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">Galeri</p>
@@ -860,21 +786,22 @@ export default function Home() {
 
           <div className="mt-16 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 sm:gap-6 auto-rows-[200px] sm:auto-rows-[280px]">
             {galleryImages.map((img, i) => (
-              <FadeIn 
-                key={i} 
-                delay={i * 0.1} 
+              <FadeIn
+                key={i}
+                delay={i * 0.1}
                 className={`group relative overflow-hidden rounded-[2rem] shadow-lg transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl col-span-2 ${img.col} ${img.row}`}
               >
                 <img
                   src={img.src}
                   alt={img.alt}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                 />
                 <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent p-6 translate-y-full transition-transform duration-500 group-hover:translate-y-0">
                   <p className="text-xs font-bold uppercase tracking-widest text-primary mb-1">Portfolio</p>
                   <p className="text-sm font-medium text-white line-clamp-1">{img.alt}</p>
                 </div>
-                {/* Overlay on hover for all */}
                 <div className="absolute inset-0 bg-primary/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
               </FadeIn>
             ))}
@@ -884,7 +811,7 @@ export default function Home() {
 
       {/* ═══ FAQ ═══ */}
       <section id="faq" className="relative px-6 py-28 overflow-hidden">
-        <BackgroundDots />
+        <BackgroundDots mouseX={mouseX} mouseY={mouseY} />
         <div className="mx-auto max-w-4xl">
           <FadeIn className="text-center">
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">FAQ</p>
@@ -894,12 +821,12 @@ export default function Home() {
           <div className="mt-16 space-y-4">
             {faqItems.map((item, i) => (
               <FadeIn key={i} delay={i * 0.1}>
-                <div 
+                <div
                   className={`rounded-3xl border border-border/50 transition-all duration-300 ${openFaq === i ? "bg-muted border-primary/20 shadow-lg" : "bg-card"}`}
                 >
                   <button
                     className="flex w-full items-center justify-between px-8 py-6 text-left"
-                    onClick={() => setOpenFaq(openFaq === i ? null : i)}
+                    onClick={() => toggleFaq(i)}
                   >
                     <span className="font-bold">{item.q}</span>
                     <div className={`flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary transition-transform duration-300 ${openFaq === i ? "rotate-180" : ""}`}>
@@ -925,7 +852,7 @@ export default function Home() {
 
       {/* ═══ TEAM & TRUSTED LOGOS ═══ */}
       <section className="relative px-6 py-28 bg-accent text-accent-foreground overflow-hidden">
-        <BackgroundGrid />
+        <BackgroundGrid mouseX={mouseX} mouseY={mouseY} />
         <div className="mx-auto max-w-6xl">
           <div className="grid gap-20">
             {/* Team */}
@@ -939,9 +866,11 @@ export default function Home() {
                     <div className="group rounded-[2.5rem] bg-accent-foreground/5 p-10 text-center transition-all duration-300 hover:bg-accent-foreground/10 hover:-translate-y-2">
                       <div className="mx-auto mb-8 relative h-40 w-40 overflow-hidden rounded-[3rem] shadow-2xl transition-transform duration-500 group-hover:scale-105">
                         {member.image ? (
-                          <img 
-                            src={member.image} 
-                            alt={member.name} 
+                          <img
+                            src={member.image}
+                            alt={member.name}
+                            loading="lazy"
+                            decoding="async"
                             className="h-full w-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
                           />
                         ) : (
@@ -975,8 +904,12 @@ export default function Home() {
 
       {/* ═══ CONTACT ═══ */}
       <section id="kontak" className="relative px-6 py-28 overflow-hidden">
-        <BackgroundDots />
-        <InteractiveBlobs />
+        <BackgroundDots mouseX={mouseX} mouseY={mouseY} />
+        {/* Static blobs — CSS only */}
+        <div className="pointer-events-none absolute inset-0 overflow-hidden">
+          <div className="absolute -left-1/4 top-0 h-[500px] w-[500px] animate-[pulse_20s_ease-in-out_infinite] rounded-full bg-primary/5 blur-[80px]" />
+          <div className="absolute -right-1/4 bottom-0 h-[600px] w-[600px] animate-[pulse_25s_ease-in-out_infinite] rounded-full bg-secondary/5 blur-[80px]" />
+        </div>
         <div className="mx-auto max-w-6xl">
           <div className="grid gap-12 lg:grid-cols-5">
             <FadeIn className="lg:col-span-2">
