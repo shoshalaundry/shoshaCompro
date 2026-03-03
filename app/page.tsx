@@ -29,65 +29,47 @@ export default function WelcomePage() {
       <div className="absolute inset-0 bg-white/40" />
 
       {/* QR INSTAGRAM */}
-      <div className="absolute right-12 top-1/2 -translate-y-1/2 hidden lg:flex flex-col items-center gap-3">
-
-        <p className="text-sm font-medium text-gray-700">
-          Scan Instagram
-        </p>
-
+      <div className="absolute right-4 xl:right-12 top-1/2 -translate-y-1/2 hidden lg:flex flex-col items-center gap-3">
+        <p className="text-sm font-medium text-gray-700">Scan Instagram</p>
         <img
           src="/qr-instagram.jpeg"
           alt="Instagram QR"
-          className="
-          w-32
-          drop-shadow-lg
-          hover:scale-110
-          transition
-          duration-300
-          rounded-sm
-        "
+          className="w-32 drop-shadow-lg hover:scale-110 transition duration-300 rounded-sm"
         />
-
       </div>
 
       {/* CARD */}
       <section className="
-      relative
-      w-full
-      max-w-xl
-      bg-[#F97316]
-      rounded-2xl
-      shadow-2xl
-      px-16
-      pt-14
-      pb-10
-      flex
-      flex-col
-      items-center
-      text-white
+        relative
+        w-full
+        max-w-full
+        sm:max-w-xl
+        md:max-w-2xl
+        lg:max-w-xl
+        bg-[#F97316]
+        rounded-2xl
+        shadow-2xl
+        px-6
+        sm:px-10
+        md:px-16
+        pt-14
+        pb-10
+        flex
+        flex-col
+        items-center
+        text-white
       ">
 
         {/* SOCIAL ICONS */}
-        <div className="absolute top-5 left-6 flex gap-3">
-
+        <div className="absolute top-5 left-4 sm:left-6 flex gap-3">
           {/* Instagram */}
           <a
             href="https://instagram.com"
             target="_blank"
             className="
-            w-10
-            h-10
-            flex
-            items-center
-            justify-center
-            bg-white/90
-            rounded-full
-            shadow
-            transition
-            duration-300
-            hover:scale-110
-            hover:rotate-6
-            hover:bg-[#FACC15]
+              w-10 h-10 flex items-center justify-center
+              bg-white/90 rounded-full shadow
+              transition duration-300 hover:scale-110 hover:rotate-6 hover:bg-[#FACC15]
             "
           >
             <svg
@@ -105,19 +87,9 @@ export default function WelcomePage() {
             href="https://facebook.com"
             target="_blank"
             className="
-            w-10
-            h-10
-            flex
-            items-center
-            justify-center
-            bg-white/90
-            rounded-full
-            shadow
-            transition
-            duration-300
-            hover:scale-110
-            hover:rotate-6
-            hover:bg-[#FACC15]
+              w-10 h-10 flex items-center justify-center
+              bg-white/90 rounded-full shadow
+              transition duration-300 hover:scale-110 hover:rotate-6 hover:bg-[#FACC15]
             "
           >
             <svg
@@ -129,7 +101,6 @@ export default function WelcomePage() {
               <path d="M22 12a10 10 0 1 0-11.56 9.87v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.88 3.77-3.88 1.09 0 2.23.19 2.23.19v2.45h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.77l-.44 2.88h-2.33v6.99A10 10 0 0 0 22 12z"/>
             </svg>
           </a>
-
         </div>
 
         {/* LOGO */}
@@ -137,48 +108,29 @@ export default function WelcomePage() {
           src="/logo2.jpg"
           alt="Sho-Sha Laundry"
           className="
-          w-24
-          h-24
-          rounded-full
-          object-cover
-          border-2
-          border-white
-          mb-5
+            w-24 h-24 rounded-full object-cover shadow-lg my-5
           "
         />
 
         {/* TITLE */}
-        <h1 className="
-        text-center
-        text-4xl
-        font-semibold
-        tracking-tight
-        leading-tight
-        mb-6
-        ">
+        <h1 className="text-center text-4xl font-semibold tracking-tight leading-tight">
           SHO-SHA <br />
           LAUNDRY
         </h1>
+
+        {/* SLOGAN */}
+        <p className="text-center text-sm sm:text-base text-white/90 max-w-xs sm:max-w-sm mt-3 mb-8 italic">
+          “Bersih, Wangi, dan Praktis – Laundry Autopilot untuk Hidup Lebih Mudah”
+        </p>
 
         {/* PROFIL */}
         <button
           onClick={() => router.push('/home')}
           className="
-          w-full
-          max-w-[360px]
-          bg-[#FFF7ED]
-          text-gray-800
-          rounded-2xl
-          py-4
-          text-lg
-          font-semibold
-          shadow-md
-          transition
-          duration-300
-          hover:bg-[#FACC15]
-          hover:scale-[1.03]
-          hover:shadow-xl
-          mb-8
+            w-full bg-[#FFF7ED] text-gray-800 rounded-full py-4
+            text-lg font-semibold shadow-md transition duration-300
+            hover:bg-[#FACC15] hover:scale-[1.03] hover:shadow-xl
+            mb-8
           "
         >
           PROFIL PERUSAHAAN
@@ -188,66 +140,32 @@ export default function WelcomePage() {
         <div className="w-full max-w-[360px] h-px bg-white/40 mb-5"/>
 
         {/* CABANG */}
-        <p className="
-        text-base
-        uppercase
-        tracking-widest
-        text-white/90
-        mb-6
-        ">
+        <p className="text-base uppercase tracking-widest text-white/90 mb-6">
           Cabang
         </p>
 
         {/* UNITS */}
-        <div className="
-        w-full
-        flex
-        flex-col
-        items-center
-        gap-5
-        ">
-
+        <div className="w-full flex flex-col items-center gap-5">
           {units.map((unit) => (
-
             <button
               key={unit.path}
               onClick={() => router.push(unit.path)}
               className="
-              w-full
-              max-w-[360px]
-              bg-[#FFF7ED]
-              text-gray-800
-              rounded-2xl
-              py-4
-              text-lg
-              font-medium
-              shadow-sm
-              transition
-              duration-300
-              hover:bg-[#FACC15]
-              hover:scale-[1.03]
-              hover:shadow-xl
+                w-full bg-[#FFF7ED] text-gray-800 rounded-full py-4
+                text-lg font-medium shadow-sm transition duration-300
+                hover:bg-[#FACC15] hover:scale-[1.03] hover:shadow-xl
               "
             >
               {unit.name}
             </button>
-
           ))}
-
         </div>
 
         {/* COPYRIGHT */}
-        <p className="
-        text-sm
-        text-white/80
-        mt-10
-        tracking-wide
-        ">
+        <p className="text-sm text-white/80 mt-10 tracking-wide">
           © {new Date().getFullYear()} SHO-SHA Laundry
         </p>
-
       </section>
-
     </main>
   );
 }
