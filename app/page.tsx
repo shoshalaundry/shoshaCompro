@@ -7,38 +7,43 @@ export default function WelcomePage() {
   const router = useRouter();
 
   const units = [
-    { name: "Pahlawan", path: "/units-pahlawan" },
-    { name: "Radio Dalam Lama", path: "/units-rd-lama" },
-    { name: "Assirot", path: "/units-assirot" },
-    { name: "Petukangan Baru", path: "/units-petukangan-baru" },
-    { name: "Kemanggisan Pulo", path: "/units-k-pulo" },
-    { name: "Cipete Utara", path: "/units-cipete-utara" },
-    { name: "Kpbd", path: "/units-kpbd" },
-    { name: "Ciledug", path: "/units-ciledug" },
+    { name: "Pahlawan", address: "Jl. Pahlawan No.34, RT.10/RW.4, Sukabumi Sel., Kec. Kb. Jeruk, Kota Jakarta Barat", path: "/units-pahlawan" },
+    { name: "Radio Dalam Lama", address: " Jl. Ps. Inpres No.65, RW.14, Gandaria Utara, Kec. Kby. Baru, Jakarta", path: "/units-rd-lama" },
+    { name: "Assirot", address: "Jl. Assirot No.8B, Grogol Sel., Kec. Kb. Jeruk, Kota Jakarta Selatan", path: "/units-assirot" },
+    { name: "Ciledug", address: "Jl. Raden Saleh No.55, RT.003/RW.008, Karang Tengah, Kec. Karang Tengah, Kota Tangerang", path: "/units-ciledug" },
+    { name: "Cipete Utara", address: "Jl. Damai Raya No.9A, Cipete Utara, Kec. Kby. Baru, Kota Jakarta Selatan", path: "/units-cipete-utara" },
+    { name: "Kebon Mangga", address: "Jl. Kebon Mangga 1, RT.01/007, No.15, RT.5/RW.7, Cipulir, Kec. Kebayoran Lama, Kota Jakarta Selatan", path: "/units-kebon-mangga" },
+    { name: "Kemanggisan Pulo", address: "Jl. Kemanggisan Pulo, RT.4/RW.17, Palmerah, Kec. Palmerah, Kota Jakarta Barat", path: "/units-k-pulo" },
+    { name: "KPBD", address: "Jl. Raya Kby. Lama Jl. Kpbd No.6, RT.10/RW.1, Sukabumi Sel., Kec. Kb. Jeruk, Kota Jakarta Barat", path: "/units-kpbd" },
+    { name: "Madrasah", address: "Jl. Madrasah SDN No.1, RT.12/RW.2, Gandaria Sel., Kec. Cilandak, Kota Jakarta Selatan", path: "/units-madrasah" },
+    { name: "Petukangan Baru", address: "Jl. H. Muchtar Raya No.37-1, RT.8/RW.1, Petukangan Utara, Kec. Pesanggrahan, Kota Jakarta Selatan", path: "/units-petukangan-baru" },
+    { name: "Petukangan Lama", address: "Dekat Meliala Foto, Jl. Kostrad Pusri No.3, RT.3/RW.5, Petukangan Utara, Kec. Pesanggrahan, Kota Jakarta Selatan", path: "/units-petukangan-lama" },
+    { name: "Radio Dalam 24 Jam", address: "Jl. Ps. Inpres No.80a, RT.4/RW.14, Gandaria Utara, Kec. Kby. Baru, Kota Jakarta Selatan", path: "/units-rd-24j" },
+    { name: "Tanah Kusir", address: "Jl. Tanah Kusir II No.15, RT.9/RW.9, Kby. Lama Sel., Kec. Kebayoran Lama, Kota Jakarta Selatan", path: "/units-tanah-kusir" },
   ];
 
   return (
-    <main className="relative min-h-screen flex justify-center pt-20 pb-20 px-6">
+    <main className="relative min-h-screen flex justify-center pt-20 pb-20 px-6 bg-[#FFF9E3]">
 
-      {/* BACKGROUND */}
-      <div
+      {/* Here to change BACKGROUND to Image*/}
+      {/* <div
         className="absolute inset-0 bg-cover bg-center"
         style={{ backgroundImage: "url('/background.png')" }}
       />
 
-      <div className="absolute inset-0 bg-white/40" />
+      <div className="absolute inset-0 bg-white/40" /> */}
 
       {/* QR INSTAGRAM */}
       <div className="absolute right-4 xl:right-12 top-1/2 -translate-y-1/2 hidden lg:flex flex-col items-center gap-3">
         <p className="text-sm font-medium text-gray-700">Scan Instagram</p>
         <img
-          src="/qr-instagram.jpeg"
+          src="/qr_instagram.jpeg"
           alt="Instagram QR"
           className="w-32 drop-shadow-lg hover:scale-110 transition duration-300 rounded-sm"
         />
       </div>
 
-      {/* CARD */}
+      {/* CARD with transparent orange */}
       <section className="
         relative
         w-full
@@ -46,7 +51,7 @@ export default function WelcomePage() {
         sm:max-w-xl
         md:max-w-2xl
         lg:max-w-xl
-        bg-[#F97316]
+        bg-[#F97316]/80
         rounded-2xl
         shadow-2xl
         px-6
@@ -60,21 +65,21 @@ export default function WelcomePage() {
         text-white
       ">
 
-        {/* SOCIAL ICONS */}
-        <div className="absolute top-5 left-4 sm:left-6 flex gap-3">
+        {/* SOCIAL ICONS - bigger */}
+        <div className="absolute top-5 left-4 sm:left-6 flex gap-4">
           {/* Instagram */}
           <a
-            href="https://instagram.com"
+            href="https://instagram.com/shoshalaundryofficial"
             target="_blank"
             className="
-              w-10 h-10 flex items-center justify-center
-              bg-white/90 rounded-full shadow
+              w-12 h-12 flex items-center justify-center
+              bg-white/90 rounded-full shadow-lg
               transition duration-300 hover:scale-110 hover:rotate-6 hover:bg-[#FACC15]
             "
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="w-5 h-5 text-gray-800"
+              className="w-6 h-6 text-gray-800"
               fill="currentColor"
               viewBox="0 0 24 24"
             >
@@ -87,14 +92,14 @@ export default function WelcomePage() {
             href="https://facebook.com"
             target="_blank"
             className="
-              w-10 h-10 flex items-center justify-center
-              bg-white/90 rounded-full shadow
+              w-12 h-12 flex items-center justify-center
+              bg-white/90 rounded-full shadow-lg
               transition duration-300 hover:scale-110 hover:rotate-6 hover:bg-[#FACC15]
             "
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="w-5 h-5 text-gray-800"
+              className="w-6 h-6 text-gray-800"
               fill="currentColor"
               viewBox="0 0 24 24"
             >
@@ -108,7 +113,7 @@ export default function WelcomePage() {
           src="/logo2.jpg"
           alt="Sho-Sha Laundry"
           className="
-            w-24 h-24 rounded-full object-cover shadow-lg my-5
+            w-24 h-24 rounded-full object-cover shadow-lg mt-10 mb-5
           "
         />
 
@@ -144,25 +149,43 @@ export default function WelcomePage() {
           Cabang
         </p>
 
-        {/* UNITS */}
-        <div className="w-full flex flex-col items-center gap-5">
+        {/* UNITS with outlet icon and address */}
+        <div className="w-full flex flex-col items-center gap-4">
           {units.map((unit) => (
             <button
               key={unit.path}
               onClick={() => router.push(unit.path)}
               className="
-                w-full bg-[#FFF7ED] text-gray-800 rounded-full py-4
-                text-lg font-medium shadow-sm transition duration-300
-                hover:bg-[#FACC15] hover:scale-[1.03] hover:shadow-xl
+                w-full bg-[#FFF7ED] text-gray-800 rounded-2xl py-3 px-4
+                flex items-center gap-3
+                shadow-sm transition duration-300
+                hover:bg-[#FACC15] hover:scale-[1.02] hover:shadow-xl
+                text-left
               "
             >
-              {unit.name}
+              {/* Outlet Icon */}
+              <span className="shrink-0 text-gray-600">
+                <img 
+                  src="/ic_outlet.png" 
+                  alt="Outlet" 
+                  className="w-6 h-6"
+                />
+              </span>
+
+              {/* Name and Address */}
+              <div className="flex-1">
+                <div className="font-semibold text-base sm:text-lg">{unit.name}</div>
+                <div className="text-xs sm:text-sm text-gray-600">{unit.address}</div>
+              </div>
             </button>
           ))}
         </div>
+        
+        {/* DIVIDER */}
+        <div className="w-full max-w-[360px] h-px bg-white/40 mt-10"/>
 
         {/* COPYRIGHT */}
-        <p className="text-sm text-white/80 mt-10 tracking-wide">
+        <p className="text-sm text-white/80 mt-5 tracking-wide">
           © {new Date().getFullYear()} SHO-SHA Laundry
         </p>
       </section>
