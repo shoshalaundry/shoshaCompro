@@ -43,7 +43,7 @@ export default function DropdownMenuCabang() {
       >
         
         {/* GRID */}
-        <div className="grid grid-cols-7 divide-x divide-y divide-border/40 gap-x-6 gap-y-3">
+        <div className="grid grid-cols-7 divide-x divide-y divide-border/60 gap-x-6 gap-y-3">
 
           {outlets.map((outlet) => (
             <Link

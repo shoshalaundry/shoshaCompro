@@ -812,78 +812,86 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Testimonials (smaller card) */}
-      <section className="py-20 bg-primary relative overflow-hidden">
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="text-center mb-12">
-            <h2 className="text-white/80 font-bold uppercase tracking-widest text-sm mb-2">Testimonial</h2>
-            <h3 className="text-3xl md:text-4xl font-extrabold text-white mb-4 tracking-tight">Apa Kata <span className="text-accent">Customers</span></h3>
+      {/* Testimonials */}
+      <section className="py-24 bg-primary relative overflow-hidden">
+
+        {/* Background patterns */}
+        <div className="absolute inset-0 opacity-10 pointer-events-none">
+          <div className="absolute top-10 left-10 w-40 h-40 border-4 border-white rounded-full rotate-45" />
+          <div className="absolute bottom-20 right-20 w-60 h-60 border-4 border-white rounded-full -rotate-12" />
+        </div>
+
+        <div className="max-w-6xl mx-auto px-4 relative z-10">
+
+          {/* Heading */}
+          <div className="text-center mb-16">
+            <h2 className="text-white/80 font-bold uppercase tracking-widest text-sm mb-4">
+              Testimonial
+            </h2>
+
+            <h3 className="text-4xl md:text-5xl font-extrabold text-white mb-6 tracking-tight">
+              Apa Kata <span className="text-accent">Customers</span>
+            </h3>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-6">
+          {/* Cards */}
+          <div className="grid md:grid-cols-3 gap-8">
+
             {testimonials.map((t, i) => (
-              <Card key={i} className="bg-white/8 backdrop-blur-md border-white/10 text-white hover:bg-white/12 transition-all duration-300">
-                <CardContent className="pt-6 pb-6 flex flex-col h-full">
-                  <div className="flex items-center gap-1 mb-4 text-yellow-400">
+              <Card
+                key={i}
+                className="w-full bg-white/10 backdrop-blur-xl border-white/20 text-white transition-all duration-300 hover:bg-white/20 hover:-translate-y-2 hover:shadow-2xl"
+              >
+                <CardContent className="pt-9 pb-9 px-7 flex flex-col h-full">
+
+                  {/* Stars */}
+                  <div className="flex items-center gap-1 mb-6">
                     {[...Array(5)].map((_, idx) => (
-                      <Star key={idx} className="w-3 h-3" />
+                      <Star
+                        key={idx}
+                        className="w-5 h-5 text-yellow-400 stroke-yellow-500 fill-yellow-400"
+                      />
                     ))}
                   </div>
-                  <Quote className="w-8 h-8 text-accent opacity-30 mb-3" />
-                  <p className="text-sm leading-relaxed mb-5 flex-grow italic">"{t.text}"</p>
-                  <div className="flex items-center gap-3 border-t border-white/8 pt-4">
-                    <div className="relative w-10 h-10 rounded-full overflow-hidden border-2 border-accent">
-                      <Image src={t.img || ""} alt={t.name} fill className="object-cover" />
+
+                  {/* Quote */}
+                  <Quote className="w-12 h-12 text-accent opacity-30 mb-4" />
+
+                  {/* Text */}
+                  <p className="text-lg leading-relaxed mb-8 flex-grow italic">
+                    "{t.text}"
+                  </p>
+
+                  {/* User */}
+                  <div className="flex items-center gap-4 border-t border-white/10 pt-6">
+                    <div className="relative w-14 h-14 rounded-full overflow-hidden border-2 border-accent">
+                      <Image
+                        src={t.img || ""}
+                        alt={t.name}
+                        fill
+                        className="object-cover"
+                      />
                     </div>
+
                     <div>
-                      <p className="font-semibold text-sm">{t.name}</p>
-                      <p className="text-xs text-white/60">{t.role}</p>
+                      <p className="font-bold text-lg">{t.name}</p>
+                      <p className="text-sm text-white/60">{t.role}</p>
                     </div>
                   </div>
+
                 </CardContent>
               </Card>
             ))}
-          </div>
-        </div>
-      </section>
 
-      {/* ═══ CTA SECTION ═══ */}
-      <section className="px-6 py-16 bg-gradient-to-b from-orange-50 to-primary-foreground">
-        <div className="mx-auto max-w-6xl">
-          <FadeIn>
-            <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-accent via-accent to-accent/80 shadow-xl px-8 py-16 text-center text-primary-foreground sm:px-16 sm:py-20">
-              <div className="pointer-events-none absolute -right-20 -top-20 h-60 w-60 rounded-full bg-white/10 blur-2xl" />
-              <div className="pointer-events-none absolute -bottom-20 -left-20 h-60 w-60 rounded-full bg-white/10 blur-2xl" />
-              <h2 className="relative text-3xl font-extrabold tracking-tight sm:text-4xl md:text-5xl">
-                Siap Memulai Investasi
-                <br />
-                Laundry Autopilot?
-              </h2>
-              <p className="relative mx-auto mt-4 max-w-lg text-base text-primary-foreground/80">Konsultasikan rencana investasi Anda dengan tim profesional kami. Dapatkan proposal lengkap dan jadwalkan kunjungan outlet.</p>
-              <div className="relative mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-                <Button size="lg" className="gap-2 rounded-xl bg-white px-8 text-base font-semibold text-accent shadow-xl hover:bg-white/90" asChild>
-                  <a href="https://wa.me/6281234567890" target="_blank" rel="noopener noreferrer">
-                    <MessageCircle className="h-4 w-4" />
-                    Hubungi Kami
-                  </a>
-                </Button>
-                <Button size="lg" variant="ghost" className="gap-2 rounded-xl border border-white/20 text-base text-primary-foreground hover:bg-white/10" asChild>
-                  <a href="https://wa.me/6281234567890" target="_blank" rel="noopener noreferrer">
-                    <Calendar className="h-4 w-4" />
-                    Jadwalkan Konsultasi
-                  </a>
-                </Button>
-              </div>
-            </div>
-          </FadeIn>
+          </div>
         </div>
       </section>
 
       {/* ═══ GALLERY — Collage Masonry ═══ */}
-      <section id="gallery" className="px-6 py-28 bg-primary-foreground">
+      <section id="gallery" className="px-6 py-28 bg-gradient-to-b from-orange-50 to-primary-foreground">
         <div className="mx-auto max-w-6xl">
           <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-100px" }} transition={{ duration: 0.6 }}>
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">Gallery</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-accent">Gallery</p>
             <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">Lihat lebih dekat.</h2>
           </motion.div>
 
@@ -925,6 +933,38 @@ export default function Home() {
             </div>
           </DialogContent>
         </Dialog>
+      </section>
+
+      {/* ═══ CTA SECTION ═══ */}
+      <section className="px-6 py-16 bg-primary-foreground">
+        <div className="mx-auto max-w-6xl">
+          <FadeIn>
+            <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-primary via-primary to-primary/80 shadow-xl px-8 py-16 text-center text-primary-foreground sm:px-16 sm:py-20">
+              <div className="pointer-events-none absolute -right-20 -top-20 h-60 w-60 rounded-full bg-white/10 blur-2xl" />
+              <div className="pointer-events-none absolute -bottom-20 -left-20 h-60 w-60 rounded-full bg-white/10 blur-2xl" />
+              <h2 className="relative text-3xl font-extrabold tracking-tight sm:text-4xl md:text-5xl">
+                Siap Memulai Investasi
+                <br />
+                Laundry Autopilot?
+              </h2>
+              <p className="relative mx-auto mt-4 max-w-lg text-base text-primary-foreground/80">Konsultasikan rencana investasi Anda dengan tim profesional kami. Dapatkan proposal lengkap dan jadwalkan kunjungan outlet.</p>
+              <div className="relative mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+                <Button size="lg" className="gap-2 rounded-xl bg-white px-8 text-base font-semibold text-primary shadow-xl hover:bg-white/90" asChild>
+                  <a href="https://wa.me/6281234567890" target="_blank" rel="noopener noreferrer">
+                    <MessageCircle className="h-4 w-4" />
+                    Hubungi Kami
+                  </a>
+                </Button>
+                <Button size="lg" variant="ghost" className="gap-2 rounded-xl border border-white/20 text-base text-primary-foreground hover:bg-white/10" asChild>
+                  <a href="https://wa.me/6281234567890" target="_blank" rel="noopener noreferrer">
+                    <Calendar className="h-4 w-4" />
+                    Jadwalkan Konsultasi
+                  </a>
+                </Button>
+              </div>
+            </div>
+          </FadeIn>
+        </div>
       </section>
 
       {/* ═══ FOOTER ═══ */}
