@@ -13,198 +13,69 @@ import {
 } from "framer-motion";
 import {
   Droplets,
-  Clock,
-  Eye,
-  Shield,
   Sparkles,
-  MapPin,
-  Phone,
-  Quote,
-  Mail,
-  Star,
   ArrowRight,
-  ArrowLeft,
   CheckCircle2,
   Instagram,
   MessageCircle,
-  Zap,
+  Menu,
+  X,
+  Calendar,
   ChevronDown,
   ChevronLeft,
   ChevronRight,
   CreditCard,
-  Download,
-  Menu,
-  X,
-  Users,
-  TrendingUp,
-  Calendar,
-  DollarSign,
-  Target,
-  Award,
-  Building2,
-  Handshake,
-  Wrench,
-  Headphones,
-  BarChart3,
+  Facebook,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-} from "@/components/ui/dialog";
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs";
-import { Card, CardContent } from "@/components/ui/card"
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import Image from "next/image";
+import { Separator } from "@/components/ui/separator";
+import DropdownMenuCabang from "@/components/ui/dropdown-menu-cabang";
+import Link from "next/link";
 
-/* ═══════════════════════════════════════════
-   DATA ARRAYS — edit these to update content
-   ═══════════════════════════════════════════ */
-
-const heroSlides = [
+const timeline = [
   {
-    image: "https://picsum.photos/id/517/1920/1080",
-    heroImage: "/hero1.svg",
-    tagline: "Bersih Sempurna,\nSetiap Helai.",
-    subtitle: "Layanan laundry profesional dengan standar premium untuk pakaian Anda."
-    // bubble: "✨ Kualitas Terbaik"
+    year: "2011",
+    title: "Berdiri",
+    desc: "SHO-SHA LAUNDRY didirikan dengan 1 outlet pertama.",
   },
   {
-    image: "https://picsum.photos/id/525/1920/1080",
-    heroImage: "/hero2.svg",
-    tagline: "Mitra Bisnis\nTerpercaya.",
-    subtitle: "Bergabung dengan jaringan franchise laundry terbesar di Indonesia."
-    // bubble: "🤝 Bergabung Sekarang"
+    year: "2015",
+    title: "Ekspansi",
+    desc: "Berkembang menjadi 5 outlet di Jakarta.",
   },
   {
-    image: "https://picsum.photos/id/534/1920/1080",
-    heroImage: "/hero3.svg",
-    tagline: "Teknologi Modern,\nHasil Maksimal.",
-    subtitle: "Mesin cuci industri terkini dengan deterjen ramah lingkungan."
-    // bubble: "🚀 Teknologi Canggih"
+    year: "2020",
+    title: "12+ Outlet",
+    desc: "Beroperasi di berbagai lokasi strategis.",
+  },
+  {
+    year: "2025",
+    title: "Sistem Investor",
+    desc: "Meluncurkan sistem kemitraan investor autopilot.",
   },
 ];
 
-const investmentCards = [
+const teamMembers = [
   {
-    icon: TrendingUp,
-    title: "ROI hingga 65%",
-    desc: "Return on Investment hingga 65% per tahun dari modal investasi Anda.",
+    name: "Anton Agusta",
+    role: "Founder & CEO",
+    desc: "15+ tahun pengalaman di industri laundry dan sistem manajemen operasional.",
+    image: "/team/anton.jpg",
   },
   {
-    icon: Calendar,
-    title: "Payback 19 Bulan",
-    desc: "Payback period cepat hanya dalam 19 bulan untuk balik modal penuh.",
+    name: "Yesi Elfira",
+    role: "COO",
+    desc: "Ahli operasional dan quality control dengan track record membangun 10+ outlet.",
+    image: "/team/yesi.jpg",
   },
   {
-    icon: Wrench,
-    title: "Support Teknis Mandiri",
-    desc: "Tim teknisi berpengalaman siap menangani seluruh kebutuhan teknis.",
+    name: "Riyanti",
+    role: "CFO",
+    desc: "Spesialis keuangan dan analisa investasi untuk memastikan ROI optimal.",
+    image: "/team/riyanti.jpg",
   },
-  {
-    icon: Users,
-    title: "Manajemen Profesional",
-    desc: "Pengelolaan operasional oleh tim manajemen yang terlatih dan berdedikasi.",
-  },
-  {
-    icon: Headphones,
-    title: "Tim Teknisi 24 Jam",
-    desc: "Layanan darurat dan pemeliharaan rutin tersedia 24 jam nonstop.",
-  },
-  {
-    icon: BarChart3,
-    title: "Dashboard Real-Time",
-    desc: "Pantau performa bisnis kapan saja dari mana saja melalui dashboard digital.",
-  },
-];
-
-const mitraPackages = [
-  {
-    name: "Silver",
-    modal: 15_000_000,
-    pelanggan: 30,
-    harga: 7_000,
-    features: [
-      "1 mesin cuci 8kg",
-      "1 mesin pengering",
-      "Perlengkapan dasar",
-      "Training 3 hari",
-      "Branding outlet",
-    ],
-  },
-  {
-    name: "Gold",
-    modal: 30_000_000,
-    pelanggan: 60,
-    harga: 7_000,
-    features: [
-      "2 mesin cuci 12kg",
-      "2 mesin pengering",
-      "Perlengkapan lengkap",
-      "Training 7 hari",
-      "Branding outlet premium",
-      "Sistem POS digital",
-      "Support marketing 3 bulan",
-    ],
-  },
-  {
-    name: "Platinum",
-    modal: 60_000_000,
-    pelanggan: 120,
-    harga: 7_000,
-    features: [
-      "4 mesin cuci 15kg",
-      "3 mesin pengering",
-      "Full perlengkapan + AC",
-      "Training 14 hari",
-      "Full branding + interior",
-      "Sistem POS + CRM",
-      "Support marketing 6 bulan",
-      "Konsultasi bisnis 1 tahun",
-    ],
-  },
-];
-
-// const testimonials = [
-//   {
-//     name: "Rina Sari",
-//     role: "Pelanggan",
-//     text: "Laundry di SHO SHA benar-benar beda. Pakaian selalu bersih, wangi, dan cepat selesai.",
-//   },
-//   {
-//     name: "Budi Santoso",
-//     role: "Mitra Franchise",
-//     text: "Bergabung dengan SHO SHA adalah keputusan terbaik saya. Dalam 2 tahun modal sudah kembali.",
-//   },
-//   {
-//     name: "Dewi Kartika",
-//     role: "Pelanggan Setia",
-//     text: "Saya sudah pakai SHO SHA hampir 3 tahun dan selalu puas dengan hasilnya.",
-//   },
-// ];
-
-const galleryImages = [
-  { src: "https://picsum.photos/id/395/600/400", alt: "Outlet modern SHO SHA", span: "tall" as const },
-  { src: "https://picsum.photos/id/401/600/400", alt: "Mesin cuci industri", span: "normal" as const },
-  { src: "https://picsum.photos/id/403/600/400", alt: "Tim profesional", span: "wide" as const },
-  { src: "https://picsum.photos/id/399/600/400", alt: "Hasil cucian rapi", span: "normal" as const },
-  { src: "https://picsum.photos/id/411/600/400", alt: "Proses quality control", span: "tall" as const },
-  { src: "https://picsum.photos/id/416/600/400", alt: "Area packing premium", span: "normal" as const },
-  { src: "https://picsum.photos/id/431/600/400", alt: "Interior outlet bersih", span: "wide" as const },
-  { src: "https://picsum.photos/id/435/600/400", alt: "Layanan antar jemput", span: "normal" as const },
-];
-
-const investmentHighlights = [
-  { icon: TrendingUp, title: "ROI hingga 65%", desc: "Return on Investment yang sangat kompetitif di industri laundry." },
-  { icon: Calendar, title: "Payback 19 Bulan", desc: "Proyeksi balik modal yang terukur dan relatif cepat." },
-  { icon: Zap, title: "Sistem Autopilot", desc: "Operasional ditangani 100% oleh manajemen profesional kami." },
-  { icon: Eye, title: "Transparansi 24/7", desc: "Pantau omzet dan profit real-time via dashboard digital." },
-  { icon: Wrench, title: "Maintenance Siaga", desc: "Tim teknisi internal siap sedia menjaga operasional mesin." },
-  { icon: Headphones, title: "Support Marketing", desc: "Dukungan promosi berkelanjutan untuk menjaga traffic outlet." },
 ];
 
 const services = [
@@ -221,134 +92,66 @@ const services = [
   {
     icon: Droplets,
     title: "Drop-Off Laundry",
-    features: [
-      "Cuci, kering, lipat rapi",
-      "Pewangi premium gratis",
-      "Antar-jemput tersedia",
-      "Rp 7.000/kg (min 3kg)",
-    ],
+    features: ["Cuci, kering, lipat rapi", "Pewangi premium gratis", "Antar-jemput tersedia", "Rp 7.000/kg (min 3kg)"],
   },
   {
     icon: CreditCard,
     title: "Membership TORU",
-    features: [
-      "Top-up saldo digital",
-      "Diskon 10–20%",
-      "Akumulasi poin reward",
-      "Gratis pendaftaran",
-    ],
+    features: ["Top-up saldo digital", "Diskon 10–20%", "Akumulasi poin reward", "Gratis pendaftaran"],
   },
 ];
 
-const marqueeWords = [
-  "BERSIH", "WANGI", "CEPAT", "PROFESIONAL", "TERPERCAYA", "PREMIUM",
-  "HIGIENIS", "RAPI", "BERKUALITAS", "MODERN",
+const trustedLogos = [
+  "LG Electronics",
+  "QRIS",
+  "Bank BCA",
+  "Grab",
+  "Gojek",
+  "OVO",
 ];
 
 const navLinks = [
-  { label: "Tentang Kami", href: "#tentang" },
-  { label: "Layanan", href: "#layanan" },
-  { label: "Gallery", href: "#gallery" },
-  { label: "Perhitungan ROI", href: "#roi" },
+  { label: "Beranda", href: "/home" },
+  { label: "Kemitraan", href: "/partnership" },
+  { label: "FAQ", href: "/faq" },
 ];
 
-const testimonials = [
-  {
-    name: "Marcus Tan",
-    role: "Nano Outlet Owner, Singapore",
-    text: "Joining SHO SHA Connect was the best career move. The support is unparalleled and the brand vibrancy really pulls in the younger crowd.",
-    
-  },
-  {
-    name: "Sarah Jenkins",
-    role: "Classic Hub Franchisee, UK",
-    text: "The ROI exceeded my expectations. Within 14 months, I was already looking to open my second outlet. The AI tools for inventory are a lifesaver.",
-    
-  },
-  {
-    name: "Ahmad Rizwan",
-    role: "Regional Partner, UAE",
-    text: "Scaling with SHO SHA is systematic. Their modern approach to franchising removes all the typical headaches of supply chain and staffing.",
-     // fallback
-  }
+const outlets = [
+  "Pahlawan",
+  "Radio Dalam Lama",
+  "Assirot",
+  "Ciledug",
+  "Cipete Utara",
+  "Kebon Mangga",
+  "Kemanggisan Pulo",
+  "KPBD",
+  "Madrasah",
+  "Petukangan Baru",
+  "Petukangan Lama",
+  "Radio Dalam 24 Jam",
+  "Tanah Kusir",
 ]
 
-/* ═══════════════════════════════════════════
-   HELPER FUNCTIONS
-   ═══════════════════════════════════════════ */
-
-function formatRupiah(amount: number): string {
-  if (amount >= 1_000_000_000) return `${(amount / 1_000_000_000).toFixed(1)} Miliar`;
-  if (amount >= 1_000_000) return `${(amount / 1_000_000).toFixed(1)} Juta`;
-  if (amount >= 1_000) return `${(amount / 1_000).toFixed(0)} Ribu`;
-  return amount.toString();
-}
-
-function calculateROI(pkg: typeof mitraPackages[number]) {
-  const pendapatanBulanan = pkg.pelanggan * pkg.harga * 26;
-  const biayaOperasional = pendapatanBulanan * 0.4;
-  const keuntunganBersih = pendapatanBulanan - biayaOperasional;
-  const bepBulan = Math.ceil(pkg.modal / keuntunganBersih);
-  const roiPersen = Math.round((keuntunganBersih * 12 / pkg.modal) * 100);
-  return { pendapatanBulanan, keuntunganBersih, bepBulan, roiPersen };
-}
+const socialLinks = [
+  { icon: Instagram, href: "https://www.instagram.com/shoshalaundryofficial", label: "Instagram" },
+  { icon: Facebook, href: "#", label: "Facebook" },
+  { icon: MessageCircle, href: "#", label: "WhatsApp" },
+];
 
 /* ═══════════════════════════════════════════
    COMPONENTS
    ═══════════════════════════════════════════ */
 
-function AnimatedNumber({
-  value,
-  suffix = "",
-  prefix = "",
-}: {
-  value: number;
-  suffix?: string;
-  prefix?: string;
-}) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const motionVal = useMotionValue(0);
-  const spring = useSpring(motionVal, { damping: 40, stiffness: 120 });
-  const isInView = useInView(ref, { once: true });
-
-  useEffect(() => {
-    if (isInView) motionVal.set(value);
-  }, [isInView, motionVal, value]);
-
-  useEffect(() => {
-    const unsub = spring.on("change", (v) => {
-      if (ref.current) ref.current.textContent = prefix + Math.round(v).toLocaleString("id-ID") + suffix;
-    });
-    return unsub;
-  }, [spring, suffix, prefix]);
-
-  return <span ref={ref}>{prefix}0{suffix}</span>;
-}
-
-/* ═══════════════════════════════════════════
-   MARQUEE
-   ═══════════════════════════════════════════ */
-
-function Marquee({
-  children,
-  reverse = false,
-}: {
-  children: React.ReactNode;
-  reverse?: boolean;
-}) {
-  return (
-    <div className="flex overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
-      <div
-        className={`flex shrink-0 gap-8 py-4 ${
-          reverse ? "animate-marquee-reverse" : "animate-marquee"
-        }`}
-      >
-        {children}
-        {children}
-      </div>
-    </div>
-  );
-}
+const galleryImages = [
+  { src: "https://picsum.photos/id/395/600/400", alt: "Outlet modern SHO SHA", span: "tall" as const },
+  { src: "https://picsum.photos/id/401/600/400", alt: "Mesin cuci industri", span: "normal" as const },
+  { src: "https://picsum.photos/id/403/600/400", alt: "Tim profesional", span: "wide" as const },
+  { src: "https://picsum.photos/id/399/600/400", alt: "Hasil cucian rapi", span: "normal" as const },
+  { src: "https://picsum.photos/id/411/600/400", alt: "Proses quality control", span: "tall" as const },
+  { src: "https://picsum.photos/id/416/600/400", alt: "Area packing premium", span: "normal" as const },
+  { src: "https://picsum.photos/id/431/600/400", alt: "Interior outlet bersih", span: "wide" as const },
+  { src: "https://picsum.photos/id/435/600/400", alt: "Layanan antar jemput", span: "normal" as const },
+];
 
 /* ═══════════════════════════════════════════
    SECTION WRAPPER WITH FADE-IN
@@ -380,24 +183,38 @@ function FadeIn({
    MAIN PAGE
    ═══════════════════════════════════════════ */
 
-export default function Home() {
-  /* ── Hero carousel state ── */
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
-  const slideCount = heroSlides.length;
+export default function About() {
+/* ═══════════════════════════════════════════
+   DATA ARRAYS — edit these to update content
+   ═══════════════════════════════════════════ */
 
-  const nextSlide = useCallback(() => setCurrentSlide((p) => (p + 1) % slideCount), [slideCount]);
-  const prevSlide = useCallback(() => setCurrentSlide((p) => (p - 1 + slideCount) % slideCount), [slideCount]);
+  const hero = {
+      image: "https://picsum.photos/id/517/1920/1080",
+      heroImage: "/hero1.svg",
+      tagline: "Tentang Kami,\nSHO-SHA.",
+      subtitle: "Layanan laundry profesional dengan standar premium untuk pakaian Anda.",
+    };
+
+  const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
-    if (isPaused) return;
-    const timer = setInterval(nextSlide, 5000);
-    return () => clearInterval(timer);
-  }, [isPaused, nextSlide]);
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768)
+    }
+
+    handleResize()
+    window.addEventListener("resize", handleResize)
+    return () => window.removeEventListener("resize", handleResize)
+  }, [])
 
   /* ── Navbar scroll state ── */
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [openCabang, setOpenCabang] = useState(false);
+
+  /* ── Gallery lightbox ── */
+  const [lightboxOpen, setLightboxOpen] = useState(false);  
+  const [lightboxIndex, setLightboxIndex] = useState(0);
 
   useEffect(() => {
     const handler = () => setScrolled(window.scrollY > 50);
@@ -411,53 +228,62 @@ export default function Home() {
   const heroY = useTransform(scrollYProgress, [0, 1], [0, 150]);
   const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
-  /* ── About show more ── */
-  const [showMoreAbout, setShowMoreAbout] = useState(false);
-
-  /* ── Gallery lightbox ── */
-  const [lightboxOpen, setLightboxOpen] = useState(false);
-  const [lightboxIndex, setLightboxIndex] = useState(0);
-
-  /* ── ROI calculator ── */
-  const [selectedPackage, setSelectedPackage] = useState("Silver");
-  const currentPkg = mitraPackages.find((p) => p.name === selectedPackage) ?? mitraPackages[0];
-  const roi = calculateROI(currentPkg);
-
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       {/* ═══ NAVBAR — floating glassmorphism ═══ */}
       <nav className="fixed top-0 z-50 w-full">
         <div className="mx-auto max-w-7xl px-6">
           <div
-            className={`mt-4 flex h-14 items-center justify-between rounded-2xl border border-border/50 px-6 shadow-lg shadow-black/5 backdrop-blur-xl transition-all duration-300 ${
+            className={`mt-4 flex h-16 items-center justify-between rounded-2xl border border-border/50 px-8 shadow-lg shadow-black/5 backdrop-blur-xl transition-all duration-300 ${
               scrolled ? "bg-background/90" : "bg-background/70"
             }`}
           >
-            <a href="#" className="flex items-center gap-2.5">
-              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-primary/80">
-                <Droplets className="h-4 w-4 text-primary-foreground" />
-              </div>
-              <span className="text-base font-bold tracking-tight">SHO SHA</span>
+            <a href="/home" className="flex items-center gap-2">
+              <img src="/logo.svg" alt="SHO SHA Logo" className="h-10 w-auto" />
             </a>
 
-            {/* Desktop nav */}
-            <div className="hidden items-center gap-7 md:flex">
-              {navLinks.map((item) => (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  className="text-[13px] font-medium text-muted-foreground transition-colors hover:text-foreground"
-                >
-                  {item.label}
-                </a>
-              ))}
+            {/* Custom Right-Aligned Navigation */}
+            <div className="hidden md:flex items-center ml-auto">
+              <ul className="flex items-center gap-2 text-right">
+                <li>
+                  <a href="/home" className="px-4 py-2 text-[13px] font-medium text-muted-foreground hover:text-primary transition-colors rounded-xl">
+                    Beranda
+                  </a>
+                </li>
+                <li>
+                  <a href="/about" className="px-4 py-2 text-[13px] font-medium text-orange-600 hover:text-orange-600 transition-colors rounded-xl">
+                    Tentang
+                  </a>
+                </li>
+                <li>
+                  <a href="/partnership" className="px-4 py-2 text-[13px] font-medium text-muted-foreground hover:text-primary transition-colors rounded-xl">
+                    Kemitraan
+                  </a>
+                </li>
+                <li>
+                  <a href="/faq" className="px-4 py-2 text-[13px] font-medium text-muted-foreground hover:text-primary transition-colors rounded-xl">
+                    FAQ
+                  </a>
+                </li>
+
+                {/* Cabang Menu */}
+                <li className="relative group">
+                  <button className="px-4 py-2 text-[13px] font-medium text-muted-foreground hover:text-primary transition-colors rounded-xl flex items-center gap-1">
+                    Cabang <ChevronDown className="w-3 h-3 ml-1" />
+                  </button>
+
+                  <div className="invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-all duration-200">
+                    <DropdownMenuCabang />
+                  </div>
+                </li>
+              </ul>
             </div>
 
             <div className="flex items-center gap-3">
               <Button size="sm" className="hidden rounded-xl text-xs sm:inline-flex" asChild>
                 <a href="https://wa.me/6281234567890" target="_blank" rel="noopener noreferrer">
                   <MessageCircle className="mr-1.5 h-3.5 w-3.5" />
-                  WhatsApp
+                  Hubungi Kami
                 </a>
               </Button>
 
@@ -472,7 +298,7 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Mobile menu slide-down */}
+          {/* Mobile Menu */}
           <AnimatePresence>
             {mobileMenuOpen && (
               <motion.div
@@ -482,7 +308,10 @@ export default function Home() {
                 transition={{ duration: 0.3 }}
                 className="overflow-hidden md:hidden"
               >
-                <div className="mt-2 flex flex-col gap-1 rounded-2xl border border-border/50 bg-background/95 p-4 backdrop-blur-xl">
+                <div className={`mt-2 flex flex-col gap-1 rounded-2xl border border-border/50 shadow-lg p-4 shadow-black/5 backdrop-blur-xl transition-all duration-300 ${
+                    scrolled ? "bg-background/90" : "bg-background/70"
+                  }`}
+                >
                   {navLinks.map((item) => (
                     <a
                       key={item.label}
@@ -493,10 +322,38 @@ export default function Home() {
                       {item.label}
                     </a>
                   ))}
-                  <Button size="sm" className="mt-2 rounded-xl text-xs" asChild>
+
+                  {/* Dropdown Cabang */}
+                  <div className="flex flex-col">
+                    <button
+                      onClick={() => setOpenCabang(!openCabang)}
+                      className="flex w-full items-center justify-between rounded-xl px-4 py-3 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                    >
+                      <span>Cabang</span>
+                      <ChevronDown className="w-3 h-3" />
+                    </button>
+
+                    {openCabang && (
+                      <ul className="ml-4 mt-1 mb-1 flex flex-col divide-y divide-border/40 border-l border-border/40">
+                        {outlets.map((outlet) => (
+                          <li key={outlet}>
+                            <Link
+                              href={`/units-${outlet.toLowerCase().replace(/\s+/g, "-")}`}
+                              onClick={() => setMobileMenuOpen(false)}
+                              className="block px-4 py-2 text-sm text-muted-foreground hover:text-primary hover:bg-primary/10 transition-colors"
+                            >
+                              {outlet}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                  
+                  <Button size="sm" className="rounded-xl text-xs sm:inline-flex" asChild>
                     <a href="https://wa.me/6281234567890" target="_blank" rel="noopener noreferrer">
                       <MessageCircle className="mr-1.5 h-3.5 w-3.5" />
-                      WhatsApp
+                      Hubungi Kami
                     </a>
                   </Button>
                 </div>
@@ -511,28 +368,15 @@ export default function Home() {
         ref={heroRef}
         id="beranda"
         className="relative min-h-[100dvh] overflow-hidden"
-        onMouseEnter={() => setIsPaused(true)}
-        onMouseLeave={() => setIsPaused(false)}
       >
         {/* Background slides */}
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentSlide}
-            initial={{ opacity: 0, scale: 1.1 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
-            transition={{ duration: 0.8, ease: "easeInOut" }}
-            className="absolute inset-0"
-          >
-            <motion.div style={{ y: heroY }} className="absolute inset-0">
-              <img
-                src={heroSlides[currentSlide].image}
-                alt={heroSlides[currentSlide].tagline}
-                className="h-full w-full object-cover"
-              />
-            </motion.div>
-          </motion.div>
-        </AnimatePresence>
+        <motion.div style={{ y: heroY }} className="absolute inset-0">
+          <img
+            src={hero.image}
+            alt="SHO SHA Laundry"
+            className="h-full w-full object-cover"
+          />
+        </motion.div>
 
         {/* Dark gradient overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-black/30" />
@@ -541,29 +385,20 @@ export default function Home() {
         <motion.div style={{ opacity: heroOpacity }} className="relative z-10 flex min-h-[100dvh] items-center px-6">
           <div className="mx-auto max-w-7xl grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Left column - Text content */}
-            <div>
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={currentSlide}
-                  initial={{ opacity: 0, y: 40 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -30 }}
-                  transition={{ duration: 0.6 }}
-                >
-                  <h1 className="whitespace-pre-line text-5xl font-extrabold leading-[1.1] tracking-tight text-white sm:text-6xl md:text-7xl lg:text-8xl">
-                    {heroSlides[currentSlide].tagline}
-                  </h1>
-                  <p className="mt-6 max-w-xl text-lg leading-relaxed text-white/70 sm:text-xl">
-                    {heroSlides[currentSlide].subtitle}
-                  </p>
-                </motion.div>
-              </AnimatePresence>
+            <div className="text-center lg:text-left">
+              <h1 className="whitespace-pre-line mx-auto lg:mx-0 text-4xl font-extrabold leading-[1.1] tracking-tight text-white sm:text-5xl md:text-6xl lg:text-7xl">
+                {hero.tagline}
+              </h1>
+
+              <p className="mt-6 mx-auto lg:mx-0 max-w-xl text-base leading-relaxed text-white/70 sm:text-lg">
+                {hero.subtitle}
+              </p>
 
               <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4, duration: 0.6 }}
-                className="mt-10 flex flex-col items-start gap-4 sm:flex-row"
+                className="mt-8 flex flex-col items-center gap-4 sm:flex-row sm:items-start lg:items-center"
               >
                 <Button size="lg" className="group gap-2 rounded-xl px-8 text-base" asChild>
                   <a href="https://wa.me/6281234567890" target="_blank" rel="noopener noreferrer">
@@ -571,13 +406,8 @@ export default function Home() {
                     <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
                   </a>
                 </Button>
-                <Button
-                  size="lg"
-                  variant="ghost"
-                  className="gap-2 rounded-xl border border-white/20 text-base text-white hover:bg-white/10"
-                  asChild
-                >
-                  <a href="#tentang">
+                <Button size="lg" variant="ghost" className="gap-2 rounded-xl border border-white/20 text-base text-white hover:bg-white/10" asChild>
+                  <a href="/about">
                     Pelajari Lebih Lanjut
                     <ChevronDown className="h-4 w-4" />
                   </a>
@@ -586,302 +416,200 @@ export default function Home() {
             </div>
 
             {/* Right column - Hero image */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.2, duration: 0.8 }}
-              className="hidden lg:block relative"
-            >
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={currentSlide}
-                  initial={{ opacity: 0, x: 50 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -50 }}
-                  transition={{ duration: 0.6 }}
-                  className="relative"
-                >
-                  <img
-                    src={heroSlides[currentSlide].heroImage}
-                    alt="SHO SHA Laundry Hero"
-                    className="w-full h-auto max-h-[100vh] object-contain"
-                  />
-                  
-                  {/* Text bubble */}
-                  <motion.div
-                    initial={{ opacity: 0, y: 20, scale: 0.8 }}
-                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                    transition={{ delay: 0.4, duration: 0.5 }}
-                    className="absolute -top-4 -right-4 text-white"
-                  >
-                    <div className="relative">
-                      <p className="text-sm font-bold whitespace-nowrap drop-shadow-lg">
-                        {heroSlides[currentSlide].bubble}
-                      </p>
-                    </div>
-                  </motion.div>
-                </motion.div>
-              </AnimatePresence>
+            <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ delay: 0.2, duration: 0.8 }} className="hidden lg:block relative">
+              <img
+                src={hero.heroImage}
+                alt="SHO SHA Laundry Hero"
+                className="w-full h-auto max-h-[100vh] object-contain"
+              />
             </motion.div>
           </div>
         </motion.div>
-
-        {/* Dots navigation */}
-        <div className="absolute bottom-8 left-1/2 z-20 flex -translate-x-1/2 gap-2">
-          {heroSlides.map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setCurrentSlide(i)}
-              aria-label={`Go to slide ${i + 1}`}
-              className={`h-2 rounded-full transition-all duration-500 ${
-                i === currentSlide ? "w-8 bg-white" : "w-2 bg-white/40"
-              }`}
-            />
-          ))}
-        </div>
       </section>
 
       {/* ═══ TENTANG KAMI ═══ */}
-      <section id="tentang" className="px-6 py-28 bg-primary-foreground">
-        <div className="mx-auto max-w-6xl">
-          <div className="grid items-center gap-16 lg:grid-cols-2">
+      <section
+        id="tentang"
+        className="relative overflow-hidden bg-accent px-6 py-28 text-accent-foreground"
+      >
+        <div className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden">
+          <span className="select-none text-[18vw] font-black leading-none tracking-tighter text-accent-foreground/[0.03]">
+            SHO-SHA
+          </span>
+        </div>
 
-            {/* Left Column */}
-            <motion.div
-              initial={{ opacity: 0, x: -40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 0.6 }}
-            >
+        <div className="relative mx-auto max-w-6xl">
+          {/* Visi & Misi */}
+          <div className="grid gap-12 lg:grid-cols-2">
+            <FadeIn>
               <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">
                 Tentang Kami
               </p>
-
               <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
-                Lebih dari sekadar{" "}
-                <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                  laundry.
-                </span>
+                Visi Kami
               </h2>
-
-              <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
-                SHO SHA LAUNDRY didirikan pada tahun 2019 dengan misi sederhana:
-                memberikan layanan laundry terbaik dengan harga terjangkau.
-                Kami percaya bahwa pakaian bersih dan wangi adalah hak semua orang.
+              <p className="mt-6 text-lg leading-relaxed text-accent-foreground/70">
+                Menjadi jaringan laundry terkemuka di Indonesia dengan sistem
+                autopilot yang memberikan{" "}
+                <span className="font-semibold text-accent-foreground">
+                  passive income berkelanjutan
+                </span>{" "}
+                bagi investor dan layanan terbaik bagi pelanggan.
               </p>
+            </FadeIn>
 
-              {/* Baca Selengkapnya */}
-              <div className="mt-6">
-                <a
-                  href="/about"
-                  className="text-sm font-semibold text-primary transition hover:text-primary/80"
-                >
-                  Baca Selengkapnya →
-                </a>
+            <FadeIn delay={0.1}>
+              <div className="flex h-full flex-col justify-center">
+                <h2 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
+                  Misi Kami
+                </h2>
+                <p className="mt-6 text-lg leading-relaxed text-accent-foreground/70">
+                  Memberikan solusi investasi bisnis laundry yang{" "}
+                  <span className="font-semibold text-accent-foreground">
+                    menguntungkan, transparan, dan mudah dikelola
+                  </span>{" "}
+                  dengan dukungan operasional penuh dari tim profesional kami.
+                </p>
               </div>
+            </FadeIn>
+          </div>
 
-              {/* Stats */}
-              <div className="mt-8 grid grid-cols-2 gap-4">
-                <div className="rounded-3xl bg-gradient-to-br from-primary to-primary/80 p-6 text-primary-foreground">
-                  <Shield className="mb-3 h-8 w-8" />
-                  <p className="text-4xl font-extrabold">
-                    <AnimatedNumber value={5} suffix="+" />
-                  </p>
-                  <p className="mt-1 text-sm text-primary-foreground/70">
-                    Tahun Pengalaman
-                  </p>
-                </div>
+          {/* Timeline */}
+          <div className="mt-28">
+            <FadeIn className="text-center">
+              <h3 className="text-2xl font-bold sm:text-3xl">
+                Perjalanan Kami
+              </h3>
+              <p className="mt-2 text-accent-foreground/60">
+                15+ tahun membangun kepercayaan dan kesuksesan bersama
+              </p>
+            </FadeIn>
 
-                <div className="rounded-3xl border border-border/50 bg-card p-6">
-                  <Users className="mb-3 h-8 w-8 text-primary" />
-                  <p className="text-4xl font-extrabold">
-                    <AnimatedNumber value={2000} suffix="+" />
-                  </p>
-                  <p className="mt-1 text-sm text-muted-foreground">
-                    Pelanggan Puas
-                  </p>
-                </div>
+            <div className="relative mt-16">
+              {/* Center line */}
+              <div className="absolute left-4 top-0 h-full w-px bg-accent-foreground/10 md:left-1/2 md:-translate-x-px" />
 
-                <div className="rounded-3xl border border-border/50 bg-card p-6">
-                  <Building2 className="mb-3 h-8 w-8 text-primary" />
-                  <p className="text-4xl font-extrabold">
-                    <AnimatedNumber value={50} suffix="+" />
-                  </p>
-                  <p className="mt-1 text-sm text-muted-foreground">
-                    Outlet Mitra
-                  </p>
-                </div>
+              {timeline.map((item, i) => (
+                <FadeIn key={item.year} delay={i * 0.1}>
+                  <div
+                    className={`relative mb-12 flex items-start gap-8 pl-12 md:pl-0 ${
+                      i % 2 === 0
+                        ? "md:flex-row md:text-right"
+                        : "md:flex-row-reverse md:text-left"
+                    }`}
+                  >
+                    {/* Dot */}
+                    <div className="absolute left-2 top-1 h-4 w-4 rounded-full border-[3px] border-primary bg-accent md:left-1/2 md:-translate-x-2" />
 
-                <div className="rounded-3xl bg-accent p-6 text-accent-foreground">
-                  <Zap className="mb-3 h-8 w-8" />
-                  <p className="text-4xl font-extrabold">
-                    <AnimatedNumber value={98} suffix="%" />
-                  </p>
-                  <p className="mt-1 text-sm text-accent-foreground/70">
-                    Repeat Order
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-
-            
-            {/* Right Column: Hero Image — hidden on mobile, shown from lg */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.8, x: 20 }}
-              animate={{ opacity: 1, scale: 1, x: 0 }}
-              transition={{ delay: 0.4, duration: 0.8 }}
-              className="relative hidden lg:block"
-            >
-              <div className="relative z-10 flex justify-center">
-                <img
-                  src="/picture2.svg"
-                  alt="SHO SHA Hero Image"
-                  className="h-full w-full object-contain drop-shadow-2xl"
-                  loading="eager"
-                  fetchPriority="high"
-                />
-              </div>
-
-              {/* Floating badges — only on desktop where image is visible */}
-              <motion.div
-                animate={{ y: [0, -10, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                className="absolute left-6 top-12 rounded-2xl border border-border/50 bg-card/80 p-4 shadow-xl backdrop-blur-md will-change-transform"
-              >
-                <div className="flex items-center gap-3">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary/10 text-primary">
-                    <TrendingUp className="h-5 w-5" />
+                    <div
+                      className={`flex-1 ${
+                        i % 2 === 0 ? "md:pr-16" : "md:pl-16"
+                      }`}
+                    >
+                      <span className="inline-flex rounded-full bg-primary/10 px-3 py-1 text-sm font-bold text-primary">
+                        {item.year}
+                      </span>
+                      <h4 className="mt-2 text-xl font-bold">{item.title}</h4>
+                      <p className="mt-1 text-sm text-accent-foreground/60">
+                        {item.desc}
+                      </p>
+                    </div>
+                    <div className="hidden flex-1 md:block" />
                   </div>
-                  <div>
-                    <p className="text-xs text-muted-foreground">Potensi Profit</p>
-                    <p className="text-base font-bold text-foreground">Aktif 24/7</p>
-                  </div>
-                </div>
-              </motion.div>
+                </FadeIn>
+              ))}
+            </div>
+          </div>
 
-              <motion.div
-                animate={{ y: [0, 15, 0] }}
-                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-                className="absolute bottom-6 -right-12 rounded-2xl border border-border/50 bg-card/80 p-5 shadow-xl backdrop-blur-md will-change-transform"
-              >
-                <div className="flex items-baseline gap-1">
-                  <span className="text-3xl font-black text-primary">100%</span>
-                  <span className="text-sm font-medium text-muted-foreground">Autopilot</span>
-                </div>
-              </motion.div>
-            </motion.div>
+          {/* Tim Kami */}
+          <div className="mt-28">
+            <FadeIn className="text-center">
+              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">
+                Tim Kami
+              </p>
+              <h3 className="mt-3 text-2xl font-bold sm:text-3xl">
+                Dikelola oleh Profesional
+              </h3>
+            </FadeIn>
+
+            <div className="mt-14 grid gap-6 sm:grid-cols-3">
+              {teamMembers.map((member, i) => (
+                <FadeIn key={member.name} delay={i * 0.1}>
+                  <div className="group rounded-3xl border border-accent-foreground/10 bg-accent-foreground/5 p-8 text-center backdrop-blur-sm transition-all duration-300 hover:border-primary/30 hover:bg-accent-foreground/10">
+                    {/* Avatar placeholder */}
+                    <div className="mx-auto h-20 w-20 overflow-hidden rounded-full border border-primary/20">
+                      <Image
+                        src={member.image}
+                        alt={member.name}
+                        width={80}
+                        height={80}
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
+                    <h4 className="mt-5 text-lg font-bold">{member.name}</h4>
+                    <p className="mt-1 text-sm font-medium text-primary">
+                      {member.role}
+                    </p>
+                    <p className="mt-3 text-sm leading-relaxed text-accent-foreground/60">
+                      {member.desc}
+                    </p>
+                  </div>
+                </FadeIn>
+              ))}
+            </div>
           </div>
         </div>
       </section>
-      
-        {/* ═══ LAYANAN ═══ */}
-        <section id="layanan" className="px-6 py-28 bg-gradient-to-b from-primary-foreground to-orange-50">
-            <div className="mx-auto max-w-6xl">
-                <FadeIn className="text-center">
-                  <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">
-                    Layanan
-                  </p>
-                  <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
-                    Solusi Laundry{" "}
-                    <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                      Lengkap
-                    </span>
-                  </h2>
-                </FadeIn>
-      
-                <div className="mt-14 grid gap-6 lg:grid-cols-3">
-                  {services.map((service, i) => (
-                    <FadeIn key={service.title} delay={i * 0.1}>
-                      <div className="group flex h-full flex-col rounded-3xl border border-border/50 bg-card p-8 transition-all duration-300 hover:border-primary/20 hover:shadow-2xl hover:shadow-primary/5">
-                        <div className="mb-5 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-primary transition-colors duration-300 group-hover:bg-primary group-hover:text-primary-foreground">
-                          <service.icon className="h-7 w-7" />
-                        </div>
-                        <h3 className="text-xl font-bold">{service.title}</h3>
-                        <ul className="mt-5 flex-1 space-y-3">
-                          {service.features.map((f) => (
-                            <li
-                              key={f}
-                              className="flex items-center gap-2.5 text-sm text-muted-foreground"
-                            >
-                              <CheckCircle2 className="h-4 w-4 shrink-0 text-primary" />
-                              {f}
-                            </li>
-                          ))}
-                        </ul>
-                        <Button
-                          className="mt-8 w-full rounded-xl"
-                          variant="outline"
-                          size="lg"
-                          asChild
-                        >
-                          <a
-                            href="https://wa.me/6281234567890"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            Selengkapnya
-                            <ArrowRight className="ml-2 h-4 w-4" />
-                          </a>
-                        </Button>
-                      </div>
-                    </FadeIn>
-                  ))}
-                </div>
-              </div>
-            </section>
 
-      {/* ═══ KEUNGGULAN INVESTASI ═══ */}
-      <section id="keunggulan" className="px-6 py-28 bg-orange-50">
+      {/* ═══ LAYANAN ═══ */}
+      <section id="layanan" className="px-6 py-28">
         <div className="mx-auto max-w-6xl">
           <FadeIn className="text-center">
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">
-              Keunggulan
+              Layanan
             </p>
             <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
-              Mengapa Memilih Kemitraan? <br />
+              Solusi Laundry{" "}
               <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-                SHO-SHA Laundry
+                Lengkap
               </span>
             </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-muted-foreground">
-              Investasi laundry autopilot dengan keuntungan maksimal dan risiko
-              minimal. Dikelola profesional, dipantau transparan.
-            </p>
           </FadeIn>
 
-          {/* Stats bar */}
-          <FadeIn delay={0.15}>
-            <div className="mx-auto mt-12 flex max-w-3xl flex-wrap items-center justify-center gap-8 rounded-2xl border border-border/50 bg-card p-6 sm:gap-12">
-              {[
-                { value: 65, suffix: "%", label: "ROI / Tahun" },
-                { value: 19, suffix: " Bln", label: "Payback Period" },
-                { value: 12, suffix: "+", label: "Outlet Aktif" },
-                { value: 15, suffix: "+", label: "Tahun Pengalaman" },
-              ].map((s) => (
-                <div key={s.label} className="text-center">
-                  <p className="text-3xl font-extrabold tabular-nums text-primary sm:text-4xl">
-                    <AnimatedNumber value={s.value} suffix={s.suffix} />
-                  </p>
-                  <p className="mt-1 text-xs text-muted-foreground">
-                    {s.label}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </FadeIn>
-
-          {/* Cards */}
-          <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {investmentCards.map((card, i) => (
-              <FadeIn key={card.title} delay={i * 0.08}>
-                <div className="group h-full rounded-3xl border border-border/50 bg-card p-6 transition-all duration-300 hover:border-primary/20 hover:shadow-xl hover:shadow-primary/5">
-                  <div className="mb-4 inline-flex rounded-2xl bg-primary/10 p-3 text-primary transition-colors duration-300 group-hover:bg-primary group-hover:text-primary-foreground">
-                    <card.icon className="h-5 w-5" />
+          <div className="mt-14 grid gap-6 lg:grid-cols-3">
+            {services.map((service, i) => (
+              <FadeIn key={service.title} delay={i * 0.1}>
+                <div className="group flex h-full flex-col rounded-3xl border border-border/50 bg-card p-8 transition-all duration-300 hover:border-primary/20 hover:shadow-2xl hover:shadow-primary/5">
+                  <div className="mb-5 inline-flex h-14 w-14 items-center justify-center rounded-2xl bg-primary/10 text-primary transition-colors duration-300 group-hover:bg-primary group-hover:text-primary-foreground">
+                    <service.icon className="h-7 w-7" />
                   </div>
-                  <h3 className="text-lg font-bold">{card.title}</h3>
-                  <p className="mt-2 text-sm text-muted-foreground">
-                    {card.desc}
-                  </p>
+                  <h3 className="text-xl font-bold">{service.title}</h3>
+                  <ul className="mt-5 flex-1 space-y-3">
+                    {service.features.map((f) => (
+                      <li
+                        key={f}
+                        className="flex items-center gap-2.5 text-sm text-muted-foreground"
+                      >
+                        <CheckCircle2 className="h-4 w-4 shrink-0 text-primary" />
+                        {f}
+                      </li>
+                    ))}
+                  </ul>
+                  <Button
+                    className="mt-8 w-full rounded-xl"
+                    variant="outline"
+                    size="lg"
+                    asChild
+                  >
+                    <a
+                      href="https://wa.me/6281234567890"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Selengkapnya
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </a>
+                  </Button>
                 </div>
               </FadeIn>
             ))}
@@ -889,143 +617,33 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ═══ LAYANAN — Paket Mitra ═══ */}
-      <section id="layanan" className="relative overflow-hidden bg-accent px-6 py-28 text-accent-foreground">
-        {/* Ghost background text */}
-        <div className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden">
-          <span className="select-none text-[20vw] font-black leading-none tracking-tighter text-accent-foreground/[0.03]">
-            MITRA
-          </span>
-        </div>
-
-        <div className="relative mx-auto max-w-6xl">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6 }}
-            className="text-center"
-          >
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-primary">Kemitraan</p>
-            <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
-              Pilih Paket Mitra Anda
-            </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-accent-foreground/60">
-              Mulai bisnis laundry Anda bersama SHO SHA. Tiga paket investasi dengan dukungan penuh dari kami.
+      {/* ═══ TRUSTED BY — Logo Cloud ═══ */}
+      <div className="border-y border-border/50 px-6 py-16">
+        <div className="mx-auto max-w-6xl">
+          <FadeIn className="text-center">
+            <p className="text-sm font-medium text-muted-foreground">
+              Dipercaya oleh brand dan partner terkemuka
             </p>
-          </motion.div>
-
-          <div className="mt-16 grid items-end gap-6 lg:grid-cols-3">
-            {mitraPackages.map((pkg, i) => (
-              <motion.div
-                key={pkg.name}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ delay: i * 0.12, duration: 0.5 }}
-                className={i === 1 ? "lg:-mt-8" : ""}
-              >
-                <div
-                  className={`relative flex flex-col rounded-3xl border p-8 transition-all duration-300 hover:shadow-2xl ${
-                    i === 1
-                      ? "border-primary bg-primary text-primary-foreground shadow-xl shadow-primary/20"
-                      : "border-accent-foreground/10 bg-accent-foreground/5 backdrop-blur-sm hover:border-primary/30"
-                  }`}
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-8 sm:gap-12">
+              {trustedLogos.map((logo, i) => (
+                <motion.div
+                  key={logo}
+                  initial={{ opacity: 0, y: 10 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.08, duration: 0.4 }}
+                  className="flex h-12 items-center rounded-xl border border-border/50 bg-muted/50 px-6 text-sm font-bold tracking-wide text-muted-foreground/60 transition-all hover:border-primary/20 hover:text-foreground"
                 >
-                  {i === 1 && (
-                    <div className="absolute -top-3.5 left-1/2 -translate-x-1/2">
-                      <span className="inline-flex items-center gap-1 rounded-full bg-secondary px-4 py-1 text-xs font-semibold text-secondary-foreground shadow-lg">
-                        <Star className="h-3 w-3" />
-                        PALING POPULER
-                      </span>
-                    </div>
-                  )}
-
-                  <div>
-                    <h3 className="text-lg font-semibold">{pkg.name}</h3>
-                    <div className="mt-3 flex items-baseline gap-1">
-                      <span className={`text-sm ${i === 1 ? "text-primary-foreground/60" : "text-accent-foreground/50"}`}>Rp</span>
-                      <span className="text-4xl font-extrabold tabular-nums">{(pkg.modal / 1_000_000).toFixed(0)}</span>
-                      <span className={`text-sm ${i === 1 ? "text-primary-foreground/60" : "text-accent-foreground/50"}`}>Juta</span>
-                    </div>
-                    <p className={`mt-2 text-sm ${i === 1 ? "text-primary-foreground/70" : "text-accent-foreground/50"}`}>
-                      Est. {pkg.pelanggan} pelanggan/hari
-                    </p>
-                  </div>
-
-                  <div className={`my-6 h-px ${i === 1 ? "bg-primary-foreground/20" : "bg-accent-foreground/10"}`} />
-
-                  <ul className="flex-1 space-y-3">
-                    {pkg.features.map((f) => (
-                      <li key={f} className="flex items-center gap-2.5 text-sm">
-                        <CheckCircle2 className={`h-4 w-4 shrink-0 ${i === 1 ? "text-secondary" : "text-primary"}`} />
-                        {f}
-                      </li>
-                    ))}
-                  </ul>
-
-                  <Button
-                    className={`mt-8 w-full rounded-xl text-sm ${
-                      i === 1
-                        ? "bg-white text-primary hover:bg-white/90"
-                        : "border-primary/50 text-primary hover:bg-primary hover:text-primary-foreground"
-                    }`}
-                    variant={i === 1 ? "default" : "outline"}
-                    size="lg"
-                    asChild
-                  >
-                    <a href="https://wa.me/6281234567890" target="_blank" rel="noopener noreferrer">
-                      <Handshake className="mr-2 h-4 w-4" />
-                      Jadi Mitra {pkg.name}
-                    </a>
-                  </Button>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="py-24 bg-primary relative overflow-hidden">
-      {/* Background patterns */}
-      <div className="absolute inset-0 opacity-10 pointer-events-none">
-        <div className="absolute top-10 left-10 w-40 h-40 border-4 border-white rounded-full rotate-45" />
-        <div className="absolute bottom-20 right-20 w-60 h-60 border-4 border-white rounded-full -rotate-12" />
-      </div>
-
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="text-center mb-16">
-          <h2 className="text-white/80 font-bold uppercase tracking-widest text-sm mb-4">Wall of Success</h2>
-          <h3 className="text-4xl md:text-5xl font-extrabold text-white mb-6 tracking-tight">Trusted by <span className="text-accent">Visionaries</span></h3>
-        </div>
-
-        <div className="grid md:grid-cols-3 gap-8">
-          {testimonials.map((t, i) => (
-            <Card key={i} className="bg-white/10 backdrop-blur-xl border-white/20 text-white hover:bg-white/20 transition-all duration-300">
-              <CardContent className="pt-8 pb-8 flex flex-col h-full">
-                <div className="flex items-center gap-1 mb-6 text-accent">
-                   {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-current" />)}
-                </div>
-                <Quote className="w-12 h-12 text-accent opacity-30 mb-4" />
-                <p className="text-lg leading-relaxed mb-8 flex-grow italic">"{t.text}"</p>
-                <div className="flex items-center gap-4 border-t border-white/10 pt-6">
-                  <div className="relative w-14 h-14 rounded-full overflow-hidden border-2 border-accent">
-                    <Image src={t.img || ""} alt={t.name} fill className="object-cover" />
-                  </div>
-                  <div>
-                    <p className="font-bold text-lg">{t.name}</p>
-                    <p className="text-sm text-white/60">{t.role}</p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+                  {logo}
+                </motion.div>
+              ))}
+            </div>
+          </FadeIn>
         </div>
       </div>
-    </section>
 
       {/* ═══ GALLERY — Collage Masonry ═══ */}
-      <section id="gallery" className="px-6 py-28 bg-gradient-to-b from-orange-50 to-primary-foreground">
+      <section id="gallery" className="px-6 py-28">
         <div className="mx-auto max-w-6xl">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -1099,12 +717,11 @@ export default function Home() {
         </Dialog>
       </section>
 
-      
       {/* ═══ CTA SECTION ═══ */}
-      <section className="px-6 py-16 bg-primary-foreground">
+      <section className="px-6 py-16">
         <div className="mx-auto max-w-6xl">
           <FadeIn>
-            <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-primary via-primary to-primary/80 shadow-xl px-8 py-16 text-center text-primary-foreground sm:px-16 sm:py-20">
+            <div className="relative overflow-hidden rounded-[2rem] bg-gradient-to-br from-primary via-primary to-primary/80 px-8 py-16 text-center text-primary-foreground sm:px-16 sm:py-20">
               {/* Decorative */}
               <div className="pointer-events-none absolute -right-20 -top-20 h-60 w-60 rounded-full bg-white/10 blur-2xl" />
               <div className="pointer-events-none absolute -bottom-20 -left-20 h-60 w-60 rounded-full bg-white/10 blur-2xl" />
@@ -1154,69 +771,73 @@ export default function Home() {
           </FadeIn>
         </div>
       </section>
-    
+
       {/* ═══ FOOTER ═══ */}
-      <footer className="border-t border-accent-foreground/10 bg-accent px-6 py-16 text-accent-foreground">
+      <footer className="border-t border-accent-foreground/10 bg-accent px-6 py-20 text-accent-foreground">
         <div className="mx-auto max-w-6xl">
-          <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
-            <div className="sm:col-span-2 lg:col-span-1">
-              <div className="flex items-center gap-2.5">
-                <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-primary/80">
-                  <Droplets className="h-4 w-4 text-primary-foreground" />
-                </div>
-                <span className="text-lg font-bold">SHO SHA</span>
+          <div className="grid gap-16 lg:grid-cols-4">
+            <div className="lg:col-span-1">
+              <img src="/logo.svg" alt="SHO SHA Logo" className="h-9 w-auto brightness-0 invert opacity-60" />
+              <p className="mt-6 text-sm leading-relaxed text-accent-foreground/50">Memberikan kenyamanan laundry terbaik dan peluang investasi autopilot paling menguntungkan di Indonesia.</p>
+              <div className="mt-8 flex gap-3">
+                {socialLinks.map((item, i) => {
+                  const Icon = item.icon;
+
+                  return (
+                    <a
+                      key={i}
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex h-10 w-10 items-center justify-center rounded-2xl bg-accent-foreground/5 text-accent-foreground/40 transition-all hover:bg-primary hover:text-primary-foreground hover:scale-110"
+                    >
+                      <Icon className="h-5 w-5" />
+                    </a>
+                  );
+                })}
               </div>
-              <p className="mt-4 text-sm leading-relaxed text-accent-foreground/50">
-                Layanan laundry profesional dengan kualitas premium. Bersih, wangi, dan terpercaya sejak 2019.
-              </p>
-              <div className="mt-5 flex gap-2">
-                <a href="#" className="flex h-9 w-9 items-center justify-center rounded-xl bg-accent-foreground/5 text-accent-foreground/60 transition-all hover:bg-primary hover:text-primary-foreground">
-                  <Instagram className="h-4 w-4" />
-                </a>
-                <a href="#" className="flex h-9 w-9 items-center justify-center rounded-xl bg-accent-foreground/5 text-accent-foreground/60 transition-all hover:bg-primary hover:text-primary-foreground">
-                  <MessageCircle className="h-4 w-4" />
-                </a>
+            </div>
+
+            <div className="grid grid-cols-2 gap-8 lg:col-span-2">
+              <div>
+                <h4 className="text-sm font-bold uppercase tracking-widest text-primary">Navigasi</h4>
+                <ul className="mt-6 space-y-4 text-sm text-accent-foreground/50">
+                  {navLinks
+                    .filter((link) => link.label !== "Cabang")
+                    .map((link) => (
+                    <li key={link.label} className="transition-colors hover:text-primary">
+                      <a href={link.href}>{link.label}</a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <h4 className="text-sm font-bold uppercase tracking-widest text-primary">Layanan</h4>
+                <ul className="mt-6 space-y-4 text-sm text-accent-foreground/50">
+                  <li className="transition-colors hover:text-primary">Self-Service</li>
+                  <li className="transition-colors hover:text-primary">Drop-Off Laundry</li>
+                  <li className="transition-colors hover:text-primary">Membership TORU</li>
+                  <li className="transition-colors hover:text-primary">Premium Care</li>
+                </ul>
               </div>
             </div>
 
             <div>
-              <h4 className="text-sm font-semibold uppercase tracking-wider">Navigasi</h4>
-              <ul className="mt-4 space-y-2.5 text-sm text-accent-foreground/50">
-                <li className="transition-colors hover:text-primary"><a href="#tentang">Tentang Kami</a></li>
-                <li className="transition-colors hover:text-primary"><a href="#layanan">Layanan Mitra</a></li>
-                <li className="transition-colors hover:text-primary"><a href="#gallery">Gallery</a></li>
-                <li className="transition-colors hover:text-primary"><a href="#roi">Perhitungan ROI</a></li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="text-sm font-semibold uppercase tracking-wider">Kontak</h4>
-              <ul className="mt-4 space-y-2.5 text-sm text-accent-foreground/50">
-                <li className="flex items-center gap-2"><MapPin className="h-3.5 w-3.5" />Jl. Contoh No. 123, Jakarta</li>
-                <li className="flex items-center gap-2"><Phone className="h-3.5 w-3.5" />+62 812-3456-7890</li>
-                <li className="flex items-center gap-2"><Mail className="h-3.5 w-3.5" />hello@shoshalaundry.com</li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="text-sm font-semibold uppercase tracking-wider">Jam Buka</h4>
-              <div className="mt-4 space-y-2.5 text-sm text-accent-foreground/50">
-                <p>Senin - Minggu</p>
-                <p className="text-lg font-bold text-accent-foreground">07:00 - 21:00</p>
-                <p className="text-xs">Termasuk hari libur nasional</p>
-              </div>
+              <h4 className="text-sm font-bold uppercase tracking-widest text-primary">Kantor Pusat</h4>
+              <p className="mt-6 text-sm text-accent-foreground/50 leading-relaxed">BSD Business Center, Tower B Lt. 12<br />Tangerang, Indonesia 15310</p>
+              <p className="mt-4 text-lg font-bold">07:00 - 21:00</p>
+              <p className="mt-1 text-xs text-accent-foreground/30">Setiap hari buka</p>
             </div>
           </div>
 
-          <div className="my-10 h-px bg-accent-foreground/10" />
+          <Separator className="my-16 bg-accent-foreground/10" />
 
-          <div className="flex flex-col items-center justify-between gap-3 sm:flex-row">
-            <p className="text-xs text-accent-foreground/40">
-              &copy; {new Date().getFullYear()} SHO SHA LAUNDRY. All rights reserved.
-            </p>
-            <p className="text-xs text-accent-foreground/30">
-              Crafted with care, just like your laundry.
-            </p>
+          <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
+            <p className="text-[10px] font-medium uppercase tracking-widest text-accent-foreground/30">&copy; {new Date().getFullYear()} SHO SHA LAUNDRY. All RIGHTS RESERVED.</p>
+            <div className="flex gap-8 text-[10px] font-medium uppercase tracking-widest text-accent-foreground/30">
+              <a href="#" className="hover:text-primary transition-colors">Privacy Policy</a>
+              <a href="#" className="hover:text-primary transition-colors">Terms of Service</a>
+            </div>
           </div>
         </div>
       </footer>

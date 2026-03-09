@@ -67,14 +67,13 @@ const heroSlides = [
     image: "https://picsum.photos/id/525/1920/1080",
     heroImage: "/hero2.svg",
     tagline: "Mitra Bisnis\nTerpercaya.",
-    subtitle:
-      "Bergabunglah dengan jaringan franchise laundry yang terus berkembang di Indonesia. Didukung sistem, tim profesional, dan peluang keuntungan berkelanjutan.",
+    subtitle: "Bergabunglah dengan jaringan franchise laundry yang terus berkembang di Indonesia. Didukung sistem, tim profesional, dan peluang keuntungan berkelanjutan.",
   },
   {
     image: "https://picsum.photos/id/534/1920/1080",
     heroImage: "/hero3.svg",
     tagline: "Teknologi Modern,\nHasil Maksimal.",
-    subtitle: "Bangun bisnis laundry autopilot dengan sistem modern.",
+    subtitle: "Bangun bisnis laundry autopilot dengan passive income berkelanjutan. Tim kami mengelola segalanya — Anda cukup memantau profit.",
   },
 ];
 
@@ -825,12 +824,12 @@ export default function Home() {
 
           {/* Heading */}
           <div className="text-center mb-16">
-            <h2 className="text-white/80 font-bold uppercase tracking-widest text-sm mb-4">
-              Testimonial
+            <h2 className="text-accent font-bold uppercase tracking-widest text-sm mb-4">
+              Testimoni
             </h2>
 
             <h3 className="text-4xl md:text-5xl font-extrabold text-white mb-6 tracking-tight">
-              Apa Kata <span className="text-accent">Customers</span>
+              Kata Mereka yang Menggunakan Jasa Kami
             </h3>
           </div>
 
