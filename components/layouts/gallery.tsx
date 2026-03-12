@@ -48,7 +48,7 @@ export default function Gallery() {
 
 
   return (
-    <section className="py-24 px-6 max-w-7xl mx-auto">
+    <section className="py-24 px-6 max-w-7xl mx-auto"> {/* bg-gradient-to-b from-orange-50 to-white */}
       {/* HEADER */}
       <motion.div
         initial={{ opacity: 0, y: 30 }}

@@ -135,7 +135,7 @@ export default function Footer({ navLinks }: FooterProps) {
         {/* BOTTOM */}
         <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
           <p className="text-[10px] font-medium uppercase tracking-widest text-accent-foreground/30">
-            &copy; {new Date().getFullYear()} SHO SHA LAUNDRY. ALL RIGHTS RESERVED.
+            &copy; {new Date().getFullYear()} SHO-SHA LAUNDRY. ALL RIGHTS RESERVED.
           </p>
 
           <div className="flex gap-8 text-[10px] font-medium uppercase tracking-widest text-accent-foreground/30">

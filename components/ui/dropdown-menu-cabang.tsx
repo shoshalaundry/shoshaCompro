@@ -48,7 +48,7 @@ export default function DropdownMenuCabang() {
           {outlets.map((outlet) => (
             <Link
               key={outlet}
-              href={`/units-${slugify(outlet)}`}
+              href={`/units/${slugify(outlet)}`}
               className="px-2 py-3 text-sm font-medium text-muted-foreground hover:bg-primary/10 hover:text-primary transition-colors leading-snug"
             >
               {outlet}
