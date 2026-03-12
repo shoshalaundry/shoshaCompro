@@ -1,20 +1,46 @@
 "use client";
 
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import dynamic from "next/dynamic";
 import { Instagram, MapPin, Phone } from "lucide-react";
+import { useEffect, useState } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import Footer from "@/components/layouts/footer";
 
-export default function KpbdOutlet() {
+const MapContainer = dynamic(
+  () => import("react-leaflet").then((mod) => mod.MapContainer),
+  { ssr: false }
+);
 
-  const position: [number, number] = [-6.1967, 106.7738];
+const TileLayer = dynamic(
+  () => import("react-leaflet").then((mod) => mod.TileLayer),
+  { ssr: false }
+);
 
-  const markerIcon = new L.Icon({
-    iconUrl: "/assets/point.gif",
-    iconSize: [70, 70],
-    iconAnchor: [36, 50]
-  });
+const Marker = dynamic(
+  () => import("react-leaflet").then((mod) => mod.Marker),
+  { ssr: false }
+);
+
+const Popup = dynamic(
+  () => import("react-leaflet").then((mod) => mod.Popup),
+  { ssr: false }
+);
+
+export default function PahlawanOutlet() {
+
+  const position: [number, number] = [-6.215889, 106.772383];
+  const [markerIcon, setMarkerIcon] = useState<L.Icon | null>(null);
+
+  useEffect(() => {
+    const icon = new L.Icon({
+      iconUrl: "/assets/point.gif",
+      iconSize: [70, 70],
+      iconAnchor: [36, 50],
+    });
+
+    setMarkerIcon(icon);
+  }, []);
 
   const navLinks = [
     { label: "Beranda", href: "/home" },
@@ -29,7 +55,7 @@ export default function KpbdOutlet() {
       <section
         className="relative h-[70vh] flex items-center justify-center text-white"
         style={{
-          backgroundImage: "url('/units-raw/kpbd.png')",
+          backgroundImage: "url('/units-raw/pahlawan.png')",
           backgroundSize: "cover",
           backgroundPosition: "center"
         }}
@@ -38,7 +64,7 @@ export default function KpbdOutlet() {
 
         <div className="relative z-10 text-center px-6">
           <h1 className="text-4xl md:text-6xl font-bold mb-4">
-            Outlet KPBD
+            Outlet Pahlawan
           </h1>
 
           <p className="max-w-xl mx-auto text-lg text-white/90">
@@ -63,7 +89,7 @@ export default function KpbdOutlet() {
           {/* LEFT COLUMN */}
           <div className="flex flex-col gap-8">
             <p className="text-gray-600 leading-relaxed text-justify">
-              Outlet KPBD merupakan salah satu cabang Sho-Sha Laundry yang melayani berbagai kebutuhan laundry seperti cuci kiloan, laundry satuan, hingga layanan express. Dengan mesin modern dan proses yang higienis, kami memastikan pakaian pelanggan kembali bersih, wangi, dan rapi.
+              Outlet Pahlawan merupakan salah satu cabang Sho-Sha Laundry yang melayani berbagai kebutuhan laundry seperti cuci kiloan, laundry satuan, hingga layanan express. Dengan mesin modern dan proses yang higienis, kami memastikan pakaian pelanggan kembali bersih, wangi, dan rapi.
               <br />
               Berlokasi di Sukabumi Selatan, Kebon Jeruk, Jakarta Barat, outlet ini mudah dijangkau oleh masyarakat sekitar.
             </p>
@@ -72,21 +98,21 @@ export default function KpbdOutlet() {
             <div className="grid grid-cols-2 grid-rows-2 gap-4">
               {/* WIDE SIZE */}
               <img
-                src="/units-raw/kpbd.png"
+                src="/units-raw/pahlawan.png"
                 alt="Wide Outlet Image"
                 className="col-span-2 w-full object-cover rounded-xl shadow-md hover:scale-[1.02] transition aspect-[16/9]"
               />
 
               {/* NORMAL SIZE */}
               <img
-                src="/units-raw/kpbd.png"
+                src="/units-raw/pahlawan.png"
                 alt="Normal Outlet Image"
                 className="w-full object-cover rounded-xl shadow-md hover:scale-[1.02] transition aspect-[4/3]"
               />
 
               {/* NORMAL SIZE */}
               <img
-                src="/units-raw/kpbd.png"
+                src="/units-raw/pahlawan.png"
                 alt="Normal Outlet Image"
                 className="w-full object-cover rounded-xl shadow-md hover:scale-[1.02] transition aspect-[4/3]"
               />
@@ -98,12 +124,13 @@ export default function KpbdOutlet() {
             {/* MAP FRAME */}
             <div className="p-[3px] bg-primary rounded-2xl shadow-xl flex-1">
               <div className="w-full h-full rounded-xl overflow-hidden bg-white min-h-[280px]">
-                <MapContainer
-                  center={position}
-                  zoom={15}
-                  scrollWheelZoom={true}
-                  style={{ height: "100%", width: "100%" }}
-                >
+                {markerIcon && (
+                  <MapContainer
+                    center={position}
+                    zoom={16}
+                    scrollWheelZoom={true}
+                    style={{ height: "100%", width: "100%" }}
+                  >
 
                   <TileLayer
                     attribution="&copy; OpenStreetMap contributors"
@@ -113,15 +140,16 @@ export default function KpbdOutlet() {
                   <Marker position={position} icon={markerIcon}>
                     <Popup>
                       <a
-                        href="https://maps.app.goo.gl/cgjCfZoLwapkzbtB8"
+                        href="https://maps.app.goo.gl/hqrWxNBiqZABxHgZ6"
                         className="flex justify-center font-semibold"
                       >
-                        Cabang KPBD
+                        Cabang Pahlawan
                       </a>
                       Kebon Jeruk, Jakarta Barat
                     </Popup>
                   </Marker>
                 </MapContainer>
+                )}
               </div>
             </div>
 
@@ -131,7 +159,7 @@ export default function KpbdOutlet() {
               <div className="flex items-start gap-3">
                 <MapPin className="text-accent w-5 h-5 shrink-0 mt-1" />
                 <p className="text-accent text-sm">
-                  Jl. Raya Kby. Lama Jl. Kpbd No.6, RT.10/RW.1, Sukabumi Selatan,
+                  Jl. Pahlawan No.34, RT.10/RW.4, Sukabumi Selatan,
                   Kec. Kebon Jeruk, Kota Jakarta Barat, Daerah Khusus Ibukota Jakarta 11560
                 </p>
               </div>
@@ -143,7 +171,39 @@ export default function KpbdOutlet() {
                   href=""
                   target="_blank"
                   className="text-accent text-sm">
-                  +62 813-2492-6656
+                  +62 813-8556-3703
+                </a>
+              </div>
+
+              {/* INSTAGRAM */}
+              <div className="flex items-center gap-3">
+                <Instagram className="text-accent w-5 h-5 shrink-0" />
+                <a
+                  href="https://www.instagram.com/laundry24jampahlawan"
+                  target="_blank"
+                  className="text-accent text-sm hover:text-white transition"
+                >
+                  @laundry24jampahlawan
+                </a>
+              </div>
+
+              {/* TIKTOK */}
+              <div className="flex items-center gap-3">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="1 0 24 24"
+                  className="w-6 h-6 text-accent shrink-0"
+                  fill="currentColor"
+                >
+                  <path d="M16.5 3c.3 1.9 1.8 3.5 3.7 3.9v2.7c-1.5 0-3-.5-4.2-1.4v6.4a6 6 0 1 1-6-6c.3 0 .6 0 .9.1v2.8c-.3-.1-.6-.1-.9-.1a3.2 3.2 0 1 0 3.2 3.2V2.9h2.3z"/>
+                </svg>
+
+                <a
+                  href="https://www.tiktok.com/@l24j.pahlawan"
+                  target="_blank"
+                  className="ml-[-4px] text-gray-700 text-sm hover:text-white transition"
+                >
+                  @l24j.pahlawan
                 </a>
               </div>
             </div>

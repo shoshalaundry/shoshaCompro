@@ -1,20 +1,46 @@
-"use client";
+ "use client";
 
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import dynamic from "next/dynamic";
 import { Instagram, MapPin, Phone } from "lucide-react";
+import { useEffect, useState } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import Footer from "@/components/layouts/footer";
 
-export default function CipeteUtaraOutlet() {
+const MapContainer = dynamic(
+  () => import("react-leaflet").then((mod) => mod.MapContainer),
+  { ssr: false }
+);
 
-  const position: [number, number] = [-6.1967, 106.7738];
+const TileLayer = dynamic(
+  () => import("react-leaflet").then((mod) => mod.TileLayer),
+  { ssr: false }
+);
 
-  const markerIcon = new L.Icon({
-    iconUrl: "/assets/point.gif",
-    iconSize: [70, 70],
-    iconAnchor: [36, 50]
-  });
+const Marker = dynamic(
+  () => import("react-leaflet").then((mod) => mod.Marker),
+  { ssr: false }
+);
+
+const Popup = dynamic(
+  () => import("react-leaflet").then((mod) => mod.Popup),
+  { ssr: false }
+);
+
+export default function TanahKusirOutlet() {
+
+  const position: [number, number] = [-6.260581, 106.784882];
+  const [markerIcon, setMarkerIcon] = useState<L.Icon | null>(null);
+
+  useEffect(() => {
+    const icon = new L.Icon({
+      iconUrl: "/assets/point.gif",
+      iconSize: [70, 70],
+      iconAnchor: [36, 50],
+    });
+
+    setMarkerIcon(icon);
+  }, []);
 
   const navLinks = [
     { label: "Beranda", href: "/home" },
@@ -29,7 +55,7 @@ export default function CipeteUtaraOutlet() {
       <section
         className="relative h-[70vh] flex items-center justify-center text-white"
         style={{
-          backgroundImage: "url('/units/cipete3.jpg')",
+          backgroundImage: "url('/units/tanah_kusir2.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center"
         }}
@@ -38,7 +64,7 @@ export default function CipeteUtaraOutlet() {
 
         <div className="relative z-10 text-center px-6">
           <h1 className="text-4xl md:text-6xl font-bold mb-4">
-            Outlet Cipete Utara
+            Outlet Tanah Kusir
           </h1>
 
           <p className="max-w-xl mx-auto text-lg text-white/90">
@@ -63,30 +89,30 @@ export default function CipeteUtaraOutlet() {
           {/* LEFT COLUMN */}
           <div className="flex flex-col gap-8">
             <p className="text-gray-600 leading-relaxed text-justify">
-              Outlet Cipete Utara merupakan salah satu cabang Sho-Sha Laundry yang melayani berbagai kebutuhan laundry seperti cuci kiloan, laundry satuan, hingga layanan express. Dengan mesin modern dan proses yang higienis, kami memastikan pakaian pelanggan kembali bersih, wangi, dan rapi.
+              Outlet Tanah Kusir merupakan salah satu cabang Sho-Sha Laundry yang melayani berbagai kebutuhan laundry seperti cuci kiloan, laundry satuan, hingga layanan express. Dengan mesin modern dan proses yang higienis, kami memastikan pakaian pelanggan kembali bersih, wangi, dan rapi.
               <br />
-              Berlokasi di Cipete Utara, Kebayoran Baru, Jakarta Selatan, outlet ini mudah dijangkau oleh masyarakat sekitar.
+              Berlokasi di Kebayoran Lama Selatan, Kebayoran Lama, Jakarta Selatan, outlet ini mudah dijangkau oleh masyarakat sekitar.
             </p>
 
             {/* GALLERY */}
             <div className="grid grid-cols-2 grid-rows-2 gap-4">
               {/* WIDE SIZE */}
               <img
-                src="/units/cipete.jpg"
+                src="/units/tanah_kusir.jpg"
                 alt="Wide Outlet Image"
                 className="col-span-2 w-full object-cover rounded-xl shadow-md hover:scale-[1.02] transition aspect-[16/9]"
               />
 
               {/* NORMAL SIZE */}
               <img
-                src="/units/cipete.jpg"
+                src="/units/tanah_kusir.jpg"
                 alt="Normal Outlet Image"
                 className="w-full object-cover rounded-xl shadow-md hover:scale-[1.02] transition aspect-[4/3]"
               />
 
               {/* NORMAL SIZE */}
               <img
-                src="/units/cipete2.jpg"
+                src="/units/tanah_kusir2.jpg"
                 alt="Normal Outlet Image"
                 className="w-full object-cover rounded-xl shadow-md hover:scale-[1.02] transition aspect-[4/3]"
               />
@@ -98,12 +124,13 @@ export default function CipeteUtaraOutlet() {
             {/* MAP FRAME */}
             <div className="p-[3px] bg-primary rounded-2xl shadow-xl flex-1">
               <div className="w-full h-full rounded-xl overflow-hidden bg-white min-h-[280px]">
-                <MapContainer
-                  center={position}
-                  zoom={15}
-                  scrollWheelZoom={true}
-                  style={{ height: "100%", width: "100%" }}
-                >
+                {markerIcon && (
+                  <MapContainer
+                    center={position}
+                    zoom={16}
+                    scrollWheelZoom={true}
+                    style={{ height: "100%", width: "100%" }}
+                  >
 
                   <TileLayer
                     attribution="&copy; OpenStreetMap contributors"
@@ -113,15 +140,16 @@ export default function CipeteUtaraOutlet() {
                   <Marker position={position} icon={markerIcon}>
                     <Popup>
                       <a
-                        href="https://maps.app.goo.gl/GwGhWyDMJbXbm5h6A"
+                        href="https://maps.app.goo.gl/zg2MtDbSNnBGEwfd9"
                         className="flex justify-center font-semibold"
                       >
-                        Cabang Cipete Utara
+                        Cabang Tanah Kusir
                       </a>
-                      Kebayoran Baru, Jakarta Selatan
+                      Kebayoran Lama, Jakarta Selatan
                     </Popup>
                   </Marker>
                 </MapContainer>
+                )}
               </div>
             </div>
 
@@ -131,8 +159,8 @@ export default function CipeteUtaraOutlet() {
               <div className="flex items-start gap-3">
                 <MapPin className="text-accent w-5 h-5 shrink-0 mt-1" />
                 <p className="text-accent text-sm">
-                  Jl. Damai Raya No.9A, Cipete Utara,
-                  Kec. Kebayoran Baru, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12150
+                  Jl. Tanah Kusir II No.15, RT.9/RW.9, Kebayoran Lama Selatan, 
+                  Kec. Kebayoran Lama, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12420
                 </p>
               </div>
 
@@ -140,10 +168,10 @@ export default function CipeteUtaraOutlet() {
               <div className="flex items-center gap-3">
                 <Phone className="text-accent w-5 h-5 shrink-0" />
                 <a 
-                  href="https://wa.me/6282123063418"
+                  href="https://wa.me/6285216903458"
                   target="_blank"
                   className="text-accent text-sm">
-                  +62 821-2306-3418
+                  +62 852-1690-3458
                 </a>
               </div>
 
@@ -151,11 +179,11 @@ export default function CipeteUtaraOutlet() {
               <div className="flex items-center gap-3">
                 <Instagram className="text-accent w-5 h-5 shrink-0" />
                 <a
-                  href="https://www.instagram.com/shoshalaundrycipete"
+                  href="https://www.instagram.com/shoshalaundrytanahkusir"
                   target="_blank"
                   className="text-accent text-sm hover:text-white transition"
                 >
-                  @shoshalaundrycipete
+                  @shoshalaundrytanahkusir
                 </a>
               </div>
 
@@ -171,11 +199,11 @@ export default function CipeteUtaraOutlet() {
                 </svg>
 
                 <a
-                  href="https://www.tiktok.com/@shoshalaundrycipete"
+                  href="https://www.tiktok.com/@shoshalaundrytanahkusir"
                   target="_blank"
                   className="ml-[-4px] text-gray-700 text-sm hover:text-white transition"
                 >
-                  @shoshalaundrycipete
+                  @shoshalaundrytanahkusir
                 </a>
               </div>
             </div>

@@ -1,20 +1,46 @@
 "use client";
 
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import dynamic from "next/dynamic";
 import { Instagram, MapPin, Phone } from "lucide-react";
+import { useEffect, useState } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import Footer from "@/components/layouts/footer";
 
-export default function PetukanganBaruOutlet() {
+const MapContainer = dynamic(
+  () => import("react-leaflet").then((mod) => mod.MapContainer),
+  { ssr: false }
+);
 
-  const position: [number, number] = [-6.1967, 106.7738];
+const TileLayer = dynamic(
+  () => import("react-leaflet").then((mod) => mod.TileLayer),
+  { ssr: false }
+);
 
-  const markerIcon = new L.Icon({
-    iconUrl: "/assets/point.gif",
-    iconSize: [70, 70],
-    iconAnchor: [36, 50]
-  });
+const Marker = dynamic(
+  () => import("react-leaflet").then((mod) => mod.Marker),
+  { ssr: false }
+);
+
+const Popup = dynamic(
+  () => import("react-leaflet").then((mod) => mod.Popup),
+  { ssr: false }
+);
+
+export default function KpbdOutlet() {
+
+  const position: [number, number] = [-6.214672, 106.770912];
+  const [markerIcon, setMarkerIcon] = useState<L.Icon | null>(null);
+
+  useEffect(() => {
+    const icon = new L.Icon({
+      iconUrl: "/assets/point.gif",
+      iconSize: [70, 70],
+      iconAnchor: [36, 50],
+    });
+
+    setMarkerIcon(icon);
+  }, []);
 
   const navLinks = [
     { label: "Beranda", href: "/home" },
@@ -29,7 +55,7 @@ export default function PetukanganBaruOutlet() {
       <section
         className="relative h-[70vh] flex items-center justify-center text-white"
         style={{
-          backgroundImage: "url('/mesin/mesin1_rdlama.jpg')",
+          backgroundImage: "url('/units-raw/kpbd.png')",
           backgroundSize: "cover",
           backgroundPosition: "center"
         }}
@@ -38,7 +64,7 @@ export default function PetukanganBaruOutlet() {
 
         <div className="relative z-10 text-center px-6">
           <h1 className="text-4xl md:text-6xl font-bold mb-4">
-            Outlet Petukangan Baru
+            Outlet KPBD
           </h1>
 
           <p className="max-w-xl mx-auto text-lg text-white/90">
@@ -63,30 +89,30 @@ export default function PetukanganBaruOutlet() {
           {/* LEFT COLUMN */}
           <div className="flex flex-col gap-8">
             <p className="text-gray-600 leading-relaxed text-justify">
-              Outlet Petukangan Baru merupakan salah satu cabang Sho-Sha Laundry yang melayani berbagai kebutuhan laundry seperti cuci kiloan, laundry satuan, hingga layanan express. Dengan mesin modern dan proses yang higienis, kami memastikan pakaian pelanggan kembali bersih, wangi, dan rapi.
+              Outlet KPBD merupakan salah satu cabang Sho-Sha Laundry yang melayani berbagai kebutuhan laundry seperti cuci kiloan, laundry satuan, hingga layanan express. Dengan mesin modern dan proses yang higienis, kami memastikan pakaian pelanggan kembali bersih, wangi, dan rapi.
               <br />
-              Berlokasi di Petukangan Utara, Pesanggrahan, Jakarta Selatan, outlet ini mudah dijangkau oleh masyarakat sekitar.
+              Berlokasi di Sukabumi Selatan, Kebon Jeruk, Jakarta Barat, outlet ini mudah dijangkau oleh masyarakat sekitar.
             </p>
 
             {/* GALLERY */}
             <div className="grid grid-cols-2 grid-rows-2 gap-4">
               {/* WIDE SIZE */}
               <img
-                src="/mesin/mesin1_rdlama.jpg"
+                src="/units-raw/kpbd.png"
                 alt="Wide Outlet Image"
                 className="col-span-2 w-full object-cover rounded-xl shadow-md hover:scale-[1.02] transition aspect-[16/9]"
               />
 
               {/* NORMAL SIZE */}
               <img
-                src="/mesin/mesin1_rdlama.jpg"
+                src="/units-raw/kpbd.png"
                 alt="Normal Outlet Image"
                 className="w-full object-cover rounded-xl shadow-md hover:scale-[1.02] transition aspect-[4/3]"
               />
 
               {/* NORMAL SIZE */}
               <img
-                src="/mesin/mesin1_rdlama.jpg"
+                src="/units-raw/kpbd.png"
                 alt="Normal Outlet Image"
                 className="w-full object-cover rounded-xl shadow-md hover:scale-[1.02] transition aspect-[4/3]"
               />
@@ -98,12 +124,13 @@ export default function PetukanganBaruOutlet() {
             {/* MAP FRAME */}
             <div className="p-[3px] bg-primary rounded-2xl shadow-xl flex-1">
               <div className="w-full h-full rounded-xl overflow-hidden bg-white min-h-[280px]">
-                <MapContainer
-                  center={position}
-                  zoom={15}
-                  scrollWheelZoom={true}
-                  style={{ height: "100%", width: "100%" }}
-                >
+                {markerIcon && (
+                  <MapContainer
+                    center={position}
+                    zoom={16}
+                    scrollWheelZoom={true}
+                    style={{ height: "100%", width: "100%" }}
+                  >
 
                   <TileLayer
                     attribution="&copy; OpenStreetMap contributors"
@@ -113,15 +140,16 @@ export default function PetukanganBaruOutlet() {
                   <Marker position={position} icon={markerIcon}>
                     <Popup>
                       <a
-                        href="https://maps.app.goo.gl/gNZK7Ve63CheANEy8"
+                        href="https://maps.app.goo.gl/cgjCfZoLwapkzbtB8"
                         className="flex justify-center font-semibold"
                       >
-                        Cabang Petukangan Baru
+                        Cabang KPBD
                       </a>
-                      Pesanggrahan, Jakarta Selatan
+                      Kebon Jeruk, Jakarta Barat
                     </Popup>
                   </Marker>
                 </MapContainer>
+                )}
               </div>
             </div>
 
@@ -131,8 +159,8 @@ export default function PetukanganBaruOutlet() {
               <div className="flex items-start gap-3">
                 <MapPin className="text-accent w-5 h-5 shrink-0 mt-1" />
                 <p className="text-accent text-sm">
-                  Jl. H. Muchtar Raya No.37-1, RT.8/RW.1, Petukangan Utara,
-                  Kec. Pesanggrahan, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12260
+                  Jl. Raya Kby. Lama Jl. Kpbd No.6, RT.10/RW.1, Sukabumi Selatan,
+                  Kec. Kebon Jeruk, Kota Jakarta Barat, Daerah Khusus Ibukota Jakarta 11560
                 </p>
               </div>
 
@@ -143,27 +171,7 @@ export default function PetukanganBaruOutlet() {
                   href=""
                   target="_blank"
                   className="text-accent text-sm">
-                  +62 8xx-xxxx-xxxx
-                </a>
-              </div>
-
-              {/* TIKTOK */}
-              <div className="flex items-center gap-3">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="1 0 24 24"
-                  className="w-6 h-6 text-accent shrink-0"
-                  fill="currentColor"
-                >
-                  <path d="M16.5 3c.3 1.9 1.8 3.5 3.7 3.9v2.7c-1.5 0-3-.5-4.2-1.4v6.4a6 6 0 1 1-6-6c.3 0 .6 0 .9.1v2.8c-.3-.1-.6-.1-.9-.1a3.2 3.2 0 1 0 3.2 3.2V2.9h2.3z"/>
-                </svg>
-
-                <a
-                  href="https://www.tiktok.com/@shoshalaundry24jamptk_"
-                  target="_blank"
-                  className="ml-[-4px] text-gray-700 text-sm hover:text-white transition"
-                >
-                  @shoshalaundry24jamptk_
+                  +62 813-2492-6656
                 </a>
               </div>
             </div>

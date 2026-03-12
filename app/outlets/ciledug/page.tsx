@@ -1,20 +1,46 @@
 "use client";
 
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import dynamic from "next/dynamic";
 import { Instagram, MapPin, Phone } from "lucide-react";
+import { useEffect, useState } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import Footer from "@/components/layouts/footer";
 
-export default function RadioDalamLamaOutlet() {
+const MapContainer = dynamic(
+  () => import("react-leaflet").then((mod) => mod.MapContainer),
+  { ssr: false }
+);
 
-  const position: [number, number] = [-6.1967, 106.7738];
+const TileLayer = dynamic(
+  () => import("react-leaflet").then((mod) => mod.TileLayer),
+  { ssr: false }
+);
 
-  const markerIcon = new L.Icon({
-    iconUrl: "/assets/point.gif",
-    iconSize: [70, 70],
-    iconAnchor: [36, 50]
-  });
+const Marker = dynamic(
+  () => import("react-leaflet").then((mod) => mod.Marker),
+  { ssr: false }
+);
+
+const Popup = dynamic(
+  () => import("react-leaflet").then((mod) => mod.Popup),
+  { ssr: false }
+);
+
+export default function CiledugOutlet() {
+
+  const position: [number, number] = [-6.205941, 106.703884];
+  const [markerIcon, setMarkerIcon] = useState<L.Icon | null>(null);
+
+  useEffect(() => {
+    const icon = new L.Icon({
+      iconUrl: "/assets/point.gif",
+      iconSize: [70, 70],
+      iconAnchor: [36, 50],
+    });
+  
+    setMarkerIcon(icon);
+  }, []);
 
   const navLinks = [
     { label: "Beranda", href: "/home" },
@@ -29,7 +55,7 @@ export default function RadioDalamLamaOutlet() {
       <section
         className="relative h-[70vh] flex items-center justify-center text-white"
         style={{
-          backgroundImage: "url('/mesin/mesin1_rdlama.jpg')",
+          backgroundImage: "url('/mesin/mesin1_ciledug.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center"
         }}
@@ -38,7 +64,7 @@ export default function RadioDalamLamaOutlet() {
 
         <div className="relative z-10 text-center px-6">
           <h1 className="text-4xl md:text-6xl font-bold mb-4">
-            Outlet Radio Dalam Lama
+            Outlet Ciledug
           </h1>
 
           <p className="max-w-xl mx-auto text-lg text-white/90">
@@ -63,30 +89,30 @@ export default function RadioDalamLamaOutlet() {
           {/* LEFT COLUMN */}
           <div className="flex flex-col gap-8">
             <p className="text-gray-600 leading-relaxed text-justify">
-              Outlet Radio Dalam Lama merupakan salah satu cabang Sho-Sha Laundry yang melayani berbagai kebutuhan laundry seperti cuci kiloan, laundry satuan, hingga layanan express. Dengan mesin modern dan proses yang higienis, kami memastikan pakaian pelanggan kembali bersih, wangi, dan rapi.
+              Outlet Ciledug merupakan salah satu cabang Sho-Sha Laundry yang melayani berbagai kebutuhan laundry seperti cuci kiloan, laundry satuan, hingga layanan express. Dengan mesin modern dan proses yang higienis, kami memastikan pakaian pelanggan kembali bersih, wangi, dan rapi.
               <br />
-              Berlokasi di Gandaria Utara, Kec. Kebayoran Baru, Jakarta Selatan, outlet ini mudah dijangkau oleh masyarakat sekitar. <strong><em>Fun fact:</em> cabang Radio Dalam Lama merupakan cabang pertama Sho-Sha Laundry, tempat di mana perjalanan layanan kami dimulai.</strong>
+              Berlokasi di Karang Tengah, Karang Tengah, Tangerang, outlet ini mudah dijangkau oleh masyarakat sekitar.
             </p>
 
             {/* GALLERY */}
             <div className="grid grid-cols-2 grid-rows-2 gap-4">
               {/* WIDE SIZE */}
               <img
-                src="/units-raw/rd_lama.jpg"
+                src="/units/ciledug.jpg"
                 alt="Wide Outlet Image"
                 className="col-span-2 w-full object-cover rounded-xl shadow-md hover:scale-[1.02] transition aspect-[16/9]"
               />
 
               {/* NORMAL SIZE */}
               <img
-                src="/gallery/rd_lama2.jpg"
+                src="/units/ciledug.jpg"
                 alt="Normal Outlet Image"
                 className="w-full object-cover rounded-xl shadow-md hover:scale-[1.02] transition aspect-[4/3]"
               />
 
               {/* NORMAL SIZE */}
               <img
-                src="/mesin/mesin2_rdlama.jpg"
+                src="/mesin/mesin1_ciledug.jpg"
                 alt="Normal Outlet Image"
                 className="w-full object-cover rounded-xl shadow-md hover:scale-[1.02] transition aspect-[4/3]"
               />
@@ -98,12 +124,13 @@ export default function RadioDalamLamaOutlet() {
             {/* MAP FRAME */}
             <div className="p-[3px] bg-primary rounded-2xl shadow-xl flex-1">
               <div className="w-full h-full rounded-xl overflow-hidden bg-white min-h-[280px]">
-                <MapContainer
-                  center={position}
-                  zoom={15}
-                  scrollWheelZoom={true}
-                  style={{ height: "100%", width: "100%" }}
-                >
+                {markerIcon && (
+                  <MapContainer
+                    center={position}
+                    zoom={16}
+                    scrollWheelZoom={true}
+                    style={{ height: "100%", width: "100%" }}
+                  >
 
                   <TileLayer
                     attribution="&copy; OpenStreetMap contributors"
@@ -113,15 +140,16 @@ export default function RadioDalamLamaOutlet() {
                   <Marker position={position} icon={markerIcon}>
                     <Popup>
                       <a
-                        href="https://maps.app.goo.gl/5X3FNXZUBL7D1THu9"
+                        href="https://maps.app.goo.gl/MmaEXVwLuonMwjGH6"
                         className="flex justify-center font-semibold"
                       >
-                        Cabang Radio Dalam Lama
+                        Cabang Ciledug
                       </a>
-                      Kebayoran Baru, Jakarta Selatan
+                      Karang Tengah, Tangerang
                     </Popup>
                   </Marker>
                 </MapContainer>
+                )}
               </div>
             </div>
 
@@ -131,8 +159,8 @@ export default function RadioDalamLamaOutlet() {
               <div className="flex items-start gap-3">
                 <MapPin className="text-accent w-5 h-5 shrink-0 mt-1" />
                 <p className="text-accent text-sm">
-                  Jl. Ps. Inpres No.65, RW.14, Gandaria Utara,
-                  Kec. Kebayoran Baru, Jakarta, Daerah Khusus Ibukota Jakarta 12420
+                  Jl. Raden Saleh No.55, RT.003/RW.008, Karang Tengah,
+                  Kec. Karang Tengah, Kota Tangerang, Banten 15157
                 </p>
               </div>
 
@@ -140,10 +168,10 @@ export default function RadioDalamLamaOutlet() {
               <div className="flex items-center gap-3">
                 <Phone className="text-accent w-5 h-5 shrink-0" />
                 <a 
-                  href="https://wa.me/6281287783896"
+                  href=""
                   target="_blank"
                   className="text-accent text-sm">
-                  +62 812-8778-3896
+                  +62 821-8686-1327
                 </a>
               </div>
 
@@ -151,11 +179,11 @@ export default function RadioDalamLamaOutlet() {
               <div className="flex items-center gap-3">
                 <Instagram className="text-accent w-5 h-5 shrink-0" />
                 <a
-                  href="https://instagram.com/shoshalaundryradiodalam"
+                  href="https://www.instagram.com/laundry24jamciledug/"
                   target="_blank"
                   className="text-accent text-sm hover:text-white transition"
                 >
-                  @shoshalaundryradiodalam
+                  @laundry24jamciledug
                 </a>
               </div>
 
@@ -171,11 +199,11 @@ export default function RadioDalamLamaOutlet() {
                 </svg>
 
                 <a
-                  href="https://www.tiktok.com/@shoshalaundry1?is_from_webapp=1&sender_device=pc"
+                  href="https://www.tiktok.com/@laundry.24.jam.la"
                   target="_blank"
                   className="ml-[-4px] text-gray-700 text-sm hover:text-white transition"
                 >
-                  @shoshalaundry1
+                  @laundry.24.jam.la
                 </a>
               </div>
             </div>

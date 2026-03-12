@@ -1,20 +1,46 @@
 "use client";
 
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import dynamic from "next/dynamic";
 import { Instagram, MapPin, Phone } from "lucide-react";
+import { useEffect, useState } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import Footer from "@/components/layouts/footer";
 
-export default function KebonManggaOutlet() {
+const MapContainer = dynamic(
+  () => import("react-leaflet").then((mod) => mod.MapContainer),
+  { ssr: false }
+);
 
-  const position: [number, number] = [-6.1967, 106.7738];
+const TileLayer = dynamic(
+  () => import("react-leaflet").then((mod) => mod.TileLayer),
+  { ssr: false }
+);
 
-  const markerIcon = new L.Icon({
-    iconUrl: "/assets/point.gif",
-    iconSize: [70, 70],
-    iconAnchor: [36, 50]
-  });
+const Marker = dynamic(
+  () => import("react-leaflet").then((mod) => mod.Marker),
+  { ssr: false }
+);
+
+const Popup = dynamic(
+  () => import("react-leaflet").then((mod) => mod.Popup),
+  { ssr: false }
+);
+
+export default function RadioDalam24JamOutlet() {
+
+  const position: [number, number] = [-6.262761, 106.789816];
+  const [markerIcon, setMarkerIcon] = useState<L.Icon | null>(null);
+
+  useEffect(() => {
+    const icon = new L.Icon({
+      iconUrl: "/assets/point.gif",
+      iconSize: [70, 70],
+      iconAnchor: [36, 50],
+    });
+
+    setMarkerIcon(icon);
+  }, []);
 
   const navLinks = [
     { label: "Beranda", href: "/home" },
@@ -29,7 +55,7 @@ export default function KebonManggaOutlet() {
       <section
         className="relative h-[70vh] flex items-center justify-center text-white"
         style={{
-          backgroundImage: "url('/mesin/mesin1_rdlama.jpg')",
+          backgroundImage: "url('/units/rd24j2.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center"
         }}
@@ -38,7 +64,7 @@ export default function KebonManggaOutlet() {
 
         <div className="relative z-10 text-center px-6">
           <h1 className="text-4xl md:text-6xl font-bold mb-4">
-            Outlet Kebon Mangga
+            Outlet Radio Dalam 24 Jam
           </h1>
 
           <p className="max-w-xl mx-auto text-lg text-white/90">
@@ -63,30 +89,30 @@ export default function KebonManggaOutlet() {
           {/* LEFT COLUMN */}
           <div className="flex flex-col gap-8">
             <p className="text-gray-600 leading-relaxed text-justify">
-              Outlet Kebon Mangga merupakan salah satu cabang Sho-Sha Laundry yang melayani berbagai kebutuhan laundry seperti cuci kiloan, laundry satuan, hingga layanan express. Dengan mesin modern dan proses yang higienis, kami memastikan pakaian pelanggan kembali bersih, wangi, dan rapi.
+              Outlet Radio Dalam 24 Jam merupakan salah satu cabang Sho-Sha Laundry yang melayani berbagai kebutuhan laundry seperti cuci kiloan, laundry satuan, hingga layanan express. Dengan mesin modern dan proses yang higienis, kami memastikan pakaian pelanggan kembali bersih, wangi, dan rapi.
               <br />
-              Berlokasi di Cipulir, Kebayoran Lama, Jakarta Selatan, outlet ini mudah dijangkau oleh masyarakat sekitar.
+              Berlokasi di Gandaria Utara, Kebayoran Baru, Jakarta Selatan, outlet ini mudah dijangkau oleh masyarakat sekitar.
             </p>
 
             {/* GALLERY */}
             <div className="grid grid-cols-2 grid-rows-2 gap-4">
               {/* WIDE SIZE */}
               <img
-                src="/mesin/mesin1_rdlama.jpg"
+                src="/units/rd24j2.jpg"
                 alt="Wide Outlet Image"
                 className="col-span-2 w-full object-cover rounded-xl shadow-md hover:scale-[1.02] transition aspect-[16/9]"
               />
 
               {/* NORMAL SIZE */}
               <img
-                src="/mesin/mesin1_rdlama.jpg"
+                src="/gallery/galeri1.jpg"
                 alt="Normal Outlet Image"
                 className="w-full object-cover rounded-xl shadow-md hover:scale-[1.02] transition aspect-[4/3]"
               />
 
               {/* NORMAL SIZE */}
               <img
-                src="/mesin/mesin1_rdlama.jpg"
+                src="/gallery/galeri2.jpg"
                 alt="Normal Outlet Image"
                 className="w-full object-cover rounded-xl shadow-md hover:scale-[1.02] transition aspect-[4/3]"
               />
@@ -98,12 +124,13 @@ export default function KebonManggaOutlet() {
             {/* MAP FRAME */}
             <div className="p-[3px] bg-primary rounded-2xl shadow-xl flex-1">
               <div className="w-full h-full rounded-xl overflow-hidden bg-white min-h-[280px]">
-                <MapContainer
-                  center={position}
-                  zoom={15}
-                  scrollWheelZoom={true}
-                  style={{ height: "100%", width: "100%" }}
-                >
+                {markerIcon && (
+                  <MapContainer
+                    center={position}
+                    zoom={16}
+                    scrollWheelZoom={true}
+                    style={{ height: "100%", width: "100%" }}
+                  >
 
                   <TileLayer
                     attribution="&copy; OpenStreetMap contributors"
@@ -113,15 +140,16 @@ export default function KebonManggaOutlet() {
                   <Marker position={position} icon={markerIcon}>
                     <Popup>
                       <a
-                        href="https://maps.app.goo.gl/KeKyv9Zgtb8BxMhAA"
+                        href="https://maps.app.goo.gl/ZEVWS3RQeSUwa2g56"
                         className="flex justify-center font-semibold"
                       >
-                        Cabang Kebon Mangga
+                        Cabang Radio Dalam 24 Jam
                       </a>
-                      Kebayoran Lama, Jakarta Selatan
+                      Kebayoran Baru, Jakarta Selatan
                     </Popup>
                   </Marker>
                 </MapContainer>
+                )}
               </div>
             </div>
 
@@ -131,8 +159,8 @@ export default function KebonManggaOutlet() {
               <div className="flex items-start gap-3">
                 <MapPin className="text-accent w-5 h-5 shrink-0 mt-1" />
                 <p className="text-accent text-sm">
-                  Jl. Kebon Mangga 1, RT.01/007, No.15, RT.5/RW.7, Cipulir,
-                  Kec. Kebayoran Lama, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12230
+                  Jl. Ps. Inpres No.80a, RT.4/RW.14, Gandaria Utara,
+                  Kec. Kebayoran Baru, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12140
                 </p>
               </div>
 
@@ -140,10 +168,10 @@ export default function KebonManggaOutlet() {
               <div className="flex items-center gap-3">
                 <Phone className="text-accent w-5 h-5 shrink-0" />
                 <a 
-                  href="https://wa.me/6282211551503"
+                  href="https://wa.me/6281299531535"
                   target="_blank"
                   className="text-accent text-sm">
-                  +62 822-1155-1503
+                  +62 812-9953-1535
                 </a>
               </div>
 
@@ -151,11 +179,11 @@ export default function KebonManggaOutlet() {
               <div className="flex items-center gap-3">
                 <Instagram className="text-accent w-5 h-5 shrink-0" />
                 <a
-                  href="https://www.instagram.com/shoshalaundrykebonmangga"
+                  href="https://www.instagram.com/laundry24jamradiodalam"
                   target="_blank"
                   className="text-accent text-sm hover:text-white transition"
                 >
-                  @shoshalaundrykebonmangga
+                  @laundry24jamradiodalam
                 </a>
               </div>
 
@@ -171,11 +199,11 @@ export default function KebonManggaOutlet() {
                 </svg>
 
                 <a
-                  href="https://www.tiktok.com/@shoshalaundrykbma"
+                  href="https://www.tiktok.com/@laundry24jamradiodalam"
                   target="_blank"
                   className="ml-[-4px] text-gray-700 text-sm hover:text-white transition"
                 >
-                  @shoshalaundrykbma
+                  @laundry24jamradiodalam
                 </a>
               </div>
             </div>

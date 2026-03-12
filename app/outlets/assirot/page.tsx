@@ -1,20 +1,46 @@
 "use client";
 
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import dynamic from "next/dynamic";
 import { Instagram, MapPin, Phone } from "lucide-react";
+import { useEffect, useState } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import Footer from "@/components/layouts/footer";
 
+const MapContainer = dynamic(
+  () => import("react-leaflet").then((mod) => mod.MapContainer),
+  { ssr: false }
+);
+
+const TileLayer = dynamic(
+  () => import("react-leaflet").then((mod) => mod.TileLayer),
+  { ssr: false }
+);
+
+const Marker = dynamic(
+  () => import("react-leaflet").then((mod) => mod.Marker),
+  { ssr: false }
+);
+
+const Popup = dynamic(
+  () => import("react-leaflet").then((mod) => mod.Popup),
+  { ssr: false }
+);
+
 export default function AssirotOutlet() {
 
-  const position: [number, number] = [-6.1967, 106.7738];
+  const position: [number, number] = [-6.236778, 106.789401];
+  const [markerIcon, setMarkerIcon] = useState<L.Icon | null>(null);
 
-  const markerIcon = new L.Icon({
-    iconUrl: "/assets/point.gif",
-    iconSize: [70, 70],
-    iconAnchor: [36, 50]
-  });
+  useEffect(() => {
+    const icon = new L.Icon({
+      iconUrl: "/assets/point.gif",
+      iconSize: [70, 70],
+      iconAnchor: [36, 50],
+    });
+
+    setMarkerIcon(icon);
+  }, []);
 
   const navLinks = [
     { label: "Beranda", href: "/home" },
@@ -25,13 +51,14 @@ export default function AssirotOutlet() {
 
   return (
     <main className="min-h-screen flex flex-col">
+      
       {/* HERO */}
       <section
         className="relative h-[70vh] flex items-center justify-center text-white"
         style={{
           backgroundImage: "url('/units-raw/assirot.png')",
           backgroundSize: "cover",
-          backgroundPosition: "center"
+          backgroundPosition: "center",
         }}
       >
         <div className="absolute inset-0 bg-black/50" />
@@ -50,7 +77,7 @@ export default function AssirotOutlet() {
 
       {/* SECTION INFO */}
       <section className="py-20 px-6 bg-white">
-        {/* TITLE */}
+
         <div className="text-center mb-14">
           <h3 className="text-3xl font-bold text-accent inline-block relative">
             Tentang Outlet
@@ -58,96 +85,99 @@ export default function AssirotOutlet() {
           </h3>
         </div>
 
-        {/* WRAPPER GRID */}
         <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12 items-stretch">
-          {/* LEFT COLUMN */}
+
+          {/* LEFT */}
           <div className="flex flex-col gap-8">
+
             <p className="text-gray-600 leading-relaxed text-justify">
-              Outlet Assirot merupakan salah satu cabang Sho-Sha Laundry yang melayani berbagai kebutuhan laundry seperti cuci kiloan, laundry satuan, hingga layanan express. Dengan mesin modern dan proses yang higienis, kami memastikan pakaian pelanggan kembali bersih, wangi, dan rapi.
+              Outlet Assirot merupakan salah satu cabang Sho-Sha Laundry yang
+              melayani berbagai kebutuhan laundry seperti cuci kiloan,
+              laundry satuan, hingga layanan express. Dengan mesin modern
+              dan proses yang higienis, kami memastikan pakaian pelanggan
+              kembali bersih, wangi, dan rapi.
               <br />
-              Berlokasi di Grogol Selatan, Kebon Jeruk, Kota Jakarta Selatan, outlet ini mudah dijangkau oleh masyarakat sekitar.
+              Berlokasi di Grogol Selatan, Kebon Jeruk, Kota Jakarta Selatan,
+              outlet ini mudah dijangkau oleh masyarakat sekitar.
             </p>
 
-            {/* GALLERY */}
             <div className="grid grid-cols-2 grid-rows-2 gap-4">
-              {/* WIDE SIZE */}
+
               <img
                 src="/units-raw/assirot.png"
-                alt="Wide Outlet Image"
                 className="col-span-2 w-full object-cover rounded-xl shadow-md hover:scale-[1.02] transition aspect-[16/9]"
               />
 
-              {/* NORMAL SIZE */}
               <img
                 src="/units-raw/assirot.png"
-                alt="Normal Outlet Image"
                 className="w-full object-cover rounded-xl shadow-md hover:scale-[1.02] transition aspect-[4/3]"
               />
 
-              {/* NORMAL SIZE */}
               <img
                 src="/units-raw/assirot.png"
-                alt="Normal Outlet Image"
                 className="w-full object-cover rounded-xl shadow-md hover:scale-[1.02] transition aspect-[4/3]"
               />
+
             </div>
           </div>
 
-          {/* RIGHT COLUMN */}
+          {/* RIGHT */}
           <div className="flex flex-col gap-6">
-            {/* MAP FRAME */}
+
+            {/* MAP */}
             <div className="p-[3px] bg-primary rounded-2xl shadow-xl flex-1">
               <div className="w-full h-full rounded-xl overflow-hidden bg-white min-h-[280px]">
-                <MapContainer
-                  center={position}
-                  zoom={15}
-                  scrollWheelZoom={true}
-                  style={{ height: "100%", width: "100%" }}
-                >
 
-                  <TileLayer
-                    attribution="&copy; OpenStreetMap contributors"
-                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                  />
+                {markerIcon && (
+                  <MapContainer
+                    center={position}
+                    zoom={16}
+                    scrollWheelZoom={true}
+                    style={{ height: "100%", width: "100%" }}
+                  >
 
-                  <Marker position={position} icon={markerIcon}>
-                    <Popup>
-                      <a
-                        href="https://maps.app.goo.gl/WqT87RSq6Za9DS8N7"
-                        className="flex justify-center font-semibold"
-                      >
-                        Cabang Assirot
-                      </a>
-                      Kebon Jeruk, Jakarta Barat
-                    </Popup>
-                  </Marker>
-                </MapContainer>
+                    <TileLayer
+                      attribution="&copy; OpenStreetMap contributors"
+                      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    />
+
+                    <Marker position={position} icon={markerIcon}>
+                      <Popup>
+                        <a
+                          href="https://maps.app.goo.gl/WqT87RSq6Za9DS8N7"
+                          className="flex justify-center font-semibold"
+                        >
+                          Cabang Assirot
+                        </a>
+                        Kebon Jeruk, Jakarta Barat
+                      </Popup>
+                    </Marker>
+
+                  </MapContainer>
+                )}
+
               </div>
             </div>
 
-            {/* CONTACT CARD */}
+            {/* CONTACT */}
             <div className="bg-orange-400 rounded-2xl p-6 shadow-md space-y-4">
-              {/* LOCATION */}
+
               <div className="flex items-start gap-3">
                 <MapPin className="text-accent w-5 h-5 shrink-0 mt-1" />
                 <p className="text-accent text-sm">
                   Jl. Assirot No.8B, Grogol Selatan,
-                  Kebon Jeruk, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 11560
+                  Kebon Jeruk, Kota Jakarta Selatan,
+                  Daerah Khusus Ibukota Jakarta 11560
                 </p>
               </div>
 
-              {/* PHONE */}
               <div className="flex items-center gap-3">
                 <Phone className="text-accent w-5 h-5 shrink-0" />
-                <a 
-                  href=""
-                  target="_blank"
-                  className="text-accent text-sm">
+                <span className="text-accent text-sm">
                   +62 812-8778-3962
-                </a>
+                </span>
               </div>
 
-              {/* INSTAGRAM */}
               <div className="flex items-center gap-3">
                 <Instagram className="text-accent w-5 h-5 shrink-0" />
                 <a
@@ -158,11 +188,13 @@ export default function AssirotOutlet() {
                   @laundry24jamassirot
                 </a>
               </div>
+
             </div>
+
           </div>
-          
         </div>
       </section>
+
       <Footer navLinks={navLinks} />
     </main>
   );
