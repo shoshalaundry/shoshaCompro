@@ -225,7 +225,7 @@ export default function About() {
       heroImage: "/hero/hero1.svg",
       tagline: "Tentang Kami,\nSHO-SHA.",
       subtitle: "Layanan laundry profesional dengan standar premium untuk pakaian Anda.",
-      priority: true,
+      loading: "eager",
     };
 
   const [isMobile, setIsMobile] = useState(false)

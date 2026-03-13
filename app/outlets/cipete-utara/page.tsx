@@ -27,7 +27,7 @@ const Popup = dynamic(
 
 export default function CipeteUtaraOutlet() {
 
-  const position: [number, number] = [-6.272488, 106.810742];
+  const position: [number, number] = [-6.259982940300875, 106.8010249793894];
   const [markerIcon, setMarkerIcon] = useState<any>(null);
 
   useEffect(() => {
@@ -55,7 +55,7 @@ export default function CipeteUtaraOutlet() {
       <section
         className="relative h-[70vh] flex items-center justify-center text-white"
         style={{
-          backgroundImage: "url('/units/cipete3.jpg')",
+          backgroundImage: "url('/outlets/cipete2.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center"
         }}
@@ -98,23 +98,26 @@ export default function CipeteUtaraOutlet() {
             <div className="grid grid-cols-2 grid-rows-2 gap-4">
               {/* WIDE SIZE */}
               <img
-                src="/units/cipete.jpg"
+                src="/outlets/cipete.jpg"
                 alt="Wide Outlet Image"
                 className="col-span-2 w-full object-cover rounded-xl shadow-md hover:scale-[1.02] transition aspect-[16/9]"
+                loading="lazy"
               />
 
               {/* NORMAL SIZE */}
               <img
-                src="/units/cipete.jpg"
+                src="/outlets/cipete2.jpg"
                 alt="Normal Outlet Image"
                 className="w-full object-cover rounded-xl shadow-md hover:scale-[1.02] transition aspect-[4/3]"
+                loading="lazy"
               />
 
               {/* NORMAL SIZE */}
               <img
-                src="/units/cipete2.jpg"
+                src="/outlets/cipete3.jpg"
                 alt="Normal Outlet Image"
                 className="w-full object-cover rounded-xl shadow-md hover:scale-[1.02] transition aspect-[4/3]"
+                loading="lazy"
               />
             </div>
           </div>

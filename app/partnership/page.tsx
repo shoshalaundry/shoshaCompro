@@ -310,11 +310,11 @@ export default function Partnership() {
    DATA ARRAYS — edit these to update content
    ═══════════════════════════════════════════ */
   const hero = {
-      image: "/outlets/kpbd.jpg",
+      image: "/outlets/rd24j2.jpg",
       heroImage: "/hero/hero2.svg",
       tagline: "Mitra Bisnis\nSHO-SHA.",
       subtitle: "Bergabunglah dengan jaringan franchise laundry yang terus berkembang di Indonesia. Didukung sistem, tim profesional, dan peluang keuntungan berkelanjutan.",
-      priority: true,
+      loading: "eager",
     };
 
   const [isMobile, setIsMobile] = useState(false)

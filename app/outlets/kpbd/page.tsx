@@ -27,7 +27,7 @@ const Popup = dynamic(
 
 export default function KpbdOutlet() {
 
-  const position: [number, number] = [-6.214672, 106.770912];
+  const position: [number, number] = [-6.223422481135943, 106.77836483870533];
   const [markerIcon, setMarkerIcon] = useState<any>(null);
 
   useEffect(() => {
@@ -55,7 +55,7 @@ export default function KpbdOutlet() {
       <section
         className="relative h-[70vh] flex items-center justify-center text-white"
         style={{
-          backgroundImage: "url('/units-raw/kpbd.png')",
+          backgroundImage: "url('/outlets/kpbd.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center"
         }}
@@ -98,23 +98,26 @@ export default function KpbdOutlet() {
             <div className="grid grid-cols-2 grid-rows-2 gap-4">
               {/* WIDE SIZE */}
               <img
-                src="/units-raw/kpbd.png"
+                src="/outlets/kpbd.jpg"
                 alt="Wide Outlet Image"
                 className="col-span-2 w-full object-cover rounded-xl shadow-md hover:scale-[1.02] transition aspect-[16/9]"
+                loading="lazy"
               />
 
               {/* NORMAL SIZE */}
               <img
-                src="/units-raw/kpbd.png"
+                src="/outlets/kpbd.jpg"
                 alt="Normal Outlet Image"
                 className="w-full object-cover rounded-xl shadow-md hover:scale-[1.02] transition aspect-[4/3]"
+                loading="lazy"
               />
 
               {/* NORMAL SIZE */}
               <img
-                src="/units-raw/kpbd.png"
+                src="/outlets/kpbd.jpg"
                 alt="Normal Outlet Image"
                 className="w-full object-cover rounded-xl shadow-md hover:scale-[1.02] transition aspect-[4/3]"
+                loading="lazy"
               />
             </div>
           </div>

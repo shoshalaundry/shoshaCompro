@@ -64,21 +64,21 @@ const heroSlides = [
     heroImage: "/hero/hero1.svg",
     tagline: "Bersih Sempurna,\nSetiap Helai.",
     subtitle: "Layanan laundry profesional dengan standar premium untuk pakaian Anda.",
-    priority: true,
+    loading: "eager",
   },
   {
     image: "/mesin/mesin_ciledug1.jpg",
     heroImage: "/hero/hero2.svg",
     tagline: "Mitra Bisnis\nTerpercaya.",
     subtitle: "Bergabunglah dengan jaringan franchise laundry yang terus berkembang di Indonesia. Didukung sistem, tim profesional, dan peluang keuntungan berkelanjutan.",
-    loading: "lazy",
+    loading: "eager",
   },
   {
     image: "/mesin/mesin_pahlawan2.jpg",
     heroImage: "/hero/hero3.svg",
     tagline: "Teknologi Modern,\nHasil Maksimal.",
     subtitle: "Bangun bisnis laundry autopilot dengan passive income berkelanjutan. Tim kami mengelola segalanya — Anda cukup memantau profit.",
-    loading: "lazy",
+    loading: "eager",
   },
 ];
 

@@ -27,7 +27,7 @@ const Popup = dynamic(
 
 export default function TanahKusirOutlet() {
 
-  const position: [number, number] = [-6.260581, 106.784882];
+  const position: [number, number] = [-6.258160507167096, 106.78275710269403];
   const [markerIcon, setMarkerIcon] = useState<any>(null);
 
   useEffect(() => {
@@ -55,7 +55,7 @@ export default function TanahKusirOutlet() {
       <section
         className="relative h-[70vh] flex items-center justify-center text-white"
         style={{
-          backgroundImage: "url('/units/tanah_kusir2.jpg')",
+          backgroundImage: "url('/mesin/mesin_tanahkusir1.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center"
         }}
@@ -98,23 +98,26 @@ export default function TanahKusirOutlet() {
             <div className="grid grid-cols-2 grid-rows-2 gap-4">
               {/* WIDE SIZE */}
               <img
-                src="/units/tanah_kusir.jpg"
+                src="/outlets/tanah_kusir2.jpg"
                 alt="Wide Outlet Image"
                 className="col-span-2 w-full object-cover rounded-xl shadow-md hover:scale-[1.02] transition aspect-[16/9]"
+                loading="lazy"
               />
 
               {/* NORMAL SIZE */}
               <img
-                src="/units/tanah_kusir.jpg"
+                src="/outlets/tanah_kusir.jpg"
                 alt="Normal Outlet Image"
                 className="w-full object-cover rounded-xl shadow-md hover:scale-[1.02] transition aspect-[4/3]"
+                loading="lazy"
               />
 
               {/* NORMAL SIZE */}
               <img
-                src="/units/tanah_kusir2.jpg"
+                src="/mesin/mesin_tanahkusir1.jpg"
                 alt="Normal Outlet Image"
                 className="w-full object-cover rounded-xl shadow-md hover:scale-[1.02] transition aspect-[4/3]"
+                loading="lazy"
               />
             </div>
           </div>

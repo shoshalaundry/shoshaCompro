@@ -27,7 +27,7 @@ const Popup = dynamic(
 
 export default function CiledugOutlet() {
 
-  const position: [number, number] = [-6.205941, 106.703884];
+  const position: [number, number] = [-6.2145506181164745, 106.71019678529633];
   const [markerIcon, setMarkerIcon] = useState<any>(null);
 
   useEffect(() => {
@@ -55,7 +55,7 @@ export default function CiledugOutlet() {
       <section
         className="relative h-[70vh] flex items-center justify-center text-white"
         style={{
-          backgroundImage: "url('/mesin/mesin1_ciledug.jpg')",
+          backgroundImage: "url('/mesin/mesin_ciledug2.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center"
         }}
@@ -98,23 +98,26 @@ export default function CiledugOutlet() {
             <div className="grid grid-cols-2 grid-rows-2 gap-4">
               {/* WIDE SIZE */}
               <img
-                src="/units/ciledug.jpg"
+                src="/outlets/ciledug.jpg"
                 alt="Wide Outlet Image"
                 className="col-span-2 w-full object-cover rounded-xl shadow-md hover:scale-[1.02] transition aspect-[16/9]"
+                loading="lazy"
               />
 
               {/* NORMAL SIZE */}
               <img
-                src="/units/ciledug.jpg"
+                src="/gallery/galeri5.jpg"
                 alt="Normal Outlet Image"
                 className="w-full object-cover rounded-xl shadow-md hover:scale-[1.02] transition aspect-[4/3]"
+                loading="lazy"
               />
 
               {/* NORMAL SIZE */}
               <img
-                src="/mesin/mesin1_ciledug.jpg"
+                src="/mesin/mesin_ciledug3.jpg"
                 alt="Normal Outlet Image"
                 className="w-full object-cover rounded-xl shadow-md hover:scale-[1.02] transition aspect-[4/3]"
+                loading="lazy"
               />
             </div>
           </div>

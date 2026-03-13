@@ -27,7 +27,7 @@ const Popup = dynamic(
 
 export default function RadioDalam24JamOutlet() {
 
-  const position: [number, number] = [-6.262761, 106.789816];
+  const position: [number, number] = [-6.260442307866889, 106.79077108991775];
   const [markerIcon, setMarkerIcon] = useState<any>(null);
 
   useEffect(() => {
@@ -55,7 +55,7 @@ export default function RadioDalam24JamOutlet() {
       <section
         className="relative h-[70vh] flex items-center justify-center text-white"
         style={{
-          backgroundImage: "url('/units/rd24j2.jpg')",
+          backgroundImage: "url('/outlets/rd24j2.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center"
         }}
@@ -98,9 +98,10 @@ export default function RadioDalam24JamOutlet() {
             <div className="grid grid-cols-2 grid-rows-2 gap-4">
               {/* WIDE SIZE */}
               <img
-                src="/units/rd24j2.jpg"
+                src="/outlets/rd24j2.jpg"
                 alt="Wide Outlet Image"
                 className="col-span-2 w-full object-cover rounded-xl shadow-md hover:scale-[1.02] transition aspect-[16/9]"
+                loading="lazy"
               />
 
               {/* NORMAL SIZE */}
@@ -108,6 +109,7 @@ export default function RadioDalam24JamOutlet() {
                 src="/gallery/galeri1.jpg"
                 alt="Normal Outlet Image"
                 className="w-full object-cover rounded-xl shadow-md hover:scale-[1.02] transition aspect-[4/3]"
+                loading="lazy"
               />
 
               {/* NORMAL SIZE */}
@@ -115,6 +117,7 @@ export default function RadioDalam24JamOutlet() {
                 src="/gallery/galeri2.jpg"
                 alt="Normal Outlet Image"
                 className="w-full object-cover rounded-xl shadow-md hover:scale-[1.02] transition aspect-[4/3]"
+                loading="lazy"
               />
             </div>
           </div>

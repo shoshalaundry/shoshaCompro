@@ -27,7 +27,7 @@ const Popup = dynamic(
 
 export default function MadrasahOutlet() {
 
-  const position: [number, number] = [-6.270206, 106.792635];
+  const position: [number, number] = [-6.266839548401084, 106.79317364843261];
   const [markerIcon, setMarkerIcon] = useState<any>(null);
 
   useEffect(() => {
@@ -55,7 +55,7 @@ export default function MadrasahOutlet() {
       <section
         className="relative h-[70vh] flex items-center justify-center text-white"
         style={{
-          backgroundImage: "url('/units-raw/madrasah.jpg')",
+          backgroundImage: "url('/outlets/madrasah2.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center"
         }}
@@ -98,23 +98,26 @@ export default function MadrasahOutlet() {
             <div className="grid grid-cols-2 grid-rows-2 gap-4">
               {/* WIDE SIZE */}
               <img
-                src="/units-raw/madrasah.jpg"
+                src="/outlets/madrasah2.jpg"
                 alt="Wide Outlet Image"
                 className="col-span-2 w-full object-cover rounded-xl shadow-md hover:scale-[1.02] transition aspect-[16/9]"
+                loading="lazy"
               />
 
               {/* NORMAL SIZE */}
               <img
-                src="/units/madrasah.jpg"
+                src="/outlets/madrasah.jpg"
                 alt="Normal Outlet Image"
                 className="w-full object-cover rounded-xl shadow-md hover:scale-[1.02] transition aspect-[4/3]"
+                loading="lazy"
               />
 
               {/* NORMAL SIZE */}
               <img
-                src="/units/madrasah.jpg"
+                src="/outlets/madrasah.jpg"
                 alt="Normal Outlet Image"
                 className="w-full object-cover rounded-xl shadow-md hover:scale-[1.02] transition aspect-[4/3]"
+                loading="lazy"
               />
             </div>
           </div>

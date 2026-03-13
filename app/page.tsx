@@ -16,19 +16,19 @@ export default function WelcomePage() {
   const router = useRouter();
 
   const outlets = [
-    { name: "Pahlawan", address: "Kebon Jeruk, Kota Jakarta Barat", icon: "/units-raw/pahlawan.png" },
-    { name: "Radio Dalam Lama", address: " Kebayoran Baru, Jakarta", icon: "/units-raw/rd_lama.jpg" },
-    { name: "Assirot", address: "Kebon Jeruk, Kota Jakarta Selatan", icon: "/units-raw/assirot.png" },
-    { name: "Ciledug", address: "Karang Tengah, Kota Tangerang", icon: "/units/ciledug.jpg" },
-    { name: "Cipete Utara", address: "Kebayoran Baru, Kota Jakarta Selatan", icon: "/units/cipete.jpg" }, 
+    { name: "Pahlawan", address: "Kebon Jeruk, Kota Jakarta Barat", icon: "/outlets/pahlawan.png" },
+    { name: "Radio Dalam Lama", address: " Kebayoran Baru, Jakarta", icon: "/outlets/rd_lama.jpg" },
+    { name: "Assirot", address: "Kebon Jeruk, Kota Jakarta Selatan", icon: "/outlets/assirot3.png" },
+    { name: "Ciledug", address: "Karang Tengah, Kota Tangerang", icon: "/outlets/ciledug.jpg" },
+    { name: "Cipete Utara", address: "Kebayoran Baru, Kota Jakarta Selatan", icon: "/outlets/cipete.jpg" }, 
     { name: "Kebon Mangga", address: "Kebayoran Lama, Kota Jakarta Selatan", icon: "" },
-    { name: "Kemanggisan Pulo", address: "Palmerah, Kota Jakarta Barat", icon: "/units-raw/pulo.png" }, 
-    { name: "KPBD", address: "Kebon Jeruk, Kota Jakarta Barat", icon: "/units-raw/kpbd.png" },
-    { name: "Madrasah", address: "Cilandak, Kota Jakarta Selatan", icon: "/units/madrasah.jpg" },
-    { name: "Petukangan Baru", address: "Pesanggrahan, Kota Jakarta Selatan", icon: "" },
-    { name: "Petukangan Lama", address: "Pesanggrahan, Kota Jakarta Selatan", icon: "/units-raw/ptk_lama.png" },
-    { name: "Radio Dalam 24 Jam", address: "Kebayoran Baru, Kota Jakarta Selatan", icon: "/units/rd24j2.jpg" },
-    { name: "Tanah Kusir", address: "Kebayoran Lama, Kota Jakarta Selatan", icon: "/units/tanah_kusir.jpg" },
+    { name: "Kemanggisan Pulo", address: "Palmerah, Kota Jakarta Barat", icon: "/outlets/kpulo.jpg" }, 
+    { name: "KPBD", address: "Kebon Jeruk, Kota Jakarta Barat", icon: "/outlets/kpbd.jpg" },
+    { name: "Madrasah", address: "Cilandak, Kota Jakarta Selatan", icon: "/outlets/madrasah.jpg" },
+    { name: "Petukangan Baru", address: "Pesanggrahan, Kota Jakarta Selatan", icon: "/outlets/ptk_baru.jpg" },
+    { name: "Petukangan Lama", address: "Pesanggrahan, Kota Jakarta Selatan", icon: "/outlets/ptk_lama.jpg" },
+    { name: "Radio Dalam 24 Jam", address: "Kebayoran Baru, Kota Jakarta Selatan", icon: "/outlets/rd24j2.jpg" },
+    { name: "Tanah Kusir", address: "Kebayoran Lama, Kota Jakarta Selatan", icon: "/outlets/tanah_kusir2.jpg" },
   ].map(outlet => ({
     ...outlet,
     path: `/outlets/${slugify(outlet.name)}`,
@@ -40,7 +40,7 @@ export default function WelcomePage() {
       {/* Here to change BACKGROUND to Image*/}
       <div
         className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: "url('/mesin/mesin1_rdlama.jpg')" }}
+        style={{ backgroundImage: "url('/mesin/mesin_rdlama1.jpg')" }}
       />
 
       <div className="absolute inset-0 bg-white/40"/>
@@ -52,6 +52,7 @@ export default function WelcomePage() {
           src="/assets/qr_instagram.jpeg"
           alt="Instagram QR"
           className="w-32 drop-shadow-lg hover:scale-110 transition duration-300 rounded-sm"
+          loading="lazy"
         />
       </div>
 
@@ -123,10 +124,9 @@ export default function WelcomePage() {
         {/* LOGO */}
         <img
           src="/assets/logo.svg"
-          alt="Sho-Sha Laundry"
-          className="
-            w-24 h-24 bg-yellow-400 rounded-full object-cover shadow-lg mt-10 mb-5
-          "
+          alt="SHO SHA Logo"
+          className="w-24 h-24 bg-yellow-400 rounded-full object-cover shadow-lg mt-10 mb-5"
+          loading="lazy"
         />
 
         {/* TITLE */}
@@ -178,9 +178,10 @@ export default function WelcomePage() {
               {/* Outlet Icon */}
               <span className="shrink-0 w-10 h-10 rounded-full overflow-hidden bg-white shadow-sm flex items-center justify-center">
                 <img 
-                  src={outlet.icon || "/mesin/mesin1_rdlama.jpg"}
+                  src={outlet.icon || "/mesin/mesin_rdlama2.jpg"}
                   alt={`Outlet ${outlet.name}`}
                   className="w-full h-full object-cover"
+                  loading="eager"
                 />
               </span>
 
@@ -198,7 +199,7 @@ export default function WelcomePage() {
 
         {/* COPYRIGHT */}
         <p className="text-sm text-white/80 mt-5 tracking-wide">
-          © {new Date().getFullYear()} SHO-SHA Laundry
+          &copy; {new Date().getFullYear()} SHO-SHA Laundry
         </p>
       </section>
     </main>

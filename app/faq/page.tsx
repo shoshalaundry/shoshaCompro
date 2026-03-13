@@ -181,11 +181,11 @@ export default function Faq() {
    DATA ARRAYS — edit these to update content
    ═══════════════════════════════════════════ */
   const hero = {
-      image: "/outlets/rd24j2.jpg",
+      image: "/outlets/kpbd.jpg",
       heroImage: "/hero/hero3.svg",
       tagline: "Pertanyaan\nUmum.",
       subtitle: "Bangun bisnis laundry autopilot dengan passive income berkelanjutan. Tim kami mengelola segalanya — Anda cukup memantau profit.",
-      priority: true,
+      loading: "eager",
     };
 
   const [isMobile, setIsMobile] = useState(false)

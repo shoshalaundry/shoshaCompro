@@ -27,7 +27,7 @@ const Popup = dynamic(
 
 export default function AssirotOutlet() {
 
-  const position: [number, number] = [-6.236778, 106.789401];
+  const position: [number, number] = [-6.225458910717813, 106.77365542810615];
   const [markerIcon, setMarkerIcon] = useState<any>(null);
 
   useEffect(() => {
@@ -56,7 +56,7 @@ export default function AssirotOutlet() {
       <section
         className="relative h-[70vh] flex items-center justify-center text-white"
         style={{
-          backgroundImage: "url('/units-raw/assirot.png')",
+          backgroundImage: "url('/outlets/assirot.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
@@ -104,18 +104,24 @@ export default function AssirotOutlet() {
             <div className="grid grid-cols-2 grid-rows-2 gap-4">
 
               <img
-                src="/units-raw/assirot.png"
+                src="/outlets/assirot3.png"
+                alt="Wide Outlet Image"
                 className="col-span-2 w-full object-cover rounded-xl shadow-md hover:scale-[1.02] transition aspect-[16/9]"
+                loading="lazy"
               />
 
               <img
-                src="/units-raw/assirot.png"
+                src="/gallery/galeri8.jpg"
+                alt="Normal Outlet Image"
                 className="w-full object-cover rounded-xl shadow-md hover:scale-[1.02] transition aspect-[4/3]"
+                loading="lazy"
               />
 
               <img
-                src="/units-raw/assirot.png"
+                src="/mesin/mesin_assirot2.jpg"
+                alt="Normal Outlet Image"
                 className="w-full object-cover rounded-xl shadow-md hover:scale-[1.02] transition aspect-[4/3]"
+                loading="lazy"
               />
 
             </div>

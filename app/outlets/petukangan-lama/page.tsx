@@ -27,7 +27,7 @@ const Popup = dynamic(
 
 export default function PetukanganLamaOutlet() {
 
-  const position: [number, number] = [-6.228770, 106.756155];
+  const position: [number, number] = [-6.232581547928133, 106.7572678457705];
   const [markerIcon, setMarkerIcon] = useState<any>(null);
 
   useEffect(() => {
@@ -55,7 +55,7 @@ export default function PetukanganLamaOutlet() {
       <section
         className="relative h-[70vh] flex items-center justify-center text-white"
         style={{
-          backgroundImage: "url('/units-raw/ptk_lama.png')",
+          backgroundImage: "url('/outlets/ptk_lama.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center"
         }}
@@ -91,30 +91,33 @@ export default function PetukanganLamaOutlet() {
             <p className="text-gray-600 leading-relaxed text-justify">
               Outlet Petukangan Lama merupakan salah satu cabang Sho-Sha Laundry yang melayani berbagai kebutuhan laundry seperti cuci kiloan, laundry satuan, hingga layanan express. Dengan mesin modern dan proses yang higienis, kami memastikan pakaian pelanggan kembali bersih, wangi, dan rapi.
               <br />
-              Berlokasi di Petukangan Selatan, Pesanggrahan, Jakarta Selatan, outlet ini mudah dijangkau oleh masyarakat sekitar.
+              Berlokasi di Petukangan Utara, Pesanggrahan, Jakarta Selatan, outlet ini mudah dijangkau oleh masyarakat sekitar.
             </p>
 
             {/* GALLERY */}
             <div className="grid grid-cols-2 grid-rows-2 gap-4">
               {/* WIDE SIZE */}
               <img
-                src="/units-raw/ptk_lama.png"
+                src="/outlets/ptk_lama.jpg"
                 alt="Wide Outlet Image"
                 className="col-span-2 w-full object-cover rounded-xl shadow-md hover:scale-[1.02] transition aspect-[16/9]"
+                loading="lazy"
               />
 
               {/* NORMAL SIZE */}
               <img
-                src="/units-raw/ptk_lama.png"
+                src="/outlets/ptk_lama.jpg"
                 alt="Normal Outlet Image"
                 className="w-full object-cover rounded-xl shadow-md hover:scale-[1.02] transition aspect-[4/3]"
+                loading="lazy"
               />
 
               {/* NORMAL SIZE */}
               <img
-                src="/units-raw/ptk_lama.png"
+                src="/outlets/ptk_lama.jpg"
                 alt="Normal Outlet Image"
                 className="w-full object-cover rounded-xl shadow-md hover:scale-[1.02] transition aspect-[4/3]"
+                loading="lazy"
               />
             </div>
           </div>
@@ -159,8 +162,8 @@ export default function PetukanganLamaOutlet() {
               <div className="flex items-start gap-3">
                 <MapPin className="text-accent w-5 h-5 shrink-0 mt-1" />
                 <p className="text-accent text-sm">
-                  Dekat Meliala Foto, Jl. Kostrad Pusri No.3, RT.3/RW.5, Petukangan Selatan,
-                  Kec. Pesanggrahan, Kota Jakarta Selatan
+                  Dekat Meliala Foto, Jl. Kostrad Pusri No.3, RT.3/RW.5, Petukangan Utara,
+                  Kec. Pesanggrahan, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12260
                 </p>
               </div>
 

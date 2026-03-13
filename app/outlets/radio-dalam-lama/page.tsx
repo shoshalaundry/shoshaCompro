@@ -27,7 +27,7 @@ const Popup = dynamic(
 
 export default function RadioDalamLamaOutlet() {
 
-  const position: [number, number] = [-6.263063, 106.790184];
+  const position: [number, number] = [-6.26012112766431, 106.79089510689144];
   const [markerIcon, setMarkerIcon] = useState<any>(null);
 
   useEffect(() => {
@@ -55,7 +55,7 @@ export default function RadioDalamLamaOutlet() {
       <section
         className="relative h-[70vh] flex items-center justify-center text-white"
         style={{
-          backgroundImage: "url('/mesin/mesin1_rdlama.jpg')",
+          backgroundImage: "url('/mesin/mesin_rdlama1.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center"
         }}
@@ -98,23 +98,26 @@ export default function RadioDalamLamaOutlet() {
             <div className="grid grid-cols-2 grid-rows-2 gap-4">
               {/* WIDE SIZE */}
               <img
-                src="/units-raw/rd_lama.jpg"
+                src="/outlets/rd_lama.jpg"
                 alt="Wide Outlet Image"
                 className="col-span-2 w-full object-cover rounded-xl shadow-md hover:scale-[1.02] transition aspect-[16/9]"
+                loading="lazy"
               />
 
               {/* NORMAL SIZE */}
               <img
-                src="/gallery/rd_lama2.jpg"
+                src="/gallery/galeri4.jpg"
                 alt="Normal Outlet Image"
                 className="w-full object-cover rounded-xl shadow-md hover:scale-[1.02] transition aspect-[4/3]"
+                loading="lazy"
               />
 
               {/* NORMAL SIZE */}
               <img
-                src="/mesin/mesin2_rdlama.jpg"
+                src="/mesin/mesin_rdlama2.jpg"
                 alt="Normal Outlet Image"
                 className="w-full object-cover rounded-xl shadow-md hover:scale-[1.02] transition aspect-[4/3]"
+                loading="lazy"
               />
             </div>
           </div>
