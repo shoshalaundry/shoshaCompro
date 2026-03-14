@@ -181,7 +181,7 @@ export default function WelcomePage() {
                   src={outlet.icon || "/mesin/mesin_rdlama2.jpg"}
                   alt={`Outlet ${outlet.name}`}
                   className="w-full h-full object-cover"
-                  loading="eager"
+                  loading="lazy"
                 />
               </span>
 

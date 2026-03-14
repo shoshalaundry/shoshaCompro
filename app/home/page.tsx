@@ -64,21 +64,21 @@ const heroSlides = [
     heroImage: "/hero/hero1.svg",
     tagline: "Bersih Sempurna,\nSetiap Helai.",
     subtitle: "Layanan laundry profesional dengan standar premium untuk pakaian Anda.",
-    loading: "eager",
+    loading: "lazy",
   },
   {
-    image: "/mesin/mesin_ciledug1.jpg",
+    image: "/mesin/mesin_rdlama1.jpg",
     heroImage: "/hero/hero2.svg",
     tagline: "Mitra Bisnis\nTerpercaya.",
     subtitle: "Bergabunglah dengan jaringan franchise laundry yang terus berkembang di Indonesia. Didukung sistem, tim profesional, dan peluang keuntungan berkelanjutan.",
-    loading: "eager",
+    loading: "lazy",
   },
   {
-    image: "/mesin/mesin_pahlawan2.jpg",
+    image: "/mesin/mesin_rdlama1.jpg",
     heroImage: "/hero/hero3.svg",
     tagline: "Teknologi Modern,\nHasil Maksimal.",
     subtitle: "Bangun bisnis laundry autopilot dengan passive income berkelanjutan. Tim kami mengelola segalanya — Anda cukup memantau profit.",
-    loading: "eager",
+    loading: "lazy",
   },
 ];
 
@@ -747,7 +747,7 @@ export default function Home() {
             {/* Right Column: Hero Image */}
             <motion.div initial={{ opacity: 0, scale: 0.8, x: 20 }} animate={{ opacity: 1, scale: 1, x: 0 }} transition={{ delay: 0.4, duration: 0.8 }} className="relative hidden lg:block">
               <div className="relative z-10 flex justify-center">
-                <img src="/hero/image2.svg" alt="SHO SHA Hero Image" className="h-full w-full object-contain drop-shadow-2xl" loading="lazy" fetchPriority="high" />
+                <img src="/hero/image2.svg" alt="SHO SHA Hero Image" className="h-full w-full object-contain drop-shadow-2xl" loading="lazy" />
               </div>
 
               <motion.div animate={{ y: [0, -10, 0] }} transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }} className="absolute left-6 top-12 rounded-2xl border border-border/50 bg-card/80 p-4 shadow-xl backdrop-blur-md will-change-transform">

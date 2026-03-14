@@ -221,11 +221,11 @@ export default function About() {
    DATA ARRAYS — edit these to update content
    ═══════════════════════════════════════════ */
   const hero = {
-      image: "/outlets/pahlawan.png",
+      image: "/mesin/mesin_rdlama1.jpg",
       heroImage: "/hero/hero1.svg",
       tagline: "Tentang Kami,\nSHO-SHA.",
       subtitle: "Layanan laundry profesional dengan standar premium untuk pakaian Anda.",
-      loading: "eager",
+      loading: "lazy",
     };
 
   const [isMobile, setIsMobile] = useState(false)
@@ -851,7 +851,7 @@ export default function About() {
           ))}
         </Marquee>
       </div>
-      <Gallery />
+      <Gallery variant="default"/>
       {/* ═══ CTA SECTION ═══ */}
       <section className="px-6 py-16 bg-orange-50">
         <div className="mx-auto max-w-6xl">
