@@ -33,22 +33,25 @@ export default function DropdownMenuCabang() {
         w-[min(95vw,900px)]
         max-h-[420px]
         overflow-y-auto
-        rounded-2xl
-        border border-border/50
+        rounded-3xl
+        border border-primary/10
         bg-background/95
-        backdrop-blur-xl
-        shadow-xl
-        p-4
+        backdrop-blur-2xl
+        shadow-[0_20px_50px_rgba(0,0,0,0.15)]
+        p-6
         "
       >
+        <div className="mb-4 flex items-center justify-between px-2">
+          <h4 className="text-xs font-black uppercase tracking-[0.2em] text-primary">Daftar Cabang</h4>
+          <div className="h-px flex-1 mx-4 bg-gradient-to-r from-primary/20 to-transparent" />
+        </div>
+        
         <div
           className="
           grid
           grid-cols-2
           sm:grid-cols-3
           md:grid-cols-4
-          lg:grid-cols-5
-          xl:grid-cols-6
           gap-2
           "
         >
@@ -57,17 +60,27 @@ export default function DropdownMenuCabang() {
               key={outlet}
               href={`/outlets/${slugify(outlet)}`}
               className="
-              rounded-lg
-              px-3 py-2
+              group/item
+              relative
+              flex
+              items-center
+              rounded-xl
+              px-4 py-3
               text-sm
-              font-medium
+              font-bold
               text-muted-foreground
-              hover:bg-primary/10
+              hover:bg-primary/5
               hover:text-primary
-              transition-colors
+              transition-all
+              duration-300
+              hover:scale-[1.02]
+              active:scale-95
+              border border-transparent
+              hover:border-primary/10
               "
             >
-              {outlet}
+              <div className="absolute left-2 w-1 h-0 bg-primary rounded-full transition-all duration-300 group-hover/item:h-4" />
+              <span className="truncate">{outlet}</span>
             </Link>
           ))}
         </div>

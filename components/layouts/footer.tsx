@@ -2,7 +2,17 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Instagram, Facebook, MessageCircle } from "lucide-react";
+import {
+  Instagram,
+  Facebook,
+  MessageCircle,
+  MapPin,
+  Phone,
+  Mail,
+  Clock,
+  ArrowRight
+} from "lucide-react";
+import { motion } from "framer-motion";
 
 type NavLink = {
   label: string;
@@ -23,59 +33,64 @@ export default function Footer({ navLinks }: FooterProps) {
   ];
 
   return (
-    <footer className="border-t border-accent-foreground/10 bg-accent px-6 py-20 text-accent-foreground">
-      <div className="mx-auto max-w-6xl">
-        <div className="grid gap-16 lg:grid-cols-4">
-          {/* LOGO */}
-          <div className="lg:col-span-1">
-            <img
-              src="/assets/logo.svg"
-              alt="SHO SHA Logo"
-              className="h-9 w-auto brightness-0 invert opacity-60"
-              loading="lazy"
-            />
+    <footer className="relative border-t border-white/5 bg-accent px-6 py-24 text-accent-foreground overflow-hidden">
+      {/* Subtle Background Accent */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-4xl h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
 
-            <p className="mt-6 text-sm leading-relaxed text-accent-foreground/50">
-              Memberikan kenyamanan laundry terbaik dan peluang investasi
-              autopilot paling menguntungkan di Indonesia.
+      <div className="mx-auto max-w-7xl">
+        <div className="grid gap-x-12 gap-y-16 lg:grid-cols-4 lg:items-start">
+          {/* BRANDING SECTION */}
+          <div className="lg:col-span-1 space-y-8">
+            <Link href="/" className="inline-block group">
+              <img
+                src="/assets/logo.svg"
+                alt="SHO SHA Logo"
+                className="h-10 w-auto brightness-0 invert opacity-90 transition-opacity group-hover:opacity-100"
+                loading="lazy"
+              />
+            </Link>
+
+            <p className="text-sm leading-relaxed text-accent-foreground/60 max-w-xs">
+              Membangun masa depan investasi laundry autopilot yang transparan, menguntungkan, dan terpercaya di seluruh Indonesia.
             </p>
 
-            {/* SOCIAL */}
-            <div className="mt-8 flex gap-3">
+            {/* SOCIAL LINKS */}
+            <div className="flex items-center gap-4">
               {socialLinks.map((item, i) => {
                 const Icon = item.icon;
-
                 return (
-                  <a
+                  <motion.a
                     key={i}
                     href={item.href}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex h-10 w-10 items-center justify-center rounded-2xl bg-accent-foreground/5 text-accent-foreground/40 transition-all hover:bg-primary hover:text-primary-foreground hover:scale-110"
+                    whileHover={{ scale: 1.1, backgroundColor: "var(--color-primary)" }}
+                    whileTap={{ scale: 0.95 }}
+                    className="flex h-10 w-10 items-center justify-center rounded-full bg-white/5 text-accent-foreground/50 transition-colors hover:text-white"
                   >
                     <Icon className="h-5 w-5" />
-                  </a>
+                  </motion.a>
                 );
               })}
             </div>
           </div>
 
-          {/* NAV */}
+          {/* QUICK LINKS SECTION */}
           <div className="grid grid-cols-2 gap-8 lg:col-span-2">
-            <div>
-              <h4 className="text-sm font-bold uppercase tracking-widest text-primary">
+            <div className="space-y-6">
+              <h4 className="text-xs font-bold uppercase tracking-[0.2em] text-primary">
                 Navigasi
               </h4>
-
-              <ul className="mt-6 space-y-4 text-sm text-accent-foreground/50">
+              <ul className="space-y-4">
                 {navLinks
                   .filter((link) => link.href !== pathname)
                   .map((link) => (
-                    <li
-                      key={link.label}
-                      className="transition-colors hover:text-primary"
-                    >
-                      <Link href={link.href}>
+                    <li key={link.label}>
+                      <Link
+                        href={link.href}
+                        className="group flex items-center text-sm text-accent-foreground/50 transition-colors hover:text-white"
+                      >
+                        <ArrowRight className="mr-2 h-0 w-0 transition-all group-hover:h-3 group-hover:w-3 text-primary" />
                         {link.label}
                       </Link>
                     </li>
@@ -83,72 +98,71 @@ export default function Footer({ navLinks }: FooterProps) {
               </ul>
             </div>
 
-            {/* LAYANAN */}
-            <div>
-              <h4 className="text-sm font-bold uppercase tracking-widest text-primary">
+            <div className="space-y-6">
+              <h4 className="text-xs font-bold uppercase tracking-[0.2em] text-primary">
                 Layanan
               </h4>
-
-              <ul className="mt-6 space-y-4 text-sm text-accent-foreground/50">
-                <li className="transition-colors hover:text-primary cursor-pointer">
-                  Self-Service
-                </li>
-                <li className="transition-colors hover:text-primary cursor-pointer">
-                  Drop-Off Laundry
-                </li>
-                <li className="transition-colors hover:text-primary cursor-pointer">
-                  Membership TORU
-                </li>
-                <li className="transition-colors hover:text-primary cursor-pointer">
-                  Premium Care
-                </li>
+              <ul className="space-y-4 text-sm text-accent-foreground/50">
+                {["Self-Service", "Drop-Off Laundry", "Membership TORU", "Premium Care"].map((item) => (
+                  <li key={item} className="cursor-pointer transition-colors hover:text-white flex items-center group">
+                    <span className="h-1 w-1 rounded-full bg-primary/30 mr-3 group-hover:bg-primary transition-colors" />
+                    {item}
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
 
-          {/* KANTOR */}
-          <div>
-            <h4 className="text-sm font-bold uppercase tracking-widest text-primary">
-              Kantor Pusat
-            </h4>
-
-            <p className="mt-6 text-sm text-accent-foreground/50 leading-relaxed">
-              Jl. Pahlawan No.34, RT.1/RW.5, Sukabumi Selatan
-              <br />
-              Kec. Kebon Jeruk, Kota Jakarta Barat
-              <br />
-              Daerah Khusus Ibukota Jakarta 11560, Indonesia
-            </p>
-
-            <p className="mt-4 text-lg font-bold">
-              08:00 - 20:00
-            </p>
-
-            <p className="mt-1 text-xs text-accent-foreground/30">
-              Setiap hari buka
-            </p>
+          {/* CONTACT & LOCATION SECTION */}
+          <div className="space-y-8">
+            <div className="space-y-6">
+              <h4 className="text-xs font-bold uppercase tracking-[0.2em] text-primary">
+                Hubungi Kami
+              </h4>
+              <ul className="space-y-5">
+                <li className="flex items-start gap-4 text-sm text-accent-foreground/60 leading-relaxed">
+                  <MapPin className="h-5 w-5 shrink-0 text-primary/70" />
+                  <span>
+                    Jl. Pahlawan No.34, Sukabumi Selatan,
+                    <br />
+                    Jakarta Barat 11560
+                  </span>
+                </li>
+                <li className="flex items-center gap-4 text-sm text-accent-foreground/60">
+                  <Phone className="h-5 w-5 shrink-0 text-primary/70" />
+                  <a href="tel:+628111774438" className="hover:text-white transition-colors">+62 811 1774 438</a>
+                </li>
+                <li className="flex items-center gap-4 text-sm text-accent-foreground/60">
+                  <Mail className="h-5 w-5 shrink-0 text-primary/70" />
+                  <a href="mailto:info@shoshalaundry.com" className="hover:text-white transition-colors">info@shoshalaundry.com</a>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
 
-        {/* DIVIDER */}
-        <div className="my-16 h-px w-full bg-accent-foreground/10" />
+        {/* BOTTOM DIVIDER */}
+        <div className="mt-24 mb-12 h-px w-full bg-gradient-to-r from-white/0 via-white/5 to-white/0" />
 
-        {/* BOTTOM */}
-        <div className="flex flex-col items-center justify-between gap-6 sm:flex-row">
-          <p className="text-[10px] font-medium uppercase tracking-widest text-accent-foreground/30">
-            &copy; {new Date().getFullYear()} SHO-SHA LAUNDRY. ALL RIGHTS RESERVED.
-          </p>
+        {/* COPYRIGHT & LEGAL */}
+        <div className="flex flex-col items-center justify-between gap-8 sm:flex-row">
+          <div className="flex flex-col items-center sm:items-start gap-2">
+            <p className="text-[11px] font-medium uppercase tracking-[0.15em] text-accent-foreground/30">
+              &copy; {new Date().getFullYear()} SHO-SHA LAUNDRY. SELURUH HAK CIPTA DILINDUNGI.
+            </p>
+          </div>
 
-          <div className="flex gap-8 text-[10px] font-medium uppercase tracking-widest text-accent-foreground/30">
+          <div className="flex items-center gap-8">
             <Link
               href="/privacy"
-              className="hover:text-primary transition-colors"
+              className="text-[11px] font-bold uppercase tracking-widest text-accent-foreground/20 transition-all hover:text-primary"
             >
               Privacy Policy
             </Link>
+            <div className="h-3 w-px bg-white/5" />
             <Link
               href="/terms"
-              className="hover:text-primary transition-colors"
+              className="text-[11px] font-bold uppercase tracking-widest text-accent-foreground/20 transition-all hover:text-primary"
             >
               Terms of Service
             </Link>
