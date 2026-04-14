@@ -13,7 +13,6 @@ import {
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Gallery from "@/components/layouts/gallery";
-import SEO from "@/components/seo";
 
 const timeline = [
   {
@@ -177,8 +176,6 @@ export default function About() {
 
   return (
     <div className="min-h-screen bg-background text-foreground font-sans">
-      <SEO title="Tentang Kami" description="Pelajari lebih lanjut tentang Sho-Sha Laundry, visi, misi, dan perjalanan kami dalam memberikan layanan laundry terbaik sejak 2011." />
-
       {/* ═══ HERO ═══ */}
       <section id="beranda" className="relative h-[80vh] min-h-[600px] w-full bg-[#0a0a0a] overflow-hidden">
         <div className="absolute inset-0 z-0">

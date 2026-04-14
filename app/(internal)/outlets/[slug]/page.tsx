@@ -5,7 +5,6 @@ import dynamic from "next/dynamic";
 import { Instagram, MapPin, Phone, MessageCircle } from "lucide-react";
 import { OUTLETS_DATA, OUTLETS, slugify } from "@/lib/constants";
 import { Button } from "@/components/ui/button";
-import SEO from "@/components/seo";
 import { notFound } from "next/navigation";
 
 const MapContainer = dynamic(
@@ -63,11 +62,6 @@ export default function OutletPage({ params }: { params: Promise<{ slug: string 
 
   return (
     <main className="min-h-screen bg-background font-sans">
-      <SEO 
-        title={`Outlet ${data.name}`} 
-        description={`Kunjungi Sho-Sha Laundry Cabang ${data.name}. ${data.description}`}
-      />
-      
       {/* ═══ HERO ═══ */}
       <section className="relative h-[60vh] min-h-[500px] w-full bg-[#0a0a0a] overflow-hidden">
         <div className="absolute inset-0 z-0">

@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { ShieldCheck, FileText, Lock, Eye } from "lucide-react";
-import SEO from "@/components/seo";
 
 /* ═══════════════════════════════════════════
    SECTION WRAPPER WITH FADE-IN
@@ -39,11 +38,6 @@ export default function PrivacyPolicy() {
 
   return (
     <div className="min-h-screen bg-background text-foreground font-sans">
-      <SEO 
-        title="Kebijakan Privasi" 
-        description="Pelajari bagaimana Sho-Sha Laundry mengumpulkan, menggunakan, dan melindungi informasi pribadi Anda." 
-      />
-
       {/* ═══ HERO ═══ */}
       <section className="relative h-[40vh] min-h-[300px] w-full bg-[#0a0a0a] overflow-hidden">
         <div className="absolute inset-0 z-0">

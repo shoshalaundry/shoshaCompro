@@ -32,7 +32,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://shosha-laundry.com"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL || "https://shosha-laundry.com"),
   title: {
 
     default: "SHO-SHA LAUNDRY | Professional Laundry & Investment",
@@ -68,7 +68,10 @@ export const metadata: Metadata = {
     locale: "id_ID",
     url: "https://shosha-laundry.com",
     siteName: "SHO SHA LAUNDRY",
-    title: "SHO SHA LAUNDRY | Professional Laundry & Investment",
+    title: {
+      default: "SHO SHA LAUNDRY | Professional Laundry & Investment",
+      template: "%s | SHO-SHA LAUNDRY",
+    },
     description:
       "Layanan laundry profesional dengan sistem autopilot. Bangun passive income dari bisnis laundry yang terpercaya dan berpengalaman.",
     images: [
@@ -82,7 +85,10 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "SHO SHA LAUNDRY | Professional Laundry & Investment",
+    title: {
+      default: "SHO SHA LAUNDRY | Professional Laundry & Investment",
+      template: "%s | SHO-SHA LAUNDRY",
+    },
     description:
       "Layanan laundry profesional dengan sistem autopilot. Bangun passive income dari bisnis laundry yang terpercaya.",
     images: ["/og-image.png"],

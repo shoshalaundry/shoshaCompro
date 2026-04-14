@@ -12,7 +12,6 @@ import {
   Calendar,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import SEO from "@/components/seo";
 
 const faqItems = [
   {
@@ -91,8 +90,6 @@ export default function Faq() {
 
   return (
     <div className="min-h-screen bg-background text-foreground font-sans">
-      <SEO title="FAQ" description="Pertanyaan yang sering ditanyakan seputar layanan dan kemitraan Sho-Sha Laundry." />
-
       {/* ═══ HERO ═══ */}
       <section className="relative h-[50vh] min-h-[400px] w-full bg-[#0a0a0a] overflow-hidden">
         <div className="absolute inset-0 z-0">

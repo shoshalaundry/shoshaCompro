@@ -32,7 +32,6 @@ import {
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Gallery from "@/components/layouts/gallery";
-import SEO from "@/components/seo";
 
 /* ═══════════════════════════════════════════
    DATA ARRAYS
@@ -244,8 +243,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background text-foreground font-sans">
-      <SEO title="Home" />
-
       {/* ═══ HERO ═══ */}
       <section className="relative w-full h-[100dvh] bg-[#0a0a0a] overflow-hidden" id="beranda">
         <AnimatePresence mode="wait">

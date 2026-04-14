@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import { Gavel, ClipboardList, AlertCircle, Ban } from "lucide-react";
-import SEO from "@/components/seo";
 
 /* ═══════════════════════════════════════════
    SECTION WRAPPER WITH FADE-IN
@@ -39,11 +38,6 @@ export default function TermsOfService() {
 
   return (
     <div className="min-h-screen bg-background text-foreground font-sans">
-      <SEO 
-        title="Ketentuan Layanan" 
-        description="Pelajari syarat dan ketentuan penggunaan layanan laundry dan sistem kemitraan Sho-Sha Laundry." 
-      />
-
       {/* ═══ HERO ═══ */}
       <section className="relative h-[40vh] min-h-[300px] w-full bg-[#0a0a0a] overflow-hidden">
         <div className="absolute inset-0 z-0">

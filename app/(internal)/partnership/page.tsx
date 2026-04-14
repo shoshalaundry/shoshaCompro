@@ -37,7 +37,6 @@ import {
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import Image from "next/image";
-import SEO from "@/components/seo";
 
 const services = [
   {
@@ -270,8 +269,6 @@ export default function Partnership() {
 
   return (
     <div className="min-h-screen bg-background text-foreground font-sans">
-      <SEO title="Kemitraan" description="Bergabunglah dengan jaringan franchise laundry yang terus berkembang di Indonesia. Peluang investasi laundry autopilot dengan ROI tinggi." />
-
       {/* ═══ HERO ═══ */}
       <section id="beranda" className="relative h-[80vh] min-h-[600px] w-full bg-[#0a0a0a] overflow-hidden">
         <div className="absolute inset-0 z-0">
