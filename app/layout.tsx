@@ -94,6 +94,11 @@ export const metadata: Metadata = {
     images: ["/og-image.png"],
   },
 
+  verification: {
+    other: {
+      "facebook-domain-verification": "7l8a8wp937sgt2m0uy00n6x57kao2p",
+    },
+  },
   robots: {
     index: true,
     follow: true,
